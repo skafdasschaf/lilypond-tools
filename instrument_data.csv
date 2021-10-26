@@ -2,6 +2,7 @@ abbreviation,long,relative,clef,autobeam,default_key,incipit_clef,incipit_space,
 fl,Flauto,c',treble,true,none,none,,none
 ob,Oboe,c',treble,true,none,none,,none
 fag,Fagotto,c,bass,true,none,none,,none
+cnto,Cornetto,c',treble,true,none,none,,none
 cor,Corno,c',treble,true,C,none,,none
 clno,Clarino,c',treble,true,C,none,,none
 trb,Trombone,c',treble,true,none,none,,none
@@ -10,6 +11,7 @@ vl,Violino,c',treble,true,none,none,,none
 vla,Viola,c',treble,true,none,none,,none
 vlc,Cello,c,bass,true,none,none,,none
 vlne,Violone,c,bass,true,none,none,,none
+soli,Soli,c',treble,false,none,none,,lyrics
 S,Soprano,c',treble,false,none,soprano,-19,lyrics
 A,Alto,c',treble,false,none,alto,-16.8,lyrics
 T,Tenore,c',"""treble_8""",false,none,tenor,-18.2,lyrics
