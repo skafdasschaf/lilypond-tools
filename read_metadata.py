@@ -28,7 +28,7 @@ DEFAULT_ABBREVIATIONS = {
 
 ABBR_INFO = {
     "fl": "flute",
-    "cnto": "cornet",
+    "cnto": "cornett",
     "ob": "oboe",
     "cl": "clarinet",
     "fag": "bassoon",
@@ -43,8 +43,8 @@ ABBR_INFO = {
     "vlne": "violone",
     "S": "soprano",
     "A": "alto",
-    "T": "tenore",
-    "B": "basso",
+    "T": "tenor",
+    "B": "bass",
     "org": "organ",
     "cemb": "cembalo",
     "b": "basses"
@@ -54,8 +54,8 @@ SOURCE_TYPES = {
     "A": "autograph manuscript",
     "B": "manuscript copy",
     "C": "print",
-    "D": "unused manuscript",
-    "E": "unused print"
+    "D": "manuscript not used for this edition",
+    "E": "print not used for this edition"
 }
 
 
@@ -74,7 +74,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataVersion{{{version}}}
 \\def\\MetadataDate{{{date}}}
 \\def\\MetadataLilypondVersion{{{lilypond_version}}}
-\\def\\MetadataSources{{{sources}}}
+\\def\\MetadataSources{{{sources_formatted}}}
 \\def\\MetadataAbbreviations{{{abbreviations}}}
 """
 
@@ -232,7 +232,7 @@ for id, info in metadata["sources"].items():
 
     source_items.append(SOURCE_ITEM_TEMPLATE.format(id=id, **info))
 
-metadata["sources"] = SOURCES_TEMPLATE.format("\n".join(source_items))
+metadata["sources_formatted"] = SOURCES_TEMPLATE.format("\n".join(source_items))
 
 
 ## Subtitle
@@ -241,7 +241,7 @@ metadata["sources"] = SOURCES_TEMPLATE.format("\n".join(source_items))
 # and the catalogue of works id, separated by a newline. If the latter id
 # is not specified, the primary source identifier is used.
 
-if metadata["id"] is None:
+if "id" not in metadata or metadata["id"] is None:
     metadata["id"] = metadata["primary_id"]
 
 if "subtitle" not in metadata:
