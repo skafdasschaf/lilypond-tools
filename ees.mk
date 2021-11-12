@@ -1,6 +1,6 @@
 .RECIPEPREFIX = >
 .DEFAULT_GOAL = info
-LILY_CMD = lilypond -ddelete-intermediate-files -dno-point-and-click
+LILY_CMD = lilypond -ddelete-intermediate-files -dno-point-and-click --include=$(EES_TOOLS_PATH)
 notes = $(shell find notes -name '*.ly' | sed -E 's#notes/(.*)\.ly#\1#g' | tr '\n' ' ')
 scores = $(shell find scores -name '*.ly' | sed -E 's#scores/(.*)\.ly#\1#g' | tr '\n' ' ')
 
