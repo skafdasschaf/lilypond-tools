@@ -97,6 +97,9 @@
 \newfontfamily\fontawesome{FontAwesome}
 
 
+\RequirePackage{lilyglyphs}
+
+
 \RequirePackage[pass]{geometry}
 \newgeometry{twoside,inner=20mm,outer=40mm,top=20mm,bottom=40mm}
 
@@ -174,6 +177,12 @@
     \ifx\@tempa\@empty\else\newline\sourceitemlabel{Notes}#8\fi%
   \endgroup%
 }
+
+\def\A#1{\textsb{A#1}}
+\def\B#1{\textsb{B#1}}
+\def\C#1{\textsb{C#1}}
+\def\D#1{\textsb{D#1}}
+\def\E#1{\textsb{E#1}}
 
 \newlist{abbreviations}{description}{1}
 \setlist[abbreviations]{
@@ -339,10 +348,10 @@
 
   \vspace*{\fill}
 
-  \raisebox{-4mm}{\includegraphics{byncsaeu}}\hspace*{1em}%
+  \raisebox{-4mm}{\includegraphics{by-sa}}\hspace*{1em}%
   Edition Esser-Skala, \DTMfetchyear{tagdate}
 
-  © \DTMfetchyear{tagdate} by Edition Esser-Skala. This edition is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
+  © \DTMfetchyear{tagdate} by Edition Esser-Skala. This edition is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-sa/4.0/}.
 
   Music engraving by LilyPond \MetadataLilypondVersion~(\url{https://www.lilypond.org}).\\
   Front matter typeset with Source Sans and Fredericka the Great.
@@ -369,7 +378,7 @@
           \ifees@movcol%
             \begin{xltabular}{\linewidth}{lll X}
               \toprule
-              \itshape Mov. & \itshape Bar & \itshape Staff & \itshape Note \\
+              \itshape Mov. & \itshape Bar & \itshape Staff & \itshape Description \\
               \midrule \endhead
               #1
               \bottomrule
@@ -377,7 +386,7 @@
           \else%
           \begin{xltabular}{\linewidth}{ll X}
             \toprule
-            \itshape Bar & \itshape Staff & \itshape Note \\
+            \itshape Bar & \itshape Staff & \itshape Description \\
             \midrule \endhead
             #1
             \bottomrule
@@ -388,7 +397,7 @@
 }
 
 \def\eesCommentaryIntro{%
-  In general, this edition closely follows the primary source. Any changes that were introduced by the editor are indicated by italic type (lyrics, dynamics and directions), parentheses (expressive marks and bass figures) or dashes (slurs and ties). Accidentals are used according to modern conventions. For further details, consult the Editorial Guidelines available on the Edition's webpage.%
+  In general, this edition closely follows the primary source. Any changes that were introduced by the editor are indicated by italic type (lyrics, dynamics and directives), parentheses (expressive marks and bass figures) or dashes (slurs and ties). Accidentals are used according to modern conventions. For further details, consult the Editorial Guidelines available on the Edition's webpage.%
 }
 
 \def\eesToc#1{%
