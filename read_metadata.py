@@ -19,8 +19,6 @@ logging.basicConfig(
 
 # Constants ---------------------------------------------------------------
 
-NAME_SUFFIXES = ["der Ältere", "der Jüngere"]
-
 DEFAULT_ABBREVIATIONS = {
     "Ms": "manuscript",
     "r": "rest"
@@ -63,9 +61,9 @@ SOURCE_TYPES = {
 # LaTeX templates ---------------------------------------------------------
 
 METADATA_TEMPLATE = """
-\\def\\MetadataFirstname{{{first_name}}}
-\\def\\MetadataLastname{{{last_name}}}
-\\def\\MetadataNamesuffix{{{name_suffix}}}
+\\def\\MetadataFirstname{{{composer[first]}}}
+\\def\\MetadataLastname{{{composer[last]}}}
+\\def\\MetadataNamesuffix{{{composer[suffix]}}}
 \\def\\MetadataTitle{{{title}}}
 \\def\\MetadataSubtitle{{{subtitle}}}
 \\def\\MetadataScoring{{{scoring}}}
@@ -137,18 +135,15 @@ with open("metadata.yaml") as f:
 
 ## Names
 
-# The `composer` key is required and will be split into first and last name.
-# If the last name ends with a known name suffix (NAME_SUFFIXES),
-# it is stored in a separate variable.
+# The `composer` key is required. If the value is a single string,
+# it will be split into first and last name.
 
-metadata["last_name"], metadata["first_name"] = metadata["composer"].split(", ")
-for ns in NAME_SUFFIXES:
-    m = re.search(f"(.+) ({ns})", metadata["last_name"])
-    if m:
-        metadata["last_name"], metadata["name_suffix"] = m.groups()
-        break
+if isinstance(metadata["composer"], dict):
+    if "suffix" not in metadata["composer"]:
+        metadata["composer"]["suffix"] = ""
 else:
-    metadata["name_suffix"] = ""
+    last_name, first_name = metadata["composer"].split(", ")
+    metadata["composer"] = dict(first=first_name, last=last_name, suffix="")
 
 
 ## Scoring
