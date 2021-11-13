@@ -17,6 +17,20 @@ logging.basicConfig(
 )
 
 
+# ensure that metadata.yaml contains no duplicate keys
+# after https://stackoverflow.com/questions/33490870
+class UniqueKeyLoader(yaml.SafeLoader):
+    def construct_mapping(self, node, deep=False):
+        mapping = []
+        for key_node, value_node in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            if key in mapping:
+                raise KeyError("Duplicate YAML keys detected.")
+            mapping.append(key)
+        return super().construct_mapping(node, deep)
+
+
+
 # Constants ---------------------------------------------------------------
 
 DEFAULT_ABBREVIATIONS = {
@@ -130,7 +144,7 @@ args = parser.parse_args()
 # Prepare metadata --------------------------------------------------------
 
 with open("metadata.yaml") as f:
-    metadata = yaml.load(f, Loader=yaml.SafeLoader)
+    metadata = yaml.load(f, Loader=UniqueKeyLoader)
 
 
 ## Names
@@ -201,26 +215,28 @@ metadata["lilypond_version"] = re.search(
 
 ## Sources
 
-# For each entry in `sources`, convert the date to ISO format,
-# add missing RISM information and notes,
+# For each entry in `sources`, add missing date, RISM information and notes,
 # and determine the identifier of the primary source
 
 source_items = []
 for id, info in metadata["sources"].items():
     info["type"] = SOURCE_TYPES[id[0]]
 
-    try:
-        info["date"] = info["date"].strftime("%Y-%m-%d")
-    except AttributeError:
-        pass
+    if "date" not in info or info["date"] is None:
+        info["date"] = "unknown"
 
     if "rism" not in info or info["rism"] is None:
-        info["rism"] = "(none)"
+        info["rism"] = "not available"
 
     if "notes" not in info or info["notes"] is None:
         info["notes"] = ""
 
+    if "url" not in info or info["url"] is None:
+        info["url"] = "none"
+
     if "primary" in info and info["primary"]:
+        if "primary_id" in metadata:
+            raise KeyError("Exactly one source must be marked as primary.")
         info["type"] = PRIMARY_SOURCE_TEMPLATE.format(info["type"])
         metadata["primary_id"] = PRIMARY_ID_TEMPLATE.format(info["siglum"],
                                                             info["shelfmark"])
@@ -235,6 +251,9 @@ metadata["sources_formatted"] = SOURCES_TEMPLATE.format("\n".join(source_items))
 # The subtitle consists of the value of the `subtitle` key (if available)
 # and the catalogue of works id, separated by a newline. If the latter id
 # is not specified, the primary source identifier is used.
+
+if "primary_id" not in metadata:
+    raise KeyError("No primary source specified.")
 
 if "id" not in metadata or metadata["id"] is None:
     metadata["id"] = metadata["primary_id"]
