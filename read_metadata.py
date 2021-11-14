@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse
+from datetime import date
 from git import Repo
 import logging
 import os
@@ -185,17 +186,23 @@ else:
 ## Repository
 
 # The name of the remote repository "origin" is read from the git metadata,
-# as are the version and date of the most recent tag.
+# as are the version and date of the most recent tag. If there are no tags,
+# use the current date and set version to "work in progress".
 
 metadata["repository"] = re.match(
     "git@github\\.com:(.+)\\.git",
     Repo(".").remotes.origin.url
 ).group(1)
-metadata["version"] = Repo(".").tags[-1].tag.tag
-metadata["date"] = time.strftime(
-    "%Y-%m-%d",
-    time.gmtime(Repo(".").tags[-1].tag.tagged_date)
-)
+
+if Repo(".").tags:
+    metadata["version"] = Repo(".").tags[-1].tag.tag
+    metadata["date"] = time.strftime(
+        "%Y-%m-%d",
+        time.gmtime(Repo(".").tags[-1].tag.tagged_date)
+    )
+else:
+    metadata["version"] = "work in progress"
+    metadata["date"] = date.today().strftime("%Y-%m-%d")
 
 
 ## LilyPond version
