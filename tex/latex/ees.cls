@@ -96,7 +96,9 @@
 \DeclareTextFontCommand{\textlt}{\ltseries}
 \DeclareTextFontCommand{\textsb}{\sbseries}
 \newfontfamily\headingfont{Fredericka the Great}
-\newfontfamily\fontawesome{Font Awesome 5 Free Solid}
+
+
+\RequirePackage{fontawesome5}
 
 
 \RequirePackage{lilyglyphs}
@@ -380,7 +382,7 @@
 
   Please report any errors or mistakes to \url{edition@esser-skala.at.}
 
-  {\fontawesome}~\@repository\\
+  \faGithub~\@repository\\
   \textit{\@version, \DTMusedate{tagdate}}
 
   \vspace*{2cm}%
