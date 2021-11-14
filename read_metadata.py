@@ -3,18 +3,10 @@
 import argparse
 from datetime import date
 from git import Repo
-import logging
 import os
 import re
 import subprocess
 import yaml
-
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(levelname)s [%(asctime)s] %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
-)
 
 
 # ensure that metadata.yaml contains no duplicate keys
@@ -42,24 +34,35 @@ ABBR_INFO = {
     "fl": "flute",
     "cnto": "cornett",
     "ob": "oboe",
+    "ob d'amore": "oboe d'amore",
+    "ob da caccia": "oboe da caccia",
     "cl": "clarinet",
+    "chalumeau": "chalumeau",
     "fag": "bassoon",
     "cor": "horn",
+    "cor da caccia": "corno da caccia",
     "clno": "clarion",
     "tr": "trumpet",
     "trb": "trombone",
+    "a-trb": "alto trombone",
+    "t-trb": "tenor trombone",
+    "b-trb": "bass trombone",
     "timp": "timpani",
     "vl": "violin",
     "vla": "viola",
+    "vla da gamba": "viola da gamba",
     "vlc": "violoncello",
     "vlne": "violone",
+    "cb": "contrabass",
     "S": "soprano",
     "A": "alto",
     "T": "tenor",
     "B": "bass",
     "org": "organ",
     "cemb": "cembalo",
-    "b": "basses"
+    "pf": "piano",
+    "b": "basses",
+    "bc": "basso continuo"
 }
 
 SOURCE_TYPES = {
@@ -191,7 +194,7 @@ else:
 github_repo = re.search("github\\.com.(.+)", Repo(".").remotes.origin.url)
 if github_repo is None:
     raise ValueError("URL of origin repository has unknown format.")
-metadata["repository"] = github_repo.group(1).rstrip("\\.git")
+metadata["repository"] = github_repo.group(1).removesuffix(".git")
 
 if Repo(".").tags:
     metadata["version"] = Repo(".").tags[-1].name
@@ -282,16 +285,16 @@ for a in metadata["scoring"].replace("\\newline", "").split(","):
         a = a[1:-1]
     if a[-1] == ")":
         a = re.match("[^\(]+", a).group(0).strip()
-    a = a.lstrip("0123456789 ")
+    a = a.lstrip("0123456789 ").removesuffix("solo").rstrip()
     try:
         abbreviations[a] = ABBR_INFO[a]
     except KeyError:
-        logging.warning(f"Abbreviation {a} unknown.")
+        raise ValueError(f"Abbreviation {a} unknown.")
 
 metadata["abbreviations"] = ABBREVIATIONS_TEMPLATE.format(
     "\n  ".join(
         [ABBREVIATIONS_ITEM_TEMPLATE.format(short=k, long=v)
-         for k, v in sorted(abbreviations.items())]
+         for k, v in sorted(abbreviations.items(), key=lambda x: x[0].lower())]
     )
 )
 
