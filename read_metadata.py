@@ -7,7 +7,6 @@ import logging
 import os
 import re
 import subprocess
-import time
 import yaml
 
 
@@ -189,17 +188,14 @@ else:
 # as are the version and date of the most recent tag. If there are no tags,
 # use the current date and set version to "work in progress".
 
-github_repo = re.search("github\\.com.(.+)\\.git", Repo(".").remotes.origin.url)
+github_repo = re.search("github\\.com.(.+)", Repo(".").remotes.origin.url)
 if github_repo is None:
     raise ValueError("URL of origin repository has unknown format.")
-metadata["repository"] = github_repo.group(1)
+metadata["repository"] = github_repo.group(1).rstrip("\\.git")
 
 if Repo(".").tags:
-    metadata["version"] = Repo(".").tags[-1].tag.tag
-    metadata["date"] = time.strftime(
-        "%Y-%m-%d",
-        time.gmtime(Repo(".").tags[-1].tag.tagged_date)
-    )
+    metadata["version"] = Repo(".").tags[-1].name
+    metadata["date"] = Repo(".").tags[-1].commit.committed_datetime.strftime("%Y-%m-%d")
 else:
     metadata["version"] = "work in progress"
     metadata["date"] = date.today().strftime("%Y-%m-%d")
