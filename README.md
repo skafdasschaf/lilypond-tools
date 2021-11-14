@@ -8,6 +8,13 @@ A collection of scripts that are required for engraving scores for the Edition E
 - [Installation](#installation)
 - [add_variables.py](#add_variablespy)
 - [ees.ly](#eesly)
+  - [Options](#options)
+  - [Document structure](#document-structure)
+  - [Table of contents](#table-of-contents)
+  - [Markup](#markup)
+  - [Inside the staff](#inside-the-staff)
+  - [Polyphony](#polyphony)
+  - [Bass figures](#bass-figures)
 - [ees.mk](#eesmk)
 - [make_works_table.py](#make_works_tablepy)
 - [read_metadata.py](#read_metadatapy)
@@ -16,7 +23,7 @@ A collection of scripts that are required for engraving scores for the Edition E
   - [Class options](#class-options)
   - [Formatting](#formatting)
   - [Metadata](#metadata)
-  - [Document structure](#document-structure)
+  - [Document structure](#document-structure-1)
   - [Manual TOC formatting](#manual-toc-formatting)
 
 
