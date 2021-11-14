@@ -189,10 +189,10 @@ else:
 # as are the version and date of the most recent tag. If there are no tags,
 # use the current date and set version to "work in progress".
 
-metadata["repository"] = re.match(
-    "git@github\\.com:(.+)\\.git",
-    Repo(".").remotes.origin.url
-).group(1)
+github_repo = re.search("github\\.com.(.+)\\.git", Repo(".").remotes.origin.url)
+if github_repo is None:
+    raise ValueError("URL of origin repository has unknown format.")
+metadata["repository"] = github_repo.group(1)
 
 if Repo(".").tags:
     metadata["version"] = Repo(".").tags[-1].tag.tag
