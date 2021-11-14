@@ -356,9 +356,9 @@ By default, these macros use the respective values in `metadata.yaml`.
 ### Document structure
 
 - `\eesTitlePage`: Print the default title and copyright page.
-- `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary). The single argument may contain rows for the table of emendations (four columns if `movcol` is true, otherwise three columns). If `toe` is false, the argument is ignored.
+- `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary) and the changelog. The single argument may contain rows for the table of emendations (four columns if `movcol` is true, otherwise three columns). If `toe` is false, the argument is ignored.
 - `\eesCommentaryIntro`: Print the default introduction of the commentary section (automatically invoked by `\eesCriticalReport`).
-- `\eesToc{<contents>}`: Print the changelog and table of contents. The value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
+- `\eesToc{<contents>}`: Print the table of contents. The value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
 - `\eesScore`: Print the included score.
 - `\ifPrintFrontMatter` … `\fi`: Additional content in the prefatory material should be surrounded by this conditional, which ensures that it is only printed in the full score and draft.
 

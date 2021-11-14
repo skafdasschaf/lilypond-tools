@@ -417,6 +417,8 @@
           \end{xltabular}%
           \fi% ifees@movcol
         \fi% ifees@toe
+    \cleardoublepage%
+    \markdownInput{../CHANGELOG.md}%
   \fi% ifPrintFrontMatter
 }
 
@@ -426,8 +428,6 @@
 
 \long\def\eesToc#1{%
   \ifPrintFrontMatter%
-    \cleardoublepage%
-    \markdownInput{../CHANGELOG.md}%
     \cleardoublepage%
     \chapter*{Contents}%
     \InputIfFileExists%
