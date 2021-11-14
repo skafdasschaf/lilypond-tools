@@ -80,14 +80,14 @@
 
 
 \RequirePackage{fontspec}
-\setmainfont{Source Sans Pro}[
-  ItalicFont = Source Sans Pro Italic,
-  BoldFont = Source Sans Pro Bold,
-  BoldItalicFont = Source Sans Pro Bold Italic,
-  FontFace = {lt}{n}{Source Sans Pro Light},
-  FontFace = {lt}{it}{Source Sans Pro Light Italic},
-  FontFace = {sb}{n}{Source Sans Pro Semibold},
-  FontFace = {sb}{it}{Source Sans Pro Semibold Italic},
+\setmainfont{Source Sans 3}[
+  ItalicFont = Source Sans 3 Italic,
+  BoldFont = Source Sans 3 Bold,
+  BoldItalicFont = Source Sans 3 Bold Italic,
+  FontFace = {lt}{n}{Source Sans 3 Light},
+  FontFace = {lt}{it}{Source Sans 3 Light Italic},
+  FontFace = {sb}{n}{Source Sans 3 Semibold},
+  FontFace = {sb}{it}{Source Sans 3 Semibold Italic},
   Numbers = Proportional,
   Ligatures = Common
 ]
@@ -96,7 +96,7 @@
 \DeclareTextFontCommand{\textlt}{\ltseries}
 \DeclareTextFontCommand{\textsb}{\sbseries}
 \newfontfamily\headingfont{Fredericka the Great}
-\newfontfamily\fontawesome{FontAwesome}
+\newfontfamily\fontawesome{Font Awesome 5 Free Solid}
 
 
 \RequirePackage{lilyglyphs}
