@@ -1,11 +1,13 @@
 # EES Tools
 
-A collection of scripts that are required for engraving scores for the Edition Esser-Skala.
+*EES Tools* is a collection of scripts that are required for engraving scores for the Edition Esser-Skala. In addition, this repository includes instructions to build the *EES Engraver*, a Docker container with these tools and all dependencies.
+
+
 
 ## Contents
 
-- [Contents](#contents)
 - [Installation](#installation)
+- [How to build the EES Engraver](#how-to-build-the-ees-engraver)
 - [add_variables.py](#add_variablespy)
 - [ees.ly](#eesly)
   - [Options](#options)
@@ -30,11 +32,40 @@ A collection of scripts that are required for engraving scores for the Edition E
 
 ## Installation
 
+Install the following dependencies:
+- [Python](https://python.org/) v3.9 with packages [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [GitPython](https://github.com/gitpython-developers/GitPython), and [PyYAML](https://pyyaml.org/)
+- [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
+- [TinyTex](https://yihui.org/tinytex/) v2021.11 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
+- [LilyPond](https://lilypond.org/) v2.22.1
+
 Clone the repository and make sure that the files can be found by the respective programs:
 - Define the shell variable `EES_TOOLS_PATH` to point to this directory.
-- Set the `TEXMFHOME` variable in `texmf.cnf` to include this directory.
+- Run `tlmgr conf auxtrees add $EES_TOOLS_PATH`.
 - Always run LilyPond with the flag `--include=$EES_TOOLS_PATH`.
 
+
+
+## How to build the EES Engraver
+
+This Docker image is based on [python:3.9](https://hub.docker.com/_/python), with all dependencies installed by [docker/setup.sh](docker/setup.sh). GitHub Actions uses this image to automatically engrave and release scores of the Edition Esser-Skala whenever a tag is pushed.
+
+Build the image via
+
+```bash
+sudo docker build --tag ees-engraver .
+```
+
+From the root directory of an edition, run
+
+```bash
+sudo docker run --rm -it -v $PWD:/ees ees-engraver
+```
+
+to engrave all final scores (i.e., `make final/scores`). To call `make` with a different `<target>`, run
+
+```bash
+sudo docker run --rm -it -v $PWD:/ees ees-engraver make <target>
+```
 
 ## add_variables.py
 
