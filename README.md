@@ -1,6 +1,6 @@
 # EES Tools
 
-*EES Tools* is a collection of scripts that are required for engraving scores for the Edition Esser-Skala. In addition, this repository includes instructions to build the *EES Engraver*, a Docker container with these tools and all dependencies.
+*EES Tools* is a collection of scripts that are required for engraving scores for the Edition Esser-Skala. In addition, this repository includes instructions to build a Docker container *ees-tools* with these tools and all dependencies.
 
 
 
