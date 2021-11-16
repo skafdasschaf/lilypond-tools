@@ -8,13 +8,14 @@ ENV PATH="/root/bin:${PATH}"
 WORKDIR /ees
 
 COPY docker .
-COPY add_variables.py \
-     ees.ly \
-     ees.mk \
+COPY *.py \
+     *.ly \
+     *.mk \
      instrument_data.csv \
-     make_works_table.py \
-     read_metadata.py \
      /ees-tools/
+COPY tex/latex/*.cls  \
+     tex/latex/*.pdf \
+     /ees-tools/tex/latex/
 
 RUN ./setup.sh
 
