@@ -1,0 +1,20 @@
+name: Release engraved scores
+
+on: workflow_call
+
+jobs:
+  engrave_scores:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Engrave
+        uses: docker://ghcr.io/edition-esser-skala/ees-engraver:latest
+
+      - name: Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files:
+            final/*.pdf

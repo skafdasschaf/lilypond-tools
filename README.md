@@ -6,8 +6,10 @@
 
 ## Contents
 
-- [Installation](#installation)
-- [How to build the EES Engraver](#how-to-build-the-ees-engraver)
+- [TL;DR: Engraving scores](#tldr-engraving-scores)
+  - [… using the Docker image](#-using-the-docker-image)
+  - [… using a manual installation](#-using-a-manual-installation)
+- [Structure of a score repository](#structure-of-a-score-repository)
 - [add_variables.py](#add_variablespy)
 - [ees.ly](#eesly)
   - [Options](#options)
@@ -27,27 +29,15 @@
   - [Metadata](#metadata)
   - [Document structure](#document-structure-1)
   - [Manual TOC formatting](#manual-toc-formatting)
+- [.github/workflows/engrave-and-release.yaml](#githubworkflowsengrave-and-releaseyaml)
 
 
 
-## Installation
+## TL;DR: Engraving scores
 
-Install the following dependencies:
-- [Python](https://python.org/) v3.9 with packages [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [GitPython](https://github.com/gitpython-developers/GitPython), and [PyYAML](https://pyyaml.org/)
-- [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
-- [TinyTex](https://yihui.org/tinytex/) v2021.11 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
-- [LilyPond](https://lilypond.org/) v2.22.1
+### … using the Docker image
 
-Clone the repository and make sure that the files can be found by the respective programs:
-- Define the shell variable `EES_TOOLS_PATH` to point to this directory.
-- Run `tlmgr conf auxtrees add $EES_TOOLS_PATH`.
-- Always run LilyPond with the flag `--include=$EES_TOOLS_PATH`.
-
-
-
-## How to build the EES Engraver
-
-This Docker image is based on [python:3.9](https://hub.docker.com/_/python), with all dependencies installed by [docker/setup.sh](docker/setup.sh). GitHub Actions uses this image to automatically engrave and release scores of the Edition Esser-Skala whenever a tag is pushed.
+We recommend to engrave scores via the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker image. This image is based on [python:3.9](https://hub.docker.com/_/python), with all dependencies installed by [docker/setup.sh](docker/setup.sh). GitHub Actions uses this image to automatically engrave and release scores of the Edition Esser-Skala whenever a tag is pushed.
 
 Build the image via
 
@@ -61,11 +51,60 @@ From the root directory of an edition, run
 sudo docker run --rm -it -v $PWD:/ees ees-engraver
 ```
 
-to engrave all final scores (i.e., `make final/scores`). To call `make` with a different `<target>`, run
+to engrave all final scores (i.e., `make final/scores`). To list all available build targets, run
 
 ```bash
-sudo docker run --rm -it -v $PWD:/ees ees-engraver make <target>
+sudo docker run --rm -it -v $PWD:/ees ees-engraver make info
 ```
+
+
+### … using a manual installation
+
+Install the following dependencies:
+- [Python](https://python.org/) v3.9 with packages [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [GitPython](https://github.com/gitpython-developers/GitPython), and [PyYAML](https://pyyaml.org/)
+- [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
+- [TinyTex](https://yihui.org/tinytex/) v2021.11 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
+- [LilyPond](https://lilypond.org/) v2.22.1
+
+Clone the repository and make sure that the files can be found by the respective programs:
+- Define the shell variable `EES_TOOLS_PATH` to point to this directory.
+- Run `tlmgr conf auxtrees add $EES_TOOLS_PATH`.
+- Always run LilyPond with the flag `--include=$EES_TOOLS_PATH`.
+
+From the root directory of an edition, invoke `make` to engrave scores:
+- `make final/scores` generates all publication-ready scores in folder *final*.
+- `make info` lists all available build targets.
+
+Alternatively, uncomment the score to be engraved in *main.ly* and run
+
+```bash
+lilypond --include=$EES_TOOLS_PATH main.ly
+```
+
+## Structure of a score repository
+
+In order to create a new edition, clone the [ees-template](https://github.com/edition-esser-skala/ees-tools) repository:
+
+```bash
+gh repo create edition-esser-skala/<repository> \
+  --public \
+  -p edition-esser-skala/ees-template \
+  -d "<composer>: <title>"
+```
+
+The new repository will contain the following folders and files:
+- **notes/*.ly** – LilyPond files containing individual voices; add new variables with [add_variables.py](#add_variablespy)
+- **scores/*.ly** – LilyPond files containing score definitions
+- **CHANGELOG.md** – the [changelog](https://keepachangelog.com/en/1.0.0/)
+- **definitions.ly** – general definitions; include [ees.ly](#eesly)
+- **LICENSE.txt** – the [license](https://creativecommons.org/licenses/by-sa/4.0/)
+- **main.ly** – allows to engrave scores without using `make`
+- **Makefile** – configuration file for `make`; imports [ees.mk](#eesmk)
+- **metadata.yaml** – metadata whose format is described [below](#metadatayaml); can be processed with [read_metadata.py](#read_metadatapy) and [make_works_table.py](#make_works_tablepy)
+- **.github/workflows/engrave-and-release.yaml** – GitHub Actions workflow that reuses the [workflow of the same name](#githubworkflowsengrave-and-releaseyaml) from EES Tools
+- **front_matter/critical_report.tex** – prefatory material based upon [ees.cls](#texlatexeescls)
+
+
 
 ## add_variables.py
 
@@ -401,3 +440,8 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\begin{movement}{<label>} <lyrics> \end{movement}`: Print the TOC entry for the movement (section) with `<label>`. The `<lyrics>` may comprise
   - continuous text, which represents all lyrics of the respective movement (as seen, for instance, in Michael Haydn's [Litaniae MH 532](https://github.com/edition-esser-skala/haydn-m-litaniae-mh-532)); or
   - text blocks labeled with the associated voice (as seen, for instance, in Stölzel's [Jeſu, Deine Paßion](https://github.com/edition-esser-skala/stoelzel-jesu-deine-passion)). `\voice[<label>]` sets the `<label>` of each text block.
+
+
+## .github/workflows/engrave-and-release.yaml
+
+This GitHub Actions workflow engraves scores using the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker container and creates a GitHub release that includes the generated PDFs. It is triggered whenever a [SemVer](https://semver.org) tag is pushed to GitHub.
