@@ -54,7 +54,11 @@ def arabic_to_roman(number=None):
 
 # Constants ---------------------------------------------------------------
 
-INSTRUMENT_METADATA = read_csv("instrument_data.csv").set_index("abbreviation")
+instrument_data_file = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    "instrument_data.csv"
+)
+INSTRUMENT_METADATA = read_csv(instrument_data_file).set_index("abbreviation")
 
 # abbreviations included in each edition
 DEFAULT_ABBR = {}
