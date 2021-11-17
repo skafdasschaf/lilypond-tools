@@ -23,6 +23,7 @@ vlc,violoncello,Cello,Violoncello,c,bass,true,none,none,,none
 vlne,violone,Violone,Violone,c,bass,true,none,none,,none
 cb,contrabass,Contrabasso,Contrabasso,c,bass,true,none,none,,none
 soli,soloists,Soli,Soli,c',treble,false,none,none,,lyrics
+coro,chorus,Coro,Coro,c',treble,false,none,none,,lyrics
 S,soprano,Soprano,Soprano,c',treble,false,none,soprano,-19,lyrics
 A,alto,Alto,Alto,c',treble,false,none,alto,-16.8,lyrics
 T,tenor,Tenore,Tenore,c',"""treble_8""",false,none,tenor,-18.2,lyrics
