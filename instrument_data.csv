@@ -1,21 +1,34 @@
-abbreviation,long,relative,clef,autobeam,default_key,incipit_clef,incipit_space,second_template
-fl,Flauto,c',treble,true,none,none,,none
-ob,Oboe,c',treble,true,none,none,,none
-fag,Fagotto,c,bass,true,none,none,,none
-cnto,Cornetto,c',treble,true,none,none,,none
-cor,Corno,c',treble,true,C,none,,none
-clno,Clarino,c',treble,true,C,none,,none
-trb,Trombone,c',treble,true,none,none,,none
-timp,Timpani,c,bass,true,C,none,,none
-vl,Violino,c',treble,true,none,none,,none
-vla,Viola,c',treble,true,none,none,,none
-vlc,Cello,c,bass,true,none,none,,none
-vlne,Violone,c,bass,true,none,none,,none
-soli,Soli,c',treble,false,none,none,,lyrics
-S,Soprano,c',treble,false,none,soprano,-19,lyrics
-A,Alto,c',treble,false,none,alto,-16.8,lyrics
-T,Tenore,c',"""treble_8""",false,none,tenor,-18.2,lyrics
-B,Basso,c,bass,false,none,none,,lyrics
-org,Organo,c,bass,true,none,none,,figures
-cemb,Cembalo,c,bass,true,none,none,,figures
-b,Bassi,c,bass,true,none,none,,none
+abbreviation,long,variable,score_type,relative,clef,autobeam,default_key,incipit_clef,incipit_space,second_template
+fl,flute,Flauto,Flauto,c',treble,true,none,none,,none
+cnto,cornett,Cornetto,Cornetto,c',soprano,true,none,none,,none
+ob,oboe,Oboe,Oboe,c',treble,true,none,none,,none
+ob d'amore,oboe d'amore,OboeAmore,Oboe d'amore,c',treble,true,none,none,,none
+ob da caccia,oboe da caccia,OboeCacc,Oboe da caccia,c',treble,true,none,none,,none
+cl,clarinet,Clarinetto,Clarinetto,c',treble,true,none,none,,none
+chalumeau,chalumeau,Salmoe,Salmoè,c',treble,true,none,none,,none
+fag,bassoon,Fagotto,Fagotto,c,bass,true,none,none,,none
+cor,horn,Corno,Corno,c',treble,true,C,none,,none
+cor da caccia,corno da caccia,CornoCacc,Corno da caccia,c',treble,true,C,none,,none
+clno,clarion,Clarino,Clarino,c',treble,true,C,none,,none
+tr,trumpet,Tromba,Tromba,c',treble,true,C,none,,none
+trb,trombone,Trombone,Trombone,c',treble,true,none,none,,none
+a-trb,alto trombone,AltoTrombone,Alto trombone,c',alto,true,none,none,,none
+t-trb,tenor trombone,TenorTrombone,Tenor trombone,c',tenor,true,none,none,,none
+b-trb,bass trombone,BassTrombone,Bass trombone,c,bass,true,none,none,,none
+timp,timpani,Timpani,Timpani,c,bass,true,C,none,,none
+vl,violin,Violino,Violino,c',treble,true,none,none,,none
+vla,viola,Viola,Viola,c',treble,true,none,none,,none
+vla da gamba,viola da gamba,Gamba,Viola da gamba,c',treble,true,none,none,,none
+vlc,violoncello,Cello,Violoncello,c,bass,true,none,none,,none
+vlne,violone,Violone,Violone,c,bass,true,none,none,,none
+cb,contrabass,Contrabasso,Contrabasso,c,bass,true,none,none,,none
+soli,soloists,Soli,Soli,c',treble,false,none,none,,lyrics
+S,soprano,Soprano,Soprano,c',treble,false,none,soprano,-19,lyrics
+A,alto,Alto,Alto,c',treble,false,none,alto,-16.8,lyrics
+T,tenor,Tenore,Tenore,c',"""treble_8""",false,none,tenor,-18.2,lyrics
+B,bass,Basso,Basso,c,bass,false,none,none,,lyrics
+org,organ,Organo,Organo,c,bass,true,none,none,,figures
+cemb,cembalo,Cembalo,Cembalo,c,bass,true,none,none,,figures
+pf,piano,Piano,Piano,,,,,,,
+b,basses,Bassi,Bassi,c,bass,true,none,none,,none
+bc,basso continuo,BassoContinuo,Basso continuo,,,,,,,

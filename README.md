@@ -20,8 +20,11 @@
   - [Polyphony](#polyphony)
   - [Bass figures](#bass-figures)
 - [ees.mk](#eesmk)
-- [make_works_table.py](#make_works_tablepy)
+- [instrument_data.csv](#instrument_datacsv)
 - [read_metadata.py](#read_metadatapy)
+  - [Subcommand `edition`](#subcommand-edition)
+  - [Subcommand `table`](#subcommand-table)
+  - [Subcommand `website`](#subcommand-website)
   - [metadata.yaml](#metadatayaml)
 - [tex/latex/ees.cls](#texlatexeescls)
   - [Class options](#class-options)
@@ -100,7 +103,7 @@ The new repository will contain the following folders and files:
 - **LICENSE.txt** – the [license](https://creativecommons.org/licenses/by-sa/4.0/)
 - **main.ly** – allows to engrave scores without using `make`
 - **Makefile** – configuration file for `make`; imports [ees.mk](#eesmk)
-- **metadata.yaml** – metadata whose format is described [below](#metadatayaml); can be processed with [read_metadata.py](#read_metadatapy) and [make_works_table.py](#make_works_tablepy)
+- **metadata.yaml** – metadata whose format is described [below](#metadatayaml); can be processed with [read_metadata.py](#read_metadatapy)
 - **.github/workflows/engrave-and-release.yaml** – GitHub Actions workflow that reuses the [workflow of the same name](#githubworkflowsengrave-and-releaseyaml) from EES Tools
 - **front_matter/critical_report.tex** – prefatory material based upon [ees.cls](#texlatexeescls)
 
@@ -324,35 +327,71 @@ Makefile that defines rules for engraving scores. This file is included by the `
 - `info`: usage details
 
 
-## make_works_table.py
 
-This script collects metadata from the `metadata.yaml` file in each repository and saves this data to a table (`works.csv`). `instrument_data.csv` contains metadata for this script.
+## instrument_data.csv
+
+This table describes instruments (rows) via the following variables (columns):
+- *abbreviation* – abbreviation used in the scoring, the list of abbreviations, and score file names
+- *long* – full English name given in the list of abbreviations
+- *variable* – name used in LilyPond variables
+- *score_type* – name used for the score type on the title page
+- *relative* – start pitch for relative octave entry
+- *clef* – default clef
+- *autobeam* – should notes be beamed automatically? (false for vocal parts)
+- *default_key* – overrides key for transposing instruments; 'none' indicates no override
+- *incipit_clef* – clef in the incipit; 'none' indicates no incipit
+- *incipit_space* – horizontal space between incipit and staff
+- *second_template* – second variable template to add (for vocal parts and figured bass)
+
 
 
 ## read_metadata.py
 
-This script converts information in `metadata.yaml` to a set of LaTeX macros and stores them in `front_matter/critical_report.macros`, which is subsequently imported by `front_matter/critical_report.tex`. Each of these LaTeX macros starts with `\Metadata...`. The mapping between YAML keys and macros is described below.
+This script creates various outputs from information in `metadata.yaml`, depending on the subcommand given as first argument.
 
-`read_metadata.py` has a single optional argument `-t`, which sets the score type:
-- `draft` (default):
-  - set `\MetadataScoretype` to `Draft`
-  - include critical report, changelog and TOC
-  - do *not* print any scores
-- `full_score`:
-  - set `\MetadataScoretype` to `Full Score`
-  - include critical report, changelog and TOC
-  - print the full score
-- any other value:
-  - set `\MetadataScoretype` to the value of the respective subkey of `parts` in `metadata.yaml`
-  - do *not* print critical report, changelog and TOC
-  - print the respective score
+### Subcommand `edition`
 
-The script also obtains the following information from the git metadata:
+Generate a set of LaTeX macros that can be imported by `front_matter/critical_report.tex`. Each of these LaTeX macros starts with `\Metadata...`. The mapping between YAML keys and macros is described below.
+
+- `-h`, `--help`: show this help message and exit
+- `-i`, `--input FILE`: read metadata from `FILE` (default: `metadata.yaml`)
+- `-o`, `--output FILE`: write the macros to `FILE` (default: `front_matter/critical_report.macros`)
+- `-t`, `--type TYPE`: select score `TYPE` for front matter:
+  - `draft` (default):
+    - set `\MetadataScoretype` to `Draft`
+    - include critical report, changelog and TOC
+    - do *not* print any scores
+  - `full_score`:
+    - set `\MetadataScoretype` to `Full Score`
+    - include critical report, changelog and TOC
+    - print the full score
+  - any other value is interpreted as scoring abbreviation:
+    - set `\MetadataScoretype` to the long form of the abbreviation
+    - do *not* print critical report, changelog and TOC
+    - print the respective score
+
+The long form of a scoring abbreviation is looked up [instrument_data.csv](#instrument_datacsv). The abbreviation may end in an Arabic number, which is converted to a Roman numeral (e.g., `vl2` -> "Violino II"). Abbreviations can also be defined in `metadata.yaml` via the `parts` key (e.g., `clno12` -> "Clarino I, II in C").
+
+The subcommand also obtains the following information from the git metadata:
 - name of the remote repository `origin` (-> `\MetadataRepository`)
 - version of the most recent tag (-> `\MetadataVersion`)
 - date of the most recent tag (-> `\MetadataDate`)
 
-Furthermore, the script reads the LilyPond version from the output of `lilypond --version` (-> `\MetadataLilypondVersion`).
+Furthermore, the subcommand reads the LilyPond version from the output of `lilypond --version` (-> `\MetadataLilypondVersion`).
+
+
+### Subcommand `table`
+
+Collect metadata from several repositories and save it as a table. The subcommand requires a folder structure like root -> composer -> work.
+
+- `-h`, `--help`: show this help message and exit
+- `-d`, `--root-directory ROOT`: read metadata from all repositories in `ROOT`, assuming the folder structure root -> composer -> repository (default: current folder)
+- `-o`, `--output FILE`: write the table to `FILE` (default: `works.csv`)
+
+
+### Subcommand `website`
+
+TBD
 
 
 ### metadata.yaml
@@ -363,7 +402,8 @@ This file describes metadata for each work and comprises the following keys:
   - `last` (required): last name (-> `\MetadataLastname`)
   - `suffix` (optional): name suffix (-> `\MetadataNamesuffix`)
 - `title` (required): Work title (-> `\MetadataTitle`).
-- `subtitle` (optional): Work subtitle. The subtitle is combined with the catalogue of works number of the primary source and stored in `\MetadataSubtitle`. If this key is missing, the work identifier is used alone. If the primary source has no catalogue of works number, its RISM library siglum and shelfmark are used.
+- `subtitle` (optional): Work subtitle. The subtitle is combined with the work identifier and stored in `\MetadataSubtitle`. If this key is missing, the work identifier is used alone.
+- `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the primary source are used.
 - `genre` (required): Work genre (only used on the webpage).
 - `scoring` (required): Scoring of the work (-> `\MetadataScoring`). The value should be either a single string or an array. In the latter case, array elements will be joined by newlines. See the editorial guidelines for the scoring syntax. The list of abbreviations in the critical report is also assembled from the scoring information (-> `\MetadataAbbreviations`)
 - `sources` (required): Manuscript and print sources used for the edition (-> `\MetadataSources`). The name of each subkey will be used as source identifier (e.g., A1, B2). Each source is described by the following keys:
@@ -376,9 +416,7 @@ This file describes metadata for each work and comprises the following keys:
   - `primary` (optional): Boolean that denotes whether this source is the primary source. Exactly one source *must* contain this key with a true value.
 - `imslp` (optional): IMSLP identifier (only used on the webpage).
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
-- `parts` (required): For each file in the `scores/` subdirectory, this key must contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`).
-
-
+- `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.
 
 
 
