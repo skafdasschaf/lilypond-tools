@@ -405,7 +405,7 @@ This file describes metadata for each work and comprises the following keys:
   - `suffix` (optional): name suffix (-> `\MetadataNamesuffix`)
 - `title` (required): Work title (-> `\MetadataTitle`).
 - `subtitle` (optional): Work subtitle. The subtitle is combined with the work identifier and stored in `\MetadataSubtitle`. If this key is missing, the work identifier is used alone.
-- `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the primary source are used.
+- `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the principal source are used.
 - `genre` (required): Work genre (only used on the webpage).
 - `scoring` (required): Scoring of the work (-> `\MetadataScoring`). The value should be either a single string or an array. In the latter case, array elements will be joined by newlines. See the editorial guidelines for the scoring syntax. The list of abbreviations in the critical report is also assembled from the scoring information (-> `\MetadataAbbreviations`)
 - `sources` (required): Manuscript and print sources used for the edition (-> `\MetadataSources`). The name of each subkey will be used as source identifier (e.g., A1, B2). Each source is described by the following keys:
@@ -415,7 +415,7 @@ This file describes metadata for each work and comprises the following keys:
   - `rism` (optional): RISM identifier
   - `url` (optional): link to digital version
   - `notes` (optional): miscellaneous notes
-  - `primary` (optional): Boolean that denotes whether this source is the primary source. Exactly one source *must* contain this key with a true value.
+  - `principal` (optional): Boolean that denotes whether this source is the principal source. Exactly one source *must* contain this key with a true value.
 - `imslp` (optional): IMSLP identifier (only used on the webpage).
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
 - `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.

@@ -102,9 +102,9 @@ METADATA_TEMPLATE = """
 
 SUBTITLE_TEMPLATE = "{}\\newline {}"
 
-PRIMARY_SOURCE_TEMPLATE = "{} (primary source)"
+PRINCIPAL_SOURCE_TEMPLATE = "{} (principal source)"
 
-PRIMARY_ID_TEMPLATE = "({} {})"
+PRINCIPAL_ID_TEMPLATE = "({} {})"
 
 SOURCES_TEMPLATE = """
 \\begin{{sources}}
@@ -230,7 +230,7 @@ def read_metadata(metadata_file, score_type="draft"):
 
     ## Sources
     # For each entry in `sources`, add missing date, RISM information
-    # and notes, and determine the identifier of the primary source
+    # and notes, and determine the identifier of the principal source.
 
     source_items = []
     for id, info in metadata["sources"].items():
@@ -248,11 +248,11 @@ def read_metadata(metadata_file, score_type="draft"):
         if "url" not in info or info["url"] is None:
             info["url"] = "none"
 
-        if "primary" in info and info["primary"]:
-            if "primary_id" in metadata:
-                error_exit("Exactly one source must be marked as primary.")
-            info["type"] = PRIMARY_SOURCE_TEMPLATE.format(info["type"])
-            metadata["primary_id"] = PRIMARY_ID_TEMPLATE.format(
+        if "principal" in info and info["principal"]:
+            if "principal_id" in metadata:
+                error_exit("Exactly one source must be marked as principal.")
+            info["type"] = PRINCIPAL_SOURCE_TEMPLATE.format(info["type"])
+            metadata["principal_id"] = PRINCIPAL_ID_TEMPLATE.format(
                 info["siglum"], info["shelfmark"]
             )
 
@@ -263,13 +263,13 @@ def read_metadata(metadata_file, score_type="draft"):
     ## Subtitle
     # The subtitle consists of the value of the `subtitle` key (if available)
     # and the catalogue of works id, separated by a newline. If the latter id
-    # is not specified, the primary source identifier is used.
+    # is not specified, the principal source identifier is used.
 
-    if "primary_id" not in metadata:
-        error_exit("No primary source specified.")
+    if "principal_id" not in metadata:
+        error_exit("No principal source specified.")
 
     if "id" not in metadata or metadata["id"] is None:
-        metadata["id"] = metadata["primary_id"]
+        metadata["id"] = metadata["principal_id"]
 
     if "subtitle" not in metadata:
         metadata["subtitle"] = metadata["id"]
@@ -333,8 +333,8 @@ def prepare_edition(args):
 def format_table_sources(sources):
     res = []
     for id, details in sources.items():
-        if "primary" in details and details["primary"]:
-            p = ", primary"
+        if "principal" in details and details["principal"]:
+            p = ", principal"
         else:
             p = ""
         res.append(f"{id} ({details['siglum']} {details['shelfmark']}{p})")
