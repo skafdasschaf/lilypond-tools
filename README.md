@@ -441,6 +441,8 @@ Type and default value in parentheses.
 - `\textlt{<text>}` and `\ltseries`: Select light text weight.
 - `\textsb{<text>}` and `\sbseries`: Select semibold text weight.
 - `\A{<number>}` to `\E{<number>}`: Typeset a source identifier (uppercase letter plus index `<number>`).
+- `\doublesharp{<pitch>}`, `\sharp{<pitch>}`, `\natural{<pitch>}`, `\flat{<pitch>}`, and `\flatflat{<pitch>}`: Add an accidental to `<pitch>` and ensure correct kerning.
+- `\wholeNoteRest` and `\halfNoteRest`: Print respective rest with improved kerning.
 
 
 ### Metadata

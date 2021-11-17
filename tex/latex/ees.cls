@@ -102,6 +102,20 @@
 
 
 \RequirePackage{lilyglyphs}
+\let\ees@oldflat\flat
+\def\flat#1{#1\kern.1em\ees@oldflat}
+\let\ees@oldsharp\sharp
+\def\sharp#1{#1\kern.1em\ees@oldsharp}
+\let\ees@oldnatural\natural
+\def\natural#1{#1\kern.1em\ees@oldnatural}
+\let\ees@olddoublesharp\doublesharp
+\def\doublesharp#1{#1\kern.1em\ees@olddoublesharp}
+\let\ees@oldflatflat\flatflat
+\def\flatflat#1{#1\kern.1em\ees@oldflatflat}
+\let\ees@oldwholeNoteRest\wholeNoteRest
+\def\wholeNoteRest{\kern.12em\ees@oldwholeNoteRest\kern.2em}
+\let\ees@oldhalfNoteRest\halfNoteRest
+\def\halfNoteRest{\kern.12em\ees@oldhalfNoteRest\kern.2em}
 
 
 \RequirePackage[pass]{geometry}
