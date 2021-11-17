@@ -62,7 +62,7 @@
 \DeclareTOCStyleEntry[
   indent=0pt,
   beforeskip=-\parskip,
-  entrynumberformat=\gobble,
+  entrynumberformat=\@gobble,
   entryformat=\ltseries,
   numwidth=2em,
   linefill=\hfill,
