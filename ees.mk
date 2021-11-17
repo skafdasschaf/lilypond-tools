@@ -1,6 +1,6 @@
 .RECIPEPREFIX = >
 .DEFAULT_GOAL = info
-LILY_CMD = lilypond -ddelete-intermediate-files -dno-point-and-click --include=$(EES_TOOLS_PATH)/
+LILYPOND = lilypond -ddelete-intermediate-files -dno-point-and-click --include=$(EES_TOOLS_PATH)/
 notes = $(shell find notes -name '*.ly' | sed -E 's#notes/(.*)\.ly#\1#g' | tr '\n' ' ')
 scores = $(shell find scores -name '*.ly' | sed -E 's#scores/(.*)\.ly#\1#g' | tr '\n' ' ')
 
@@ -10,10 +10,9 @@ scores = $(shell find scores -name '*.ly' | sed -E 's#scores/(.*)\.ly#\1#g' | tr
 $(scores): %: tmp/%.pdf
 $(scores:%=tmp/%.pdf): tmp/%.pdf: scores/%.ly \
                                   $(notes:%=notes/%.ly) \
-                                  definitions.ly \
-                                  CHANGELOG.md
+                                  definitions.ly
 >mkdir -p tmp
->$(LILY_CMD) -o tmp '$(shell realpath $<)'
+>$(LILYPOND) -o tmp '$(shell realpath $<)'
 
 ## all scores ('make scores')
 .PHONY: scores
@@ -24,8 +23,11 @@ scores: $(scores)
 
 ## individual final scores (e.g., 'make final/full_score')
 $(scores:%=final/%): %: %.pdf
-$(scores:%=final/%.pdf): final/%.pdf: front_matter/critical_report.tex tmp/%.pdf
->python $(EES_TOOLS_PATH)/read_metadata.py -t $*
+$(scores:%=final/%.pdf): final/%.pdf: front_matter/critical_report.tex \
+                                      tmp/%.pdf \
+		                                  metadata.yaml \
+		                                  CHANGELOG.md
+>python $(EES_TOOLS_PATH)/read_metadata.py edition -t $*
 >latexmk -cd \
 >        -lualatex \
 >        -outdir=../final \
