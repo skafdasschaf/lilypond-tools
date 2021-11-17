@@ -94,6 +94,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataRepository{{{repository}}}
 \\def\\MetadataVersion{{{version}}}
 \\def\\MetadataDate{{{date}}}
+\\def\\MetadataChecksum{{{checksum}}}
 \\def\\MetadataLilypondVersion{{{lilypond_version}}}
 \\def\\MetadataSources{{{sources_env}}}
 \\def\\MetadataAbbreviations{{{abbr_env}}}
@@ -190,21 +191,25 @@ def read_metadata(metadata_file, score_type="draft"):
 
     ## Repository
     # The name of the remote repository "origin" is read from the git metadata,
-    # as are the version and date of the most recent tag. If there are no tags,
-    # use the current date and set version to "work in progress".
+    # as are the version, date, and SHA1 of HEAD or the most recent tag.
+    # In the former case, set version to "work in progress".
 
     github_repo = re.search("github\\.com.(.+)", Repo(".").remotes.origin.url)
     if github_repo is None:
         error_exit("URL of origin repository has unknown format.")
     metadata["repository"] = github_repo.group(1).removesuffix(".git")
 
-    if Repo(".").tags:
-        metadata["version"] = Repo(".").tags[-1].name
-        metadata["date"] = (Repo(".").tags[-1].commit
-                            .committed_datetime.strftime("%Y-%m-%d"))
+    if args.checksum_from == "tag":
+        if Repo(".").tags:
+            metadata["version"] = Repo(".").tags[-1].name
+            commit = Repo(".").tags[-1].commit
+        else:
+            error_exit("ERROR: No tag found – unable to retrieve metadata.")
     else:
         metadata["version"] = "work in progress"
-        metadata["date"] = date.today().strftime("%Y-%m-%d")
+        commit = Repo(".").head.commit
+    metadata["date"] = commit.committed_datetime.strftime("%Y-%m-%d")
+    metadata["checksum"] = commit.hexsha
 
     ## LilyPond version
     # The LilyPond version is obtained from the executable.
@@ -398,11 +403,18 @@ parser_edition.add_argument(
 parser_edition.add_argument(
     "-t",
     "--type",
-    dest="type",
     default="draft",
     help="""select score TYPE for front matter
             ('full_score', 'draft', or part name;
             default: 'draft')"""
+)
+parser_edition.add_argument(
+    "-c",
+    "--checksum-from",
+    choices=["head", "tag"],
+    default="head",
+    help="""obtain version, date, and checksum from HEAD or the most recent tag
+            (default: head)"""
 )
 parser_edition.set_defaults(func=prepare_edition)
 

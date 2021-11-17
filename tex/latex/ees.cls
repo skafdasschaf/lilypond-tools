@@ -324,6 +324,7 @@
 \def\repository#1{\def\@repository{#1}}
 \def\version#1{\def\@version{#1}}
 \def\date#1{\DTMsavedate{tagdate}{#1}}
+\def\checksum#1{\def\@checksum{#1}}
 
 
 
@@ -342,6 +343,7 @@
 \providecommand\MetadataRepository{\relax}
 \providecommand\MetadataVersion{\relax}
 \providecommand\MetadataDate{2021-01-01}
+\providecommand\MetadataChecksum{\relax}
 \providecommand\MetadataLilypondVersion{\relax}
 \providecommand\MetadataSources{\relax}
 \providecommand\MetadataAbbreviations{\relax}
@@ -360,6 +362,7 @@
 \repository{\MetadataRepository}
 \version{\MetadataVersion}
 \date{\MetadataDate}
+\checksum{\MetadataChecksum}
 
 
 
@@ -397,7 +400,7 @@
   Please report any errors or mistakes to \url{edition@esser-skala.at.}
 
   \faGithub~\@repository\\
-  \textit{\@version, \DTMusedate{tagdate}}
+  \textit{\@version, \DTMusedate{tagdate} (\@checksum)}
 
   \vspace*{2cm}%
 }

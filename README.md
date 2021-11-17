@@ -369,13 +369,15 @@ Generate a set of LaTeX macros that can be imported by `front_matter/critical_re
     - set `\MetadataScoretype` to the long form of the abbreviation
     - do *not* print critical report, changelog and TOC
     - print the respective score
+- `-c`, `--checksum-from {head,tag}`: obtain version, date, and checksum from HEAD or the most recent tag (default: `head`)
 
 The long form of a scoring abbreviation is looked up [instrument_data.csv](#instrument_datacsv). The abbreviation may end in an Arabic number, which is converted to a Roman numeral (e.g., `vl2` -> "Violino II"). Abbreviations can also be defined in `metadata.yaml` via the `parts` key (e.g., `clno12` -> "Clarino I, II in C").
 
 The subcommand also obtains the following information from the git metadata:
 - name of the remote repository `origin` (-> `\MetadataRepository`)
-- version of the most recent tag (-> `\MetadataVersion`)
-- date of the most recent tag (-> `\MetadataDate`)
+- version … (-> `\MetadataVersion`)
+- … date … (-> `\MetadataDate`)
+- … and checksum of HEAD or the most recent tag (-> `\MetadataChecksum`)
 
 Furthermore, the subcommand reads the LilyPond version from the output of `lilypond --version` (-> `\MetadataLilypondVersion`).
 
@@ -460,6 +462,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\repository{}`: name with owner of the GitHub repository (default: `\MetadataRepository`)
 - `\version{}`: version of the most recent git tag (default: `\MetadataVersion`)
 - `\date{}`: date of the most recent git tag (default: `\MetadataDate`)
+- `\ckecksum{}`: checksum of the most recent git tag (default: `\MetadataChecksum`)
 
 
 ### Document structure
