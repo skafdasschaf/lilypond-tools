@@ -114,12 +114,6 @@ parser.add_argument(
             (default: false)""",
     action="store_true"
 )
-parser.add_argument(
-    "-v",
-    "--version",
-    action="version",
-    version="%(prog)s 1.0 (2021-08-12)"
-)
 
 args = parser.parse_args()
 

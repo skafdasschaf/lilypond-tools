@@ -129,13 +129,12 @@ This script extends LY files in subfolder `notes/` with variables for a new move
   start movement with this bar number (default: 1)
 - `-f`, `--force-file-creation`:
   create missing files, add version and incipits if required (default: false)
-- `-v`, `--version`:
-  show program's version number and exit
 
 
 ## ees.ly
 
 General LilyPond settings and macros. This file is included by `definitions.ly` in the repository of each work.
+
 
 ### Options
 
