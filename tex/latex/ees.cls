@@ -190,7 +190,7 @@
   \item[#1]%
     \ees@sourceitemlabel{Library}\textmd{#2}\newline%
     \ees@sourceitemlabel{Shelfmark}\textmd{#3}\newline%
-    \ees@sourceitemlabel{Type}#4\newline%
+    \ees@sourceitemlabel{Category}#4\newline%
     \ees@sourceitemlabel{Date}#5\newline%
     \ees@sourceitemlabel{RISM ID}#6\newline%
     \ees@sourceitemlabel{URL}\url{#7}%

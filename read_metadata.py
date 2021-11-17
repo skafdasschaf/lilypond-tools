@@ -63,8 +63,8 @@ INSTRUMENT_METADATA = read_csv(instrument_data_file).set_index("abbreviation")
 # abbreviations included in each edition
 DEFAULT_ABBR = {}
 
-# description of source types
-SOURCE_TYPES = {
+# description of source categories
+SOURCE_CATEGORIES = {
     "A": "autograph manuscript",
     "B": "manuscript copy",
     "C": "print",
@@ -102,7 +102,7 @@ METADATA_TEMPLATE = """
 
 SUBTITLE_TEMPLATE = "{}\\newline {}"
 
-PRINCIPAL_SOURCE_TEMPLATE = "{} (principal source)"
+PRINCIPAL_SRC_TEMPLATE = "{} (principal source)"
 
 PRINCIPAL_ID_TEMPLATE = "({} {})"
 
@@ -117,7 +117,7 @@ SOURCE_ITEM_TEMPLATE = """
   {{{id}}}%
   {{{siglum}}}%
   {{{shelfmark}}}%
-  {{{type}}}%
+  {{{category}}}%
   {{{date}}}%
   {{{rism}}}%
   {{{url}}}%
@@ -234,7 +234,7 @@ def read_metadata(metadata_file, score_type="draft"):
 
     source_items = []
     for id, info in metadata["sources"].items():
-        info["type"] = SOURCE_TYPES[id[0]]
+        info["category"] = SOURCE_CATEGORIES[id[0]]
 
         if "date" not in info or info["date"] is None:
             info["date"] = "unknown"
@@ -251,7 +251,7 @@ def read_metadata(metadata_file, score_type="draft"):
         if "principal" in info and info["principal"]:
             if "principal_id" in metadata:
                 error_exit("Exactly one source must be marked as principal.")
-            info["type"] = PRINCIPAL_SOURCE_TEMPLATE.format(info["type"])
+            info["category"] = PRINCIPAL_SRC_TEMPLATE.format(info["category"])
             metadata["principal_id"] = PRINCIPAL_ID_TEMPLATE.format(
                 info["siglum"], info["shelfmark"]
             )
