@@ -1,63 +1,63 @@
 \version "2.22.0"
 \language "deutsch"
 
+#(if
+  (not (defined? 'option-movement-title-format))
+  (define option-movement-title-format "title")
+)
+
+#(if
+  (not (defined? 'option-init-toc))
+  (define option-init-toc #f)
+)
 
 #(define-markup-command
   (printBookTitle layout props)
   ()
-  (cond
-    (
-      (string= ees-booktitle-markup "genre-number-title")
-      (interpret-markup layout props #{
-        \markup {
-          \fill-line {
-            \line {
-              \fontsize #3 {
-                \fontsize #-4 \fromproperty #'header:genre
-                \hspace #3
-                \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
-                \hspace #1
-                \fromproperty #'header:title
-              }
-            }
-          }
-        }
-      #})
-    )
-    (
-      (string= ees-booktitle-markup "number-title")
-      (interpret-markup layout props #{
-        \markup {
-          \fill-line {
-            \line {
-              \fontsize #3 {
-                \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
-                \hspace #3
-                \fromproperty #'header:title
-              }
-              \fromproperty #'header:subtitle
-            }
-          }
-        }
-      #})
-    )
-    (
-      (string= ees-booktitle-markup "title")
-      (interpret-markup layout props #{
-        \markup {
-          \fill-line {
-            \line {
-              \fontsize #3 {
-                \fromproperty #'header:title
-              }
-              \fromproperty #'header:subtitle
-            }
-          }
-        }
-      #})
-    )
-  )
-)
+  (cond ((string= option-movement-title-format "genre-number-title")
+         (interpret-markup layout props #{
+           \markup {
+             \fill-line {
+               \line {
+                 \fontsize #4 {
+                   \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
+                   \hspace #2
+                   \italic { \fromproperty #'header:genre }
+                   \hspace #2
+                   \fromproperty #'header:title
+                 }
+               }
+             }
+           }
+         #}))
+        ((string= option-movement-title-format "number-title")
+         (interpret-markup layout props #{
+           \markup {
+             \fill-line {
+               \line {
+                 \fontsize #4 {
+                   \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
+                   \hspace #2
+                   \fromproperty #'header:title
+                 }
+                 \fontsize #3 \fromproperty #'header:subtitle
+               }
+             }
+           }
+         #}))
+        ((string= option-movement-title-format "title")
+         (interpret-markup layout props #{
+           \markup {
+             \fill-line {
+               \line {
+                 \fontsize #4 {
+                   \fromproperty #'header:title
+                 }
+                 \fontsize #3 \fromproperty #'header:subtitle
+               }
+             }
+           }
+         #}))))
 
 
 \paper {
@@ -136,6 +136,10 @@
   }
 
   bookTitleMarkup = \markup \printBookTitle
+
+  #(if option-init-toc
+       (define (page-post-process layout pages)
+               (ly:create-toc-file layout pages)))
 }
 
 
@@ -625,7 +629,7 @@ part = #(define-void-function
         #(set! ees-tocnumber number)
         #(set! ees-tocgenre "")
         #(set! ees-toctitle title)
-        \toc-add-entry
+        \addTocEntry
         \new Staff \with {
           \remove "Clef_engraver"
           \remove "Time_signature_engraver"
@@ -635,25 +639,33 @@ part = #(define-void-function
       }
     #}))
 
-section = #(define-scheme-function
-  (parser location number title)
-  (string? string?)
-  (begin
-    (set! ees-toclevel "section")
-    (set! ees-tocnumber number)
-    (set! ees-tocgenre "")
-    (set! ees-toctitle title)
-    #{ \header { number = #number title = #title } #}))
 
-gsection = #(define-scheme-function
-  (parser location number genre title)
-  (string? string? string?)
-  (begin
-    (set! ees-toclevel "section")
-    (set! ees-tocnumber number)
-    (set! ees-tocgenre genre)
-    (set! ees-toctitle title)
-    #{ \header { number = #number genre = #genre title = #title } #}))
+section =
+  #(cond ((string= option-movement-title-format "title")
+          (define-scheme-function
+            (parser location title)
+            (string?)
+            #{ \header { title = #title } #}))
+         ((string= option-movement-title-format "number-title")
+          (define-scheme-function
+            (parser location number title)
+            (string? string?)
+            (begin
+              (set! ees-toclevel "section")
+              (set! ees-tocnumber number)
+              (set! ees-tocgenre "")
+              (set! ees-toctitle title)
+              #{ \header { number = #number title = #title } #})))
+         ((string= option-movement-title-format "genre-number-title")
+          (define-scheme-function
+            (parser location number genre title)
+            (string? string? string?)
+            (begin
+              (set! ees-toclevel "section")
+              (set! ees-tocnumber number)
+              (set! ees-tocgenre genre)
+              (set! ees-toctitle title)
+              #{ \header { number = #number genre = #genre title = #title } #}))))
 
 subsection = #(define-scheme-function
   (parser location title)
@@ -665,7 +677,7 @@ subsection = #(define-scheme-function
     (set! ees-toctitle title)
     #{ \header { subtitle = #title } #}))
 
-toc-add-label = #(define-music-function
+addTocLabel = #(define-music-function
   (parser location label)
   (string?)
   (add-toc-item!
@@ -679,7 +691,7 @@ toc-add-label = #(define-music-function
       ees-tocgenre
       ees-toctitle)))
 
-toc-add-entry = #(define-music-function
+addTocEntry = #(define-music-function
   (parser location)
   ()
-  (toc-add-label ""))
+  (addTocLabel ""))
