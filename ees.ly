@@ -139,51 +139,22 @@
 }
 
 
-partTitle = #(define-scheme-function
-  (parser location number title)
-  (string? string?)
-  #{
-    \markup {
-      \column {
-        \vspace #25
-        \fill-line { \fontsize #12 \with-color #(rgb-color .8313 0 0) #number }
-        \vspace #3
-        \fill-line { \fontsize #4 #title }
-      }
-    }
-  #}
-)
-
-partMark = \score {
-  \new Staff \with {
-    \remove "Clef_engraver"
-    \remove "Time_signature_engraver"
-  } { \stopStaff s }
-}
-
-
-
 tempoMarkup = #(define-music-function
   (parser location arg)
   (markup?)
-  #{
-    \tempo \markup \medium { \larger \larger #arg }
-  #}
-)
+  #{ \tempo \markup \medium { \larger \larger #arg } #})
 
 #(define-markup-command
   (remark layout props text)
   (markup?)
   (interpret-markup layout props
-    #{\markup \small \upright #text #})
-)
+    #{ \markup \small \upright #text #}))
 
 #(define-markup-command
   (remarkE layout props text)
   (markup?)
   (interpret-markup layout props
-    #{\markup \small \italic #text #})
-)
+    #{ \markup \small \italic #text #}))
 
 solo =      \markup \remark  "Solo"
 soloE =     \markup \remarkE "Solo"
@@ -229,11 +200,7 @@ x = \revert LyricText.font-shape
 bp = #(define-music-function
   (parser location beg end)
   (number? number?)
-  #{
-     \once \override Beam.positions = #(cons beg end)
-  #}
-)
-
+  #{ \once \override Beam.positions = #(cons beg end) #})
 
 
 dynScript = #(define-scheme-function
@@ -242,10 +209,7 @@ dynScript = #(define-scheme-function
   (make-dynamic-script
     (if extra?
       (markup #:line (#:normal-text #:italic #:large #:bold sym))
-      (markup #:line (#:normal-text #:large #:bold sym))
-    )
-  )
-)
+      (markup #:line (#:normal-text #:large #:bold sym)))))
 
 dynScriptPrefix = #(define-scheme-function
   (parser location prefix sym extra?)
@@ -254,15 +218,10 @@ dynScriptPrefix = #(define-scheme-function
     (if extra?
       (markup #:line (
         #:normal-text #:small #:italic prefix
-        #:normal-text #:italic #:large #:bold sym)
-      )
+        #:normal-text #:italic #:large #:bold sym))
       (markup #:line (
         #:normal-text #:small prefix
-        #:normal-text #:large #:bold sym)
-      )
-    )
-  )
-)
+        #:normal-text #:large #:bold sym)))))
 
 ff   = \dynScript "ff"  ##f
 ffE  = \dynScript "ff"  ##t
@@ -305,27 +264,25 @@ cresc = #(make-music
   'CrescendoEvent
   'span-direction START
   'span-type 'text
-  'span-text (markup (#:normal-text #:small "cresc."))
-)
+  'span-text (markup (#:normal-text #:small "cresc.")))
+
 crescE = #(make-music
   'CrescendoEvent
   'span-direction START
   'span-type 'text
-  'span-text (markup (#:normal-text #:small #:italic "cresc."))
-)
+  'span-text (markup (#:normal-text #:small #:italic "cresc.")))
+
 decresc = #(make-music
   'DecrescendoEvent
   'span-direction START
   'span-type 'text
-  'span-text (markup (#:normal-text #:small "decresc."))
-)
+  'span-text (markup (#:normal-text #:small "decresc.")))
+
 decrescE = #(make-music
   'DecrescendoEvent
   'span-direction START
   'span-type 'text
-  'span-text (markup (#:normal-text #:small #:italic "decresc."))
-)
-
+  'span-text (markup (#:normal-text #:small #:italic "decresc.")))
 
 
 smallGroupDistance = {
@@ -338,7 +295,8 @@ smallGroupDistance = {
     #'((basic-distance . 12)
        (minimum-distance . 12)
        (padding . -100)
-       (stretchability . 0)) }
+       (stretchability . 0))
+}
 
 normalGroupDistance = {
   \override StaffGrouper.staffgroup-staff-spacing =
@@ -350,7 +308,8 @@ normalGroupDistance = {
     #'((basic-distance . 12)
        (minimum-distance . 12)
        (padding . -100)
-       (stretchability . 0)) }
+       (stretchability . 0))
+}
 
 smallStaffDistance = {
   \override VerticalAxisGroup.staff-staff-spacing =
@@ -366,7 +325,7 @@ twofourtime = {
     1/8
     #'(4)
     #'((end . (((1 . 16) . (4 4)))))
-  }
+}
 
 twotwotime = {
   \overrideTimeSignatureSettings
@@ -374,7 +333,7 @@ twotwotime = {
     1/4
     #'(4)
     #'((end . (((1 . 16) . (4 4 4 4)) ((1 . 8) . (4 4)))))
-  }
+}
 
 mvTr = \once \override TextScript.X-offset = #2
 mvTrh = \once \override TextScript.X-offset = #2.5
@@ -622,110 +581,105 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
 #(define (ly:create-toc-file layout pages)
   (let* ((label-table (ly:output-def-lookup layout 'label-page-table)))
     (if (not (null? label-table))
-      (let* ((format-line (lambda (toc-item)
-             (let* ((label (car toc-item))
-                    (text  (cdaddr toc-item))
-                    (label-page (and (list? label-table)
-                                     (assoc label label-table)))
-                    (page (and label-page (cdr label-page))))
-               (format #f "~a{~a}" text page))))
+      (let* ((format-line
+              (lambda (toc-item)
+                (let* ((label (car toc-item))
+                       (text (cdaddr toc-item))
+                       (label-page (and (list? label-table)
+                                        (assoc label label-table)))
+                       (page (and label-page (cdr label-page))))
+                 (format #f "~a{~a}" text page))))
              (formatted-toc-items (map format-line (toc-items)))
              (whole-string (string-join formatted-toc-items "\n"))
              (outfilename "lilypond.toc")
              (outfile (open-output-file outfilename)))
-        (if (output-port? outfile)
-            (display whole-string outfile)
-            (ly:warning (_ "Unable to open output file ~a for the TOC information") outfilename))
-        (close-output-port outfile)))))
-
-tocPart = #(define-music-function
-  (parser location number text)
-  (markup? markup?)
-  (add-toc-item!
-    'tocItemMarkup
-    (format
-      #f
-      "\\contentsline {part}{\\numberline {~a}~a}"
-      number
-      text
-    )
-  )
-)
-
-tocSection = #(define-music-function
-  (parser location number text)
-  (markup? markup?)
-  (add-toc-item!
-    'tocItemMarkup
-    (format
-      #f
-      "\\contentsline {section}{\\numberline {~a}~a}"
-      number
-      text
-    )
-  )
-)
-
-tocSubsection = #(define-music-function
-  (parser location number text)
-  (markup? markup?)
-  (add-toc-item!
-    'tocItemMarkup
-    (format
-      #f
-      "\\contentsline {subsection}{\\numberline {~a}~a}"
-      number
-      text
-    )
-  )
-)
-
-#(define (ly:create-ref-file layout pages)
- (let* ((label-table (ly:output-def-lookup layout 'label-page-table)))
-   (if (not (null? label-table))
-     (let* ((format-line (lambda (toc-item)
-            (let* ((label (car toc-item))
-                   (text  (cdaddr toc-item))
-                   (label-page (and (list? label-table)
-                                    (assoc label label-table)))
-                   (page (and label-page (cdr label-page))))
-              (format #f "~a{~a}}" text page))))
-            (formatted-toc-items (map format-line (toc-items)))
-            (whole-string (string-join formatted-toc-items "\n"))
-            (outfilename "lilypond.ref")
-            (outfile (open-output-file outfilename)))
        (if (output-port? outfile)
            (display whole-string outfile)
-           (ly:warning (_ "Unable to open output file ~a for the REF information") outfilename))
+           (ly:warning
+             (_ "Unable to open output file ~a for the TOC information")
+             outfilename))
        (close-output-port outfile)))))
 
-tocLabel = #(define-music-function
-  (parser location label number text)
-  (markup? markup? markup?)
-   (add-toc-item!
-    'tocItemMarkup
-    (format
-      #f
-      "\\newlabel{~a}{{~a}{~a}"
-      label
-      number
-      text
-    )
-  )
-)
+#(define ees-toclevel "")
+#(define ees-tocnumber "")
+#(define ees-tocgenre "")
+#(define ees-toctitle "")
 
-tocLabelLong = #(define-music-function
-  (parser location label number genre text)
-  (markup? markup? markup? markup?)
+part = #(define-void-function
+  (number title)
+  (string? string?)
+  (ly:book-add-bookpart!
+    (ly:parser-lookup '$current-book)
+    #{
+      \bookpart {
+        \paper { evenHeaderMarkup = {} oddHeaderMarkup = {} }
+        \markup {
+          \column {
+            \vspace #25
+            \fill-line { \fontsize #12 \with-color #(rgb-color .8313 0 0) #number }
+            \vspace #3
+            \fill-line { \fontsize #4 #title }
+          }
+        }
+        #(set! ees-toclevel "part")
+        #(set! ees-tocnumber number)
+        #(set! ees-tocgenre "")
+        #(set! ees-toctitle title)
+        \toc-add-entry
+        \new Staff \with {
+          \remove "Clef_engraver"
+          \remove "Time_signature_engraver"
+        } { \stopStaff s }
+        \pageBreak
+        \markup \null
+      }
+    #}))
+
+section = #(define-scheme-function
+  (parser location number title)
+  (string? string?)
+  (begin
+    (set! ees-toclevel "section")
+    (set! ees-tocnumber number)
+    (set! ees-tocgenre "")
+    (set! ees-toctitle title)
+    #{ \header { number = #number title = #title } #}))
+
+gsection = #(define-scheme-function
+  (parser location number genre title)
+  (string? string? string?)
+  (begin
+    (set! ees-toclevel "section")
+    (set! ees-tocnumber number)
+    (set! ees-tocgenre genre)
+    (set! ees-toctitle title)
+    #{ \header { number = #number genre = #genre title = #title } #}))
+
+subsection = #(define-scheme-function
+  (parser location title)
+  (string?)
+  (begin
+    (set! ees-toclevel "subsection")
+    (set! ees-tocnumber "")
+    (set! ees-tocgenre "")
+    (set! ees-toctitle title)
+    #{ \header { subtitle = #title } #}))
+
+toc-add-label = #(define-music-function
+  (parser location label)
+  (string?)
   (add-toc-item!
     'tocItemMarkup
     (format
       #f
-      "\\newlabel{~a}{{~a}{~a}{~a}"
+      "\\newtocentry{~a}{~a}{~a}{~a}{~a}"
       label
-    number
-    genre
-    text
-    )
-  )
-)
+      ees-toclevel
+      ees-tocnumber
+      ees-tocgenre
+      ees-toctitle)))
+
+toc-add-entry = #(define-music-function
+  (parser location)
+  ()
+  (toc-add-label ""))
