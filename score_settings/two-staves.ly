@@ -5,8 +5,8 @@
   top-margin = 1.5\cm
   system-separator-markup = ##f
   system-system-spacing =
-    #'((basic-distance . 17)
-       (minimum-distance . 17)
+    #'((basic-distance . 16)
+       (minimum-distance . 16)
        (padding . -100)
        (stretchability . 0))
 
@@ -34,22 +34,18 @@
        (padding . 0)
        (stretchability . 1.0e7))
 
-  systems-per-page = #4
+  systems-per-page = #6
 }
 
 #(if
-  (not (defined? 'ees-instrument-abbreviation-upper))
-  (define ees-instrument-abbreviation-upper "")
-)
-#(if
-  (not (defined? 'ees-instrument-abbreviation-lower))
-  (define ees-instrument-abbreviation-lower "")
+  (not (defined? 'option-instrument-name))
+  (define option-instrument-name "")
 )
 
 \layout {
   \context {
     \GrandStaff
-    instrumentName = #ees-instrument-abbreviation-upper
+    instrumentName = #option-instrument-name
     \override StaffGrouper.staffgroup-staff-spacing =
       #'((basic-distance . 12)
          (minimum-distance . 12)
@@ -60,10 +56,6 @@
          (minimum-distance . 12)
          (padding . -100)
          (stretchability . 0))
-  }
-  \context {
-    \Staff
-    instrumentName = #ees-instrument-abbreviation-lower
   }
 }
 

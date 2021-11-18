@@ -39,14 +39,14 @@
 
 
 #(if
-  (not (defined? 'ees-instrument-abbreviation))
-  (define ees-instrument-abbreviation "")
+  (not (defined? 'option-instrument-name))
+  (define option-instrument-name "")
 )
 
 \layout {
   \context {
     \Staff
-    instrumentName = #ees-instrument-abbreviation
+    instrumentName = #option-instrument-name
   }
 }
 
