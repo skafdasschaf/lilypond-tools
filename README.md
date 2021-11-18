@@ -144,30 +144,27 @@ General LilyPond settings and macros. This file is included by `definitions.ly` 
 Set these Scheme variables before including the file, like
 
 ```lilypond
-#(define ees-booktitle-markup "title")
+#(define option-movement-title-markup "number-title")
+#(define option-init-toc #t)
 \include "ees.ly"
 ```
 
-- `ees-booktitle-markup`: Choose the components of each movement title (genre, number, title). Allowed values: `"genre-number-title"`, `"number-title"`, and `"title"`.
+- `option-movement-title-markup`: Select the format of the movement title and the number of arguments for `\section`. Choices: `"genre-number-title"`, `"number-title"`, and `"title"` (default).
+- `option-init-toc`: If true, generate a table of contents in `lilypond.toc`, which can be interpreted by LaTeX (default: false).
 
 
-### Document structure
+### Score settings
 
-- `\partTitle "<number>" "<title>"`
-- `\partMark`
+Include one of the following files in subfolder `score_settings` at the beginning of a score definition:
+- `one-staff.ly`: Format parts with a single staff (e.g., vl 1). `option-instrument-name` sets the instrument name of this staff.
+- `two-staves.ly`: Format parts with two bracketed staves (e.g., cor 1, 2). `option-instrument-name` sets the instrument name of the bracket.
+- `three-staves.ly`: Format parts with three staves, of which the upper two are bracketed (e.g., ottoni). `option-instrument-name-upper` and `option-instrument-name-lower` set the instrument name of the bracket and lower staff, respectively.
+- `full-score.ly`: Format the full score.
+- `coro.ly`: Format the vocal score.
+- `org-realized.ly`: Format the realized organ part.
 
-These commands allow to add a page with a part title, plus an empty page:
 
-```lilypond
-\bookpart {
-  \paper { evenHeaderMarkup = {} oddHeaderMarkup = {} }
-  \partTitle "1" "F I R S T   P A R T"
-  \tocPart "1" "First Part"
-  \partMark
-  \pageBreak
-  \markup \null
-}
-```
+### Vertical spacing
 
 - `\smallGroupDistance`
 - `\normalGroupDistance`
@@ -182,78 +179,46 @@ These commands modify the vertical spacing of staff groups and single staves:
 }
 ```
 
-- `\twofourtime`
-- `\twotwotime`
 
-These commands adjust automatic beaming in 2/4 and 2/2 time, respectively.
+### Sectioning and TOC
+
+Sectioning commands:
+- `\part "<number>" "<title>"`: Adds a part page, followed by an empty left page. Must be used inside a `\book`.
+- `\section "<title>"`,
+- `\section "<number>" "<title>"`, or
+- `\section "<number>" "<genre>" "<title>"`: Adds a section heading. The number of arguments is determined by the option `option-movement-title-format`.
+- `\subsection "<title>"`: Adds an unnumbered subsection heading. `\section` and `\subsection` must be used inside a `\bookpart`.
+
+TOC commands:
+- `\addTocEntry`: Adds a TOC entry; should be used immediately after a heading command.
+- `\addTocLabel "<label>"`: Adds a labeled TOC entry.
 
 ```lilypond
-KyrieViolinoI = {
-  \relative c' {
-    \clef treble
-    \twotwotime \key c \major \time 2/2 \tempoKyrie
-    ...
+% normal TOC entries
+\book {
+  \part "1" "First part"
+  \bookpart {
+    \section "1" "Kyrie"
+    \addTocEntry
+    \score { … }
+  }
+  \bookpart {
+    \subsection "Christe"
+    \addTocEntry
+    \score { … }
   }
 }
-```
 
-
-### Table of contents
-
-- `ly:create-toc-file`
-- `\tocPart "<number>" "<text>"`
-- `\tocSection "<number>" "<text>"`
-- `\tocSubsection "<number>" "<text>"`
-
-These commands create a table of contents that can be interpreted by LaTeX. The TOC is stored in `lilypond.toc`.
-
-```lilypond
-\paper {
-  #(define (page-post-process layout pages) (ly:create-toc-file layout pages))
-}
-
+% labeled TOC entries
 \book {
   \bookpart {
-    \header {
-      number = "1"
-      title = "K Y R I E"
-    }
-    \tocSection "1" "Kyrie"
-    ...
-  }
-  \bookpart {
-    \header {
-      subtitle = "C H R I S T E"
-    }
-    \tocSubsection "1.2" "Christe"
-    ...
+    \section "2" "Recitativo" "Title"
+    \addTocLabel "label2"
+    \score { … }
   }
 }
 ```
 
-- `ly:create-ref-file`
-- `\tocLabel "<label>" "<number>" "<text>"`
-- `\tocLabelLong "<label>" "<number>" "<genre>" "<text>"`
-
-These commands create a table of contents by defining LaTeX labels. The TOC is stored in `lilypond.ref`.
-
-```lilypond
-\paper {
-  #(define (page-post-process layout pages) (ly:create-ref-file layout pages))
-}
-
-\book {
-  \bookpart {
-    \header {
-      genre = "C O R O"
-      number = "1.1"
-      title = "Lobt den Herrn!"
-    }
-    \tocLabelLong "lobtden" "1.1" "Coro" "Lobt den Herrn!"
-    ...
-  }
-}
-```
 
 
 ### Markup
@@ -285,6 +250,16 @@ These commands create a table of contents by defining LaTeX labels. The TOC is s
 
 ### Inside the staff
 
+- `\twofourtime` and `\twotwotime` adjust automatic beaming in 2/4 and 2/2 time, respectively:
+  ```lilypond
+  KyrieViolinoI = {
+    \relative c' {
+      \clef treble
+      \twotwotime \key c \major \time 2/2 \tempoKyrie
+      ...
+    }
+  }
+  ```
 - The following dynamics commands are redefined and supplemented by an editorial variant: `\ff` (plus `\ffE` etc), `\f`, `\mf`, `\mp`, `\p`, `\pp`, `\sf`, `\sfp`, `\sfz`, `\fp`, `\fz`, `\rf`, `\rfz`, `\piuF`, `\piuP`, `\pocoF`, `\pocoP`, `\cresc`, and `\decresc`.
 - `\bp`: override beam positions
 - `\extraNat`: force accidental
