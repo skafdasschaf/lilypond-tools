@@ -11,6 +11,11 @@
   (define option-init-toc #f)
 )
 
+#(if
+  (not (defined? 'option-print-all-bar-numbers))
+  (define option-print-all-bar-numbers #f)
+)
+
 #(define-markup-command
   (printBookTitle layout props)
   ()
@@ -485,6 +490,8 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
   \context {
     \Score
     \compressEmptyMeasures
+    #(if option-print-all-bar-numbers
+         #{ \override BarNumber.break-visibility = ##(#f #t #t) #})
   }
   \context {
     \StaffGroup

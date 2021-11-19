@@ -146,11 +146,13 @@ Set these Scheme variables before including the file, like
 ```lilypond
 #(define option-movement-title-markup "number-title")
 #(define option-init-toc #t)
+#(define option-print-all-bar-numbers #f)
 \include "ees.ly"
 ```
 
 - `option-movement-title-markup`: Select the format of the movement title and the number of arguments for `\section`. Choices: `"genre-number-title"`, `"number-title"`, and `"title"` (default).
 - `option-init-toc`: If true, generate a table of contents in `lilypond.toc`, which can be interpreted by LaTeX (default: false).
+- `option-print-all-bar-numbers`: If true, print all bar numbers (useful when preparing a score).
 
 
 ### Score settings
