@@ -235,6 +235,9 @@
 \DTMsetstyle{iso}
 
 
+\RequirePackage{bibleref}
+
+
 \RequirePackage[linktoc=all,hidelinks]{hyperref}
 
 

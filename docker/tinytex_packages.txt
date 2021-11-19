@@ -20,3 +20,4 @@ datetime2
 tracklang
 pdflscape
 fontawesome5
+bibleref
