@@ -78,11 +78,7 @@ From the root directory of an edition, invoke `make` to engrave scores:
 - `make final/scores` generates all publication-ready scores in folder *final*.
 - `make info` lists all available build targets.
 
-Alternatively, uncomment the score to be engraved in *main.ly* and run
 
-```bash
-lilypond --include=$EES_TOOLS_PATH main.ly
-```
 
 ## Structure of a score repository
 
@@ -100,8 +96,7 @@ The new repository will contain the following folders and files:
 - **scores/*.ly** – LilyPond files containing score definitions
 - **CHANGELOG.md** – the [changelog](https://keepachangelog.com/en/1.0.0/)
 - **definitions.ly** – general definitions; include [ees.ly](#eesly)
-- **LICENSE.txt** – the [license](https://creativecommons.org/licenses/by-sa/4.0/)
-- **main.ly** – allows to engrave scores without using `make`
+- **LICENSE** – the [license](https://creativecommons.org/licenses/by-sa/4.0/)
 - **Makefile** – configuration file for `make`; imports [ees.mk](#eesmk)
 - **metadata.yaml** – metadata whose format is described [below](#metadatayaml); can be processed with [read_metadata.py](#read_metadatapy)
 - **.github/workflows/engrave-and-release.yaml** – GitHub Actions workflow that reuses the [workflow of the same name](#githubworkflowsengrave-and-releaseyaml) from EES Tools
