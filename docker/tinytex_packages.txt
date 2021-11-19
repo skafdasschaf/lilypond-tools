@@ -21,3 +21,5 @@ tracklang
 pdflscape
 fontawesome5
 bibleref
+fmtcount
+bookmark

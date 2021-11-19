@@ -8,14 +8,6 @@ ENV PATH="/root/bin:${PATH}"
 WORKDIR /ees
 
 COPY docker .
-COPY *.py \
-     *.ly \
-     *.mk \
-     instrument_data.csv \
-     /ees-tools/
-COPY tex/latex/*.cls  \
-     tex/latex/*.pdf \
-     /ees-tools/tex/latex/
 
 RUN ./setup.sh
 

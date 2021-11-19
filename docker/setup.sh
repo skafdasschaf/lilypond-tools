@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# EES Tools
+git clone https://github.com/edition-esser-skala/ees-tools.git
+mv ees-tools /ees-tools
+
 # Python packages
 pip install numpy pandas GitPython PyYAML
 
