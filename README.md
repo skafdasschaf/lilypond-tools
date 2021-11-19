@@ -45,20 +45,22 @@ We recommend to engrave scores via the [ees-tools](https://ghcr.io/edition-esser
 Build the image via
 
 ```bash
-sudo docker build --tag ees-engraver .
+sudo docker build --build-arg user_id=$(id -u) --build-arg group_id=$(id -g) --tag ees-tools .
 ```
 
 From the root directory of an edition, run
 
 ```bash
-sudo docker run --rm -it -v $PWD:/ees ees-engraver
+sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools
 ```
 
 to engrave all final scores (i.e., `make final/scores`). To list all available build targets, run
 
 ```bash
-sudo docker run --rm -it -v $PWD:/ees ees-engraver make info
+sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
 ```
+
+(Note: These commands ensure that there is a user *engraver* in the container whose uid and gid match the user who runs the container. Thereby, all files created by the container will have the correct permissions.)
 
 
 ### … using a manual installation
