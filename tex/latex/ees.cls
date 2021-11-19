@@ -5,6 +5,9 @@
 
 % Class options -----------------------------------------------------------
 
+\RequirePackage{ifthen}
+
+
 \RequirePackage{kvoptions}
 
 \SetupKeyvalOptions{
@@ -12,13 +15,17 @@
   prefix=ees@
 }
 
-\DeclareBoolOption[false]{parts}
-\DeclareBoolOption[false]{tocgenre}
-\DeclareBoolOption[true]{toe}
+\DeclareStringOption[3em]{abbrwidth}
 \DeclareBoolOption[true]{movcol}
 \DeclareStringOption[80]{shortnamesize}
 \DeclareStringOption[60]{shorttitlesize}
-\DeclareStringOption[3em]{abbrwidth}
+\DeclareStringOption[false]{tocstyle}
+\DeclareBoolOption[true]{toe}
+
+\def\ees@tocstyle@none{none}
+\def\ees@tocstyle@default{default}
+\def\ees@tocstyle@ref{ref}
+\def\ees@tocstyle@refgenre{ref-genre}
 
 \ProcessKeyvalOptions*
 
@@ -40,14 +47,14 @@
 
 \def\pnumbox#1{#1\hspace*{8cm}}
 \DeclareTOCStyleEntry[
-  indent=\ifees@parts2em\else0pt\fi,
-  beforeskip=\ifees@parts-\baselineskip\else0pt\fi,
-  entryformat=\itshape,
+  indent=0pt,
+  beforeskip=\baselineskip,
+  entryformat=\sbseries,
   entrynumberformat=\textcolor{eesred},
   numwidth=2em,
   linefill=\hfill,
   pagenumberbox=\pnumbox,
-  pagenumberformat=\itshape
+  pagenumberformat=\sbseries
 ]{tocline}{part}
 
 \DeclareTOCStyleEntry[
@@ -151,9 +158,17 @@
 
 
 \RequirePackage{enumitem}
-\edef\ees@movement@labelwidth{\ifees@tocgenre6.5em\else0em\fi}
-\edef\ees@movement@leftmargin{\ifees@tocgenre8.5em\else2em\fi}
-\edef\ees@movement@topsep{\ifees@tocgenre0pt\else-\parskip\fi}
+\ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@refgenre}}{%
+  \def\ees@movement@labelwidth{6.5em}%
+  \def\ees@movement@leftmargin{8.5em}%
+  \def\ees@movement@topsep{0pt}%
+}{%
+  \def\ees@movement@labelwidth{0em}%
+  \def\ees@movement@leftmargin{2em}%
+  \def\ees@movement@topsep{-\parskip}%
+}
+
+
 \newlist{ees@movement}{description}{1}
 \setlist[ees@movement]{
   labelindent=2em,
@@ -167,7 +182,7 @@
   \section{#1}%
   \begin{ees@movement}%
   \let\voice\item%
-  \ifees@tocgenre\else\item[]\fi%
+  \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@refgenre}}{}{\item[]}%
 }{%
   \end{ees@movement}%
 }
@@ -185,8 +200,6 @@
 
 \def\ees@sourceitemlabel#1{\makebox[6em][l]{\itshape#1}}
 \newcommand\sourceitem[8]{%
-  \begingroup%
-  \def\@tempa{#8}%
   \item[#1]%
     \ees@sourceitemlabel{Library}\textmd{#2}\newline%
     \ees@sourceitemlabel{Shelfmark}\textmd{#3}\newline%
@@ -194,8 +207,7 @@
     \ees@sourceitemlabel{Date}#5\newline%
     \ees@sourceitemlabel{RISM ID}#6\newline%
     \ees@sourceitemlabel{URL}\url{#7}%
-    \ifx\@tempa\@empty\else\newline\ees@sourceitemlabel{Notes}#8\fi%
-  \endgroup%
+    \ifthenelse{\equal{#8}{\@empty}}{}{\newline\ees@sourceitemlabel{Notes}#8}%
 }
 
 \def\A#1{\textsb{A#1}}
@@ -226,77 +238,61 @@
 
 % TOC commands ------------------------------------------------------------
 
-\InputIfFileExists%
-  {../tmp/lilypond.ref}%
-  {}%
-  {\InputIfFileExists{../lilypond.ref}{}{}}
-
 \def\ees@dotfill{\leavevmode\cleaders\hb@xt@ .75em{\hss .\hss }\hfill \kern \z@}
 
-
-%% Short references
-\def\@firstofthree#1#2#3{#1}
-\def\@secondofthree#1#2#3{#2}
-\def\@thirdofthree#1#2#3{#3}
-
-\def\ees@shortref@number#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@firstofthree{#1}%
-}
-\def\ees@shortref@title#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@secondofthree{#1}%
-}
-\def\ees@shortref@page#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@thirdofthree{#1}%
-}
-
-\def\ees@toc@section@short#1{%
-  \begingroup%
-  \makebox[0pt][l]{\color{eesred}\ees@shortref@number{#1}}%
-  \hspace*{2em}%
-  \ees@shortref@title{#1}%
-  \ees@dotfill%
-  \ees@shortref@page{#1}%
-  \endgroup%
-}
+\ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@default}}{%
+  \newcommand\newtocentry[6]{\contentsline{#2}{\numberline{#3}#5}{#6}}%
+}{}
+\ifthenelse{%
+  \equal{\ees@tocstyle}{\ees@tocstyle@ref}%
+  \or%
+  \equal{\ees@tocstyle}{\ees@tocstyle@refgenre}%
+}{%
+  \newcommand\newtocentry[6]{\newlabel{#1}{{#3}{#4}{#5}{#6}}}%
+}{}
+\providecommand\newtocentry[6]{}
 
 
-%% Long references
-\def\@firstoffour#1#2#3#4{#1}
-\def\@secondoffour#1#2#3#4{#2}
-\def\@thirdoffour#1#2#3#4{#3}
-\def\@fourthoffour#1#2#3#4{#4}
+\def\ees@ref@getnumber#1#2#3#4{#1}
+\def\ees@ref@getgenre#1#2#3#4{#2}
+\def\ees@ref@gettitle#1#2#3#4{#3}
+\def\ees@ref@getpage#1#2#3#4{#4}
 
-\def\ees@longref@number#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@firstoffour{#1}%
+\def\ees@ref@number#1{%
+  \expandafter\@setref\csname r@#1\endcsname\ees@ref@getnumber{#1}%
 }
-\def\ees@longref@genre#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@secondoffour{#1}%
+\def\ees@ref@genre#1{%
+  \expandafter\@setref\csname r@#1\endcsname\ees@ref@getgenre{#1}%
 }
-\def\ees@longref@title#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@thirdoffour{#1}%
+\def\ees@ref@title#1{%
+  \expandafter\@setref\csname r@#1\endcsname\ees@ref@gettitle{#1}%
 }
-\def\ees@longref@page#1{%
-  \expandafter\@setref\csname r@#1\endcsname\@fourthoffour{#1}%
+\def\ees@ref@page#1{%
+  \expandafter\@setref\csname r@#1\endcsname\ees@ref@getpage{#1}%
 }
+
 
 \def\ees@toc@part#1{%
   \begingroup%
-  \makebox[0pt][l]{\sbseries\color{eesred}\ees@shortref@number{#1}}%
+  \makebox[0pt][l]{\sbseries\color{eesred}\ees@ref@number{#1}}%
   \hspace*{2em}%
-  \makebox[0pt][l]{\sbseries\ees@shortref@title{#1}}%
+  \makebox[0pt][l]{\sbseries\ees@ref@title{#1}}%
   \hfill%
-  \sbseries\ees@shortref@page{#1}%
+  \sbseries\ees@ref@page{#1}%
   \endgroup%
 }
-\def\ees@toc@section@long#1{%
+
+\def\ees@toc@section#1{%
   \begingroup%
-  \makebox[0pt][l]{\color{eesred}\ees@longref@number{#1}}%
+  \makebox[0pt][l]{\color{eesred}\ees@ref@number{#1}}%
   \hspace*{2em}%
-  \makebox[0pt][l]{\ltseries\ees@longref@genre{#1}}%
-  \hspace*{6.5em}%
-  \ees@longref@title{#1}%
+  \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@refgenre}}{%
+    \makebox[0pt][l]{\ltseries\ees@ref@genre{#1}}%
+    \hspace*{6.5em}%
+  }{}%
+  \ees@ref@title{#1}%
   \ees@dotfill%
-  \ees@longref@page{#1}%
+  \ees@ref@page{#1}%
   \endgroup%
 }
 
@@ -453,11 +449,7 @@
       {\InputIfFileExists{../lilypond.toc}{}{}}%
     \begingroup%
     \let\part\ees@toc@part%
-    \ifees@tocgenre%
-      \let\section\ees@toc@section@long%
-    \else%
-      \let\section\ees@toc@section@short%
-    \fi%
+    \let\section\ees@toc@section%
     #1%
     \endgroup%
   \fi%

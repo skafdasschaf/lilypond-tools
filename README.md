@@ -405,13 +405,16 @@ LaTeX class for printing scores with prefatory material.
 ### Class options
 
 Type and default value in parentheses.
-- `parts` (Boolean, false): indicates whether the TOC contains parts
-- `tocgenre` (Boolean, false): indicates whether the TOC contains a genre for each movement
-- `toe` (Boolean, true): indicates whether the commentary contains a table of emendations
 - `movcol` (Boolean, true): indicates whether the table of emendations contains a "Mov[ement]" column
+- `abbrwidth` (length, 3em): width of the first column in the list of abbreviations and the list of sources
 - `shortnamesize` (number, 80): font size for the composer name in the title page head
 - `shorttitlesize` (number, 60): font size for the work title in the title page head
-- `abbrwidth` (length, 3em): width of the first column in the list of abbreviations and the list of sources
+- `tocstyle` (string, `none`): selects a style for the table of contents
+  - `none`: do not print a TOC
+  - `default`: print a normal TOC
+  - `ref`: print a manual TOC using labels
+  - `ref-genre`: print a manual TOC using labels; include a genre
+- `toe` (Boolean, true): indicates whether the commentary contains a table of emendations
 
 
 ### Formatting
@@ -446,16 +449,16 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\eesTitlePage`: Print the default title and copyright page.
 - `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary) and the changelog. The single argument may contain rows for the table of emendations (four columns if `movcol` is true, otherwise three columns). If `toe` is false, the argument is ignored.
 - `\eesCommentaryIntro`: Print the default introduction of the commentary section (automatically invoked by `\eesCriticalReport`).
-- `\eesToc{<contents>}`: Print the table of contents. The value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
+- `\eesToc{<contents>}`: Print the table of contents. If the `tocstyle` option equals `ref` or `ref-genre`, the value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
 - `\eesScore`: Print the included score.
 - `\ifPrintFrontMatter` … `\fi`: Additional content in the prefatory material should be surrounded by this conditional, which ensures that it is only printed in the full score and draft.
 
 
 ### Manual TOC formatting
 
-- `\part{<label>}`: Print a TOC entry for the part with `<label>` as defined in the LY file via `\tocPart`.
-- `\section{<label>}`: Print a TOC entry for the section with `<label>` as defined in the LY file via `\tocSection`.
-- `\begin{movement}{<label>} <lyrics> \end{movement}`: Print the TOC entry for the movement (section) with `<label>`. The `<lyrics>` may comprise
+- `\part{<label>}`: Print a TOC entry for the part with `<label>` as defined in the LY file via `\addTocLabel`.
+- `\section{<label>}`: Print a TOC entry for the section with `<label>`.
+- `\begin{movement}{<label>} <lyrics> \end{movement}`: Print the TOC entry (section level) for the movement with `<label>`. The `<lyrics>` may comprise
   - continuous text, which represents all lyrics of the respective movement (as seen, for instance, in Michael Haydn's [Litaniae MH 532](https://github.com/edition-esser-skala/haydn-m-litaniae-mh-532)); or
   - text blocks labeled with the associated voice (as seen, for instance, in Stölzel's [Jeſu, Deine Paßion](https://github.com/edition-esser-skala/stoelzel-jesu-deine-passion)). `\voice[<label>]` sets the `<label>` of each text block.
 
