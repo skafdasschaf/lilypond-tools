@@ -235,13 +235,16 @@
 \DTMsetstyle{iso}
 
 
+\RequirePackage[linktoc=all,hidelinks]{hyperref}
+
+
 
 % TOC commands ------------------------------------------------------------
 
 \def\ees@dotfill{\leavevmode\cleaders\hb@xt@ .75em{\hss .\hss }\hfill \kern \z@}
 
 \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@default}}{%
-  \newcommand\newtocentry[6]{\contentsline{#2}{\numberline{#3}#5}{#6}}%
+  \newcommand\newtocentry[6]{\contentsline{#2}{\numberline{#3}#5}{#6}{score.#6}}%
 }{}
 \ifthenelse{%
   \equal{\ees@tocstyle}{\ees@tocstyle@ref}%

@@ -133,7 +133,12 @@ ABBR_TEMPLATE = """
 ABBR_ITEM_TEMPLATE = "\\abbr{{{short}}}{{{long}}}"
 
 PRINT_SCORE_TEMPLATE = """
-\\def\\eesScore{{\\cleardoublepage\\includepdf[pages=-]{{../tmp/{}.pdf}}}}
+\\def\\eesScore{{%
+  \\cleardoublepage%
+  \\pagenumbering{{arabic}}%
+  \\setcounter{{page}}{{1}}%
+  \\includepdf[pages=-,link=true,linkname=score]{{../tmp/{}.pdf}}%
+}}
 """
 
 
