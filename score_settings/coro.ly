@@ -3,22 +3,20 @@
 \paper {
   indent = 1\cm
   top-margin = 1\cm
-  bottom-margin = 0.5\cm
+  bottom-margin = .5\cm
   outer-margin = 1.5\cm
   inner-margin = 1.5\cm
   system-separator-markup = ##f
 
-  oddHeaderMarkup = \markup {}
-  evenHeaderMarkup = \markup {}
-  oddFooterMarkup = \markup {
+  oddFooterMarkup = \markup {}
+  evenFooterMarkup = \markup {}
+  oddHeaderMarkup = \markup {
     \fill-line {
-      " " \fromproperty #'page:page-number-string " "
+      " " \fromproperty #'page:page-number-string
     }
   }
-  evenFooterMarkup = \markup {
-    \fill-line {
-      " " \fromproperty #'page:page-number-string " "
-    }
+  evenHeaderMarkup = \markup {
+    \fromproperty #'page:page-number-string
   }
 
   system-system-spacing =
