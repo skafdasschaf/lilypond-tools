@@ -183,6 +183,7 @@ These commands modify the vertical spacing of staff groups and single staves:
 ### Sectioning and TOC
 
 Sectioning commands:
+- `\insertEmptyPage`: Inserts an empty page (useful if parts should start on the right page).
 - `\part "<number>" "<title>"`: Adds a part page, followed by an empty left page. Must be used inside a `\book`.
 - `\section "<title>"`,
 - `\section "<number>" "<title>"`, or

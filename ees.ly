@@ -609,6 +609,21 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
 #(define ees-tocgenre "")
 #(define ees-toctitle "")
 
+insertEmptyPage = #(define-void-function
+  ()
+  ()
+  (ly:book-add-bookpart!
+    (ly:parser-lookup '$current-book)
+    #{
+      \bookpart {
+        \paper { evenHeaderMarkup = {} oddHeaderMarkup = {} }
+        \new Staff \with {
+          \remove "Clef_engraver"
+          \remove "Time_signature_engraver"
+        } { \stopStaff s }
+      }
+    #}))
+
 part = #(define-void-function
   (number title)
   (string? string?)
@@ -622,7 +637,7 @@ part = #(define-void-function
             \vspace #25
             \fill-line { \fontsize #12 \with-color #(rgb-color .8313 0 0) #number }
             \vspace #3
-            \fill-line { \fontsize #4 #title }
+            \fill-line { \fontsize #5 #title }
           }
         }
         #(set! ees-toclevel "part")
