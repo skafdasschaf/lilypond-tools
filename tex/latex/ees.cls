@@ -490,20 +490,26 @@
 }
 
 \long\def\eesToc#1{%
-  \ifPrintFrontMatter%
+  \ifthenelse{%
+    \boolean{PrintFrontMatter}\and%
+    \not\equal{\ees@tocstyle}{\ees@tocstyle@none}%
+  }{%
     \cleardoublepage%
     \chapter{Contents}%
-  \fi%
+  }{}%
   \bookmarksetup{startatroot,openlevel=5}%
   \InputIfFileExists%
     {../tmp/lilypond.toc}%
     {}%
     {\InputIfFileExists{../lilypond.toc}{}{}}%
-  \ifPrintFrontMatter%
+  \ifthenelse{%
+    \boolean{PrintFrontMatter}\and%
+    \not\equal{\ees@tocstyle}{\ees@tocstyle@none}%
+  }{%
     \begingroup%
     \let\part\ees@toc@part%
     \let\section\ees@toc@section%
     #1%
     \endgroup%
-  \fi%
+  }{}%
 }
