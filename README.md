@@ -404,7 +404,6 @@ LaTeX class for printing scores with prefatory material.
 ### Class options
 
 Type and default value in parentheses.
-- `movcol` (Boolean, true): indicates whether the table of emendations contains a "Mov[ement]" column
 - `abbrwidth` (length, 3em): width of the first column in the list of abbreviations and the list of sources
 - `shortnamesize` (number, 80): font size for the composer name in the title page head
 - `shorttitlesize` (number, 60): font size for the work title in the title page head
@@ -446,7 +445,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 ### Document structure
 
 - `\eesTitlePage`: Print the default title and copyright page.
-- `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary) and the changelog. The single argument may contain rows for the table of emendations (four columns if `movcol` is true, otherwise three columns). If `toe` is false, the argument is ignored.
+- `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary) and the changelog. The single argument may contain rows for the table of emendations, which comprises three columns if `tocstyle=none`, and four columns otherwise. If `toe` is false, the argument is ignored.
 - `\eesCommentaryIntro`: Print the default introduction of the commentary section (automatically invoked by `\eesCriticalReport`).
 - `\eesToc{<contents>}`: Print the table of contents. If the `tocstyle` option equals `ref` or `ref-genre`, the value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
 - `\eesScore`: Print the included score.

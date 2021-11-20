@@ -16,10 +16,9 @@
 }
 
 \DeclareStringOption[3em]{abbrwidth}
-\DeclareBoolOption[true]{movcol}
 \DeclareStringOption[80]{shortnamesize}
 \DeclareStringOption[60]{shorttitlesize}
-\DeclareStringOption[false]{tocstyle}
+\DeclareStringOption[default]{tocstyle}
 \DeclareBoolOption[true]{toe}
 
 \def\ees@tocstyle@none{none}
@@ -418,7 +417,15 @@
         \eesCommentaryIntro%
         \ifees@toe%
           \par Asterisks denote the following emendations:
-          \ifees@movcol%
+          \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@none}}{%
+            \begin{xltabular}{\linewidth}{ll X}
+              \toprule
+              \itshape Bar & \itshape Staff & \itshape Description \\
+              \midrule \endhead
+              #1
+              \bottomrule
+            \end{xltabular}%
+          }{
             \begin{xltabular}{\linewidth}{lll X}
               \toprule
               \itshape Mov. & \itshape Bar & \itshape Staff & \itshape Description \\
@@ -426,15 +433,7 @@
               #1
               \bottomrule
             \end{xltabular}%
-          \else%
-          \begin{xltabular}{\linewidth}{ll X}
-            \toprule
-            \itshape Bar & \itshape Staff & \itshape Description \\
-            \midrule \endhead
-            #1
-            \bottomrule
-          \end{xltabular}%
-          \fi% ifees@movcol
+          }%
         \fi% ifees@toe
     \cleardoublepage%
     \markdownInput{../CHANGELOG.md}%
