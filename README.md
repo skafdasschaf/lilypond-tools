@@ -148,8 +148,8 @@ Set these Scheme variables before including the file, like
 ```
 
 - `option-movement-title-markup`: Select the format of the movement title and the number of arguments for `\section`. Choices: `"genre-number-title"`, `"number-title"`, and `"title"` (default).
-- `option-init-toc`: If true, generate a table of contents in `lilypond.toc`, which can be interpreted by LaTeX (default: false).
-- `option-print-all-bar-numbers`: If true, print all bar numbers (useful when preparing a score).
+- `option-init-toc`: If true, generate a table of contents in `lilypond.toc`, which can be interpreted by LaTeX (default: true).
+- `option-print-all-bar-numbers`: If true, print all bar numbers (useful when preparing a score; default: false).
 
 
 ### Score settings
@@ -328,8 +328,6 @@ This table describes instruments (rows) via the following variables (columns):
 - *clef* – default clef
 - *autobeam* – should notes be beamed automatically? (false for vocal parts)
 - *default_key* – overrides key for transposing instruments; 'none' indicates no override
-- *incipit_clef* – clef in the incipit; 'none' indicates no incipit
-- *incipit_space* – horizontal space between incipit and staff
 - *second_template* – second variable template to add (for vocal parts and figured bass)
 
 
@@ -421,11 +419,13 @@ Type and default value in parentheses.
 - `abbrwidth` (length, 3em): width of the first column in the list of abbreviations and the list of sources
 - `shortnamesize` (number, 80): font size for the composer name in the title page head
 - `shorttitlesize` (number, 60): font size for the work title in the title page head
-- `tocstyle` (string, `none`): selects a style for the table of contents
+- `tocstyle` (string, `default`): selects a style for the table of contents
   - `none`: do not print a TOC
   - `default`: print a normal TOC
   - `ref`: print a manual TOC using labels
   - `ref-genre`: print a manual TOC using labels; include a genre
+
+  Note that even if a TOC is not printed, the pdf will contain bookmarks with entries for movements as well as sections in the prefatory material
 - `toe` (Boolean, true): indicates whether the commentary contains a table of emendations
 
 
@@ -463,7 +463,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\eesTitlePage`: Print the default title and copyright page.
 - `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary) and the changelog. The single argument may contain rows for the table of emendations, which comprises three columns if `tocstyle=none`, and four columns otherwise. If `toe` is false, the argument is ignored.
 - `\eesCommentaryIntro`: Print the default introduction of the commentary section (automatically invoked by `\eesCriticalReport`).
-- `\eesToc{<contents>}`: Print the table of contents. If the `tocstyle` option equals `ref` or `ref-genre`, the value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
+- `\eesToc{<contents>}`: Setup pdf bookmarks; print the table of contents unless `tocstyle=none`. If `tocstyle=ref` or `ref-genre`, the value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
 - `\eesScore`: Print the included score.
 - `\ifPrintFrontMatter` … `\fi`: Additional content in the prefatory material should be surrounded by this conditional, which ensures that it is only printed in the full score and draft.
 

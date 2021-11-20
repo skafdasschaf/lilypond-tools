@@ -280,6 +280,11 @@
 
 \def\ees@dotfill{\leavevmode\cleaders\hb@xt@ .75em{\hss .\hss }\hfill \kern \z@}
 
+\ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@none}}{%
+  \newcommand\newtocentry[6]{%
+    \bookmark[level=#2,dest=score.#6]{#5}%
+  }%
+}{}
 \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@default}}{%
   \newcommand\newtocentry[6]{%
     \ifPrintFrontMatter%

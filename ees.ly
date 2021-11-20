@@ -8,7 +8,7 @@
 
 #(if
   (not (defined? 'option-init-toc))
-  (define option-init-toc #f)
+  (define option-init-toc #t)
 )
 
 #(if
@@ -683,33 +683,38 @@ part = #(define-void-function
       }
     #}))
 
-
 section =
-  #(cond ((string= option-movement-title-format "title")
-          (define-scheme-function
-            (parser location title)
-            (string?)
-            #{ \header { title = #title } #}))
-         ((string= option-movement-title-format "number-title")
-          (define-scheme-function
-            (parser location number title)
-            (string? string?)
-            (begin
-              (set! ees-toclevel "section")
-              (set! ees-tocnumber number)
-              (set! ees-tocgenre "")
-              (set! ees-toctitle title)
-              #{ \header { number = #number title = #title } #})))
-         ((string= option-movement-title-format "genre-number-title")
-          (define-scheme-function
-            (parser location number genre title)
-            (string? string? string?)
-            (begin
-              (set! ees-toclevel "section")
-              (set! ees-tocnumber number)
-              (set! ees-tocgenre genre)
-              (set! ees-toctitle title)
-              #{ \header { number = #number genre = #genre title = #title } #}))))
+  #(cond
+    ((string= option-movement-title-format "title")
+      (define-scheme-function
+        (parser location title)
+        (string?)
+        (begin
+          (set! ees-toclevel "section")
+          (set! ees-tocnumber "")
+          (set! ees-tocgenre "")
+          (set! ees-toctitle title)
+          #{ \header { title = #title } #})))
+    ((string= option-movement-title-format "number-title")
+      (define-scheme-function
+        (parser location number title)
+        (string? string?)
+        (begin
+          (set! ees-toclevel "section")
+          (set! ees-tocnumber number)
+          (set! ees-tocgenre "")
+          (set! ees-toctitle title)
+          #{ \header { number = #number title = #title } #})))
+   ((string= option-movement-title-format "genre-number-title")
+    (define-scheme-function
+      (parser location number genre title)
+      (string? string? string?)
+      (begin
+        (set! ees-toclevel "section")
+        (set! ees-tocnumber number)
+        (set! ees-tocgenre genre)
+        (set! ees-toctitle title)
+        #{ \header { number = #number genre = #genre title = #title } #}))))
 
 subsection = #(define-scheme-function
   (parser location title)
