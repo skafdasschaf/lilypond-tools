@@ -273,7 +273,9 @@
 
 \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@default}}{%
   \newcommand\newtocentry[6]{%
-    \contentsline{#2}{\numberline{#3}#5}{#6}{score.#6}%
+    \ifPrintFrontMatter%
+      \contentsline{#2}{\numberline{#3}#5}{#6}{score.#6}%
+    \fi%
     \bookmark[level=#2,dest=score.#6]{#5}%
   }%
 }{}
@@ -477,11 +479,13 @@
   \ifPrintFrontMatter%
     \cleardoublepage%
     \chapter{Contents}%
-    \bookmarksetup{startatroot,openlevel=5}%
-    \InputIfFileExists%
-      {../tmp/lilypond.toc}%
-      {}%
-      {\InputIfFileExists{../lilypond.toc}{}{}}%
+  \fi%
+  \bookmarksetup{startatroot,openlevel=5}%
+  \InputIfFileExists%
+    {../tmp/lilypond.toc}%
+    {}%
+    {\InputIfFileExists{../lilypond.toc}{}{}}%
+  \ifPrintFrontMatter%
     \begingroup%
     \let\part\ees@toc@part%
     \let\section\ees@toc@section%
