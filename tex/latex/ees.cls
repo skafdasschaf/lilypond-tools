@@ -263,13 +263,19 @@
 \RequirePackage[linktoc=all,hidelinks]{hyperref}
 
 
+\RequirePackage[open,openlevel=0]{bookmark}
+
+
 
 % TOC commands ------------------------------------------------------------
 
 \def\ees@dotfill{\leavevmode\cleaders\hb@xt@ .75em{\hss .\hss }\hfill \kern \z@}
 
 \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@default}}{%
-  \newcommand\newtocentry[6]{\contentsline{#2}{\numberline{#3}#5}{#6}{score.#6}}%
+  \newcommand\newtocentry[6]{%
+    \contentsline{#2}{\numberline{#3}#5}{#6}{score.#6}%
+    \bookmark[level=#2,dest=score.#6]{#5}%
+  }%
 }{}
 \ifthenelse{%
   \equal{\ees@tocstyle}{\ees@tocstyle@ref}%
@@ -431,12 +437,12 @@
 
 \def\eesCriticalReport#1{%
   \ifPrintFrontMatter%
-    \chapter*{Critical Report}%
-      \section*{Abbreviations}%
+    \chapter{Critical Report}%
+      \section{Abbreviations}%
         \MetadataAbbreviations%
-      \section*{Sources}%
+      \section{Sources}%
         \MetadataSources%
-      \section*{Commentary}%
+      \section{Commentary}%
         \eesCommentaryIntro%
         \ifees@toe%
           \par Asterisks denote the following emendations:
@@ -470,7 +476,8 @@
 \long\def\eesToc#1{%
   \ifPrintFrontMatter%
     \cleardoublepage%
-    \chapter*{Contents}%
+    \chapter{Contents}%
+    \bookmarksetup{startatroot,openlevel=5}%
     \InputIfFileExists%
       {../tmp/lilypond.toc}%
       {}%
