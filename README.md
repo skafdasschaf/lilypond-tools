@@ -422,6 +422,8 @@ Type and default value in parentheses.
 - `\A{<number>}` to `\E{<number>}`: Typeset a source identifier (uppercase letter plus index `<number>`).
 - `\doublesharp{<pitch>}`, `\sharp{<pitch>}`, `\natural{<pitch>}`, `\flat{<pitch>}`, and `\flatflat{<pitch>}`: Add an accidental to `<pitch>` and ensure correct kerning.
 - `\wholeNoteRest` and `\halfNoteRest`: Print respective rest with improved kerning.
+- `\demisemiquaverRest` and `\demisemiquaverRestDotted`: Print (dotted) thirty-second rest.
+- `\hemidemisemiquaverRest` and `\hemidemisemiquaverRestDotted`: Print (dotted) sixty-fourth rest.
 
 
 ### Metadata
@@ -452,7 +454,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\ifPrintFrontMatter` … `\fi`: Additional content in the prefatory material should be surrounded by this conditional, which ensures that it is only printed in the full score and draft.
 
 
-### Manual TOC formatting
+### Manual TOC
 
 - `\part{<label>}`: Print a TOC entry for the part with `<label>` as defined in the LY file via `\addTocLabel`.
 - `\section{<label>}`: Print a TOC entry for the section with `<label>`.

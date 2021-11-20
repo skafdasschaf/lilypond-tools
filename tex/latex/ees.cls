@@ -108,6 +108,7 @@
 
 
 \RequirePackage{lilyglyphs}
+
 \let\ees@oldflat\flat
 \def\flat#1{#1\kern.1em\ees@oldflat}
 \let\ees@oldsharp\sharp
@@ -122,6 +123,28 @@
 \def\wholeNoteRest{\kern.12em\ees@oldwholeNoteRest\kern.2em}
 \let\ees@oldhalfNoteRest\halfNoteRest
 \def\halfNoteRest{\kern.12em\ees@oldhalfNoteRest\kern.2em}
+
+\newcommand*\demisemiquaverRest[1][]{%
+  \setkeys{lilyDesignOptions}{scale=1.3,raise=0.5}%
+  \lilyPrint[#1]{\lilyGetGlyph{rests.5}}%
+}
+
+\newcommand*\demisemiquaverRestDotted[1][]{%
+  \setkeys{lilyDesignOptions}{scale=0.8,raise=0.2}%
+  \lilySetDotOptions[#1]{0}{0}{-0.1}%
+  \demisemiquaverRest[#1]\lilyDotSpace\lilyPrintDot%
+}
+
+\newcommand*\hemidemisemiquaverRest[1][]{%
+  \setkeys{lilyDesignOptions}{scale=1.3,raise=0.8}%
+  \lilyPrint[#1]{\lilyGetGlyph{rests.6}}%
+}
+
+\newcommand*\hemidemisemiquaverRestDotted[1][]{%
+  \setkeys{lilyDesignOptions}{scale=0.8,raise=0.2}%
+  \lilySetDotOptions[#1]{0}{0}{-0.1}%
+  \hemidemisemiquaverRest[#1]\lilyDotSpace\lilyPrintDot%
+}
 
 
 \RequirePackage[pass]{geometry}
