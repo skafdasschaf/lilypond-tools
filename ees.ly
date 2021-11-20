@@ -388,6 +388,28 @@ markDaCapo = {
 }
 
 
+incipit = #(define-music-function
+  (name clef name-staff-space staff-system-space)
+  (string? string? number? number?)
+  #{
+    \set Staff.instrumentName = \markup {
+      #name \hspace #name-staff-space \score {
+        \new Staff \with {
+          \remove Time_signature_engraver
+        } {
+          \clef #clef s4 \bar empty
+        }
+        \layout { }
+      } \hspace #staff-system-space
+    }
+    \override Staff.InstrumentName.self-alignment-Y = ##f
+    \override Staff.InstrumentName.self-alignment-X = #RIGHT
+  #})
+
+incipitSoprano = \incipit "Soprano" "soprano" #-19 #-1.8
+incipitAlto = \incipit "Alto" "alto" #-16.8 #-1.8
+incipitTenore = \incipit "Tenore" "tenor" #-18.2 #-1.8
+
 
 % modify the Scheme function 'format-bass-figure'
 % in usr/share/lilypond/current/scm/translation-functions.scm

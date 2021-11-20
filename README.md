@@ -128,7 +128,7 @@ This script extends LY files in subfolder `notes/` with variables for a new move
 - `-b`, `--current-bar CURRENT_BAR`:
   start movement with this bar number (default: 1)
 - `-f`, `--force-file-creation`:
-  create missing files, add version and incipits if required (default: false)
+  create missing files (default: false)
 
 
 ## ees.ly
@@ -163,7 +163,7 @@ Include one of the following files in subfolder `score_settings` at the beginnin
 - `org-realized.ly`: Format the realized organ part.
 
 
-### Vertical spacing
+### System configuration
 
 - `\smallGroupDistance`
 - `\normalGroupDistance`
@@ -175,6 +175,20 @@ These commands modify the vertical spacing of staff groups and single staves:
 \new Staff \with { \smallStaffDistance } {
   \set Staff.instrumentName = "clno"
   \Clarino
+}
+```
+
+- `\incipit "<name>" "<clef>" #<space1> #<space2>`
+- `\incipitSoprano`
+- `\incipitAlto`
+- `\incipitTenore`
+
+`\incipit` prints an incipit in front of a staff with the given instrument `name` and `clef`. `space1` and `space2` determine the horizontal space between the instrument name and the staff, or the staff and the system, respectively. For convenience, predefined incipit commands for soprano, alto, and tenor are provided.
+
+```lilypond
+\new Staff {
+  \incipitSoprano
+  \new Voice = "Soprano" { \dynamicUp \SopranoNotes }
 }
 ```
 

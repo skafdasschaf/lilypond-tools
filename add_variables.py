@@ -24,19 +24,6 @@ DOCUMENT_PREAMBLE = """\
 \\version "2.22.0"
 """
 
-INCIPIT_TEMPLATE = """
-{instrument}Incipit = \\markup {{
-  "{instrument}" \\hspace #{incipit_space} \\score {{
-    \\new Staff \\with {{
-      \\remove Time_signature_engraver
-    }} {{
-      \\clef {incipit_clef} s4 \\bar empty
-    }}
-    \\layout {{ }}
-  }} \\hspace #-1.8
-}}
-"""
-
 INSTRUMENT_TEMPLATE = """
 {movement}{instrument} = {{
   \\relative {relative} {{
@@ -110,8 +97,7 @@ parser.add_argument(
 parser.add_argument(
     "-f",
     "--force-file-creation",
-    help="""create missing files, add \\version and incipits if required
-            (default: false)""",
+    help="""create missing files (default: false)""",
     action="store_true"
 )
 
@@ -200,17 +186,13 @@ for instrument in args.notes:
         autobeam="\\autoBeamOff "
                  if not instrument_data.loc[abbr, "autobeam"]
                  else "",
-        flags="\n    ".join(flags),
-        incipit_clef=instrument_data.loc[abbr, "incipit_clef"],
-        incipit_space=instrument_data.loc[abbr, "incipit_space"]
+        flags="\n    ".join(flags)
     )
 
     if instrument not in available_notes:
         if args.force_file_creation:
             with open(os.path.join("notes", f"{instrument}.ly"), "w") as f:
                 f.write(DOCUMENT_PREAMBLE)
-                if instrument_data.loc[abbr, "incipit_clef"] != "none":
-                    f.write(INCIPIT_TEMPLATE.format(**keys))
             logging.info(f"Successfully created '{instrument}'.")
         else:
             logging.warning(
