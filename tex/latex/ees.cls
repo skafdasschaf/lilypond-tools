@@ -28,6 +28,15 @@
 
 \ProcessKeyvalOptions*
 
+\ifthenelse{%
+  \equal{\ees@tocstyle}{\ees@tocstyle@none}\or%
+  \equal{\ees@tocstyle}{\ees@tocstyle@default}\or%
+  \equal{\ees@tocstyle}{\ees@tocstyle@ref}\or%
+  \equal{\ees@tocstyle}{\ees@tocstyle@refgenre}%
+}{}{
+  \ClassError{ees}{Unknown value for tocstyle: \ees@tocstyle}{}%
+}
+
 
 
 % Load base class ---------------------------------------------------------
