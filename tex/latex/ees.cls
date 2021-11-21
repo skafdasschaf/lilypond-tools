@@ -445,7 +445,7 @@
     {\@subtitle}\\[\baselineskip]%
     {\itshape\@scoring}%
     \vfill%
-    {\itshape\@scoretype}\hspace*{\fill}%
+    \@scoretype\hspace*{\fill}%
      \raisebox{0pt}[0pt][0pt]{\includegraphics[scale=1.25]{logo_full}}%
   \end{titlepage}%
 
