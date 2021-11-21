@@ -13,8 +13,9 @@
 - [add_variables.py](#add_variablespy)
 - [ees.ly](#eesly)
   - [Options](#options)
-  - [Document structure](#document-structure)
-  - [Table of contents](#table-of-contents)
+  - [Score settings](#score-settings)
+  - [System configuration](#system-configuration)
+  - [Sectioning and TOC](#sectioning-and-toc)
   - [Markup](#markup)
   - [Inside the staff](#inside-the-staff)
   - [Polyphony](#polyphony)
@@ -30,8 +31,8 @@
   - [Class options](#class-options)
   - [Formatting](#formatting)
   - [Metadata](#metadata)
-  - [Document structure](#document-structure-1)
-  - [Manual TOC formatting](#manual-toc-formatting)
+  - [Document structure](#document-structure)
+  - [Manual TOC](#manual-toc)
 - [.github/workflows/engrave-and-release.yaml](#githubworkflowsengrave-and-releaseyaml)
 
 
