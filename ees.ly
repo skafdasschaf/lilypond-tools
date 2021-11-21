@@ -148,6 +148,95 @@
 }
 
 
+make-one-pitch = #(define-scheme-function
+  (parser location pitch acc)
+  (string? string?)
+  #{
+    \markup {
+      \concat {
+        #pitch
+        \hspace #(if (string= acc "") 0 0.25)
+        \fontsize #-2 \raise #.5 \musicglyph #(string-append "accidentals." acc )
+      }
+    }
+  #})
+
+make-timp-pitches = #(define-scheme-function
+  (parser location pitch-high acc-high pitch-low acc-low)
+  (string? string? string? string?)
+  #{
+    \markup {
+      \concat {
+        #(make-one-pitch pitch-high acc-high)
+        \hspace #(if (string= acc-high "") 0 0.25)
+        "–"
+        #(make-one-pitch pitch-low acc-low)
+      }
+    }
+  #})
+
+transposedName = #(define-scheme-function
+  (parser location name pitch acc)
+  (string? string? string?)
+  #{
+    \markup {
+      \center-column {
+        #name
+        \concat {
+          "in "
+          #(make-one-pitch pitch acc)
+        }
+      }
+    }
+  #})
+
+transposedNameShort = #(define-scheme-function
+  (parser location name pitch acc)
+  (string? string? string?)
+  #{
+    \markup {
+      \concat {
+        #name
+        " ("
+        #(make-one-pitch pitch acc)
+        ")"
+      }
+    }
+  #})
+
+transposedTimp = #(define-scheme-function
+  (parser location pitch-high acc-high pitch-low acc-low)
+  (string? string? string? string?)
+  #{
+    \markup {
+      \center-column {
+        "Timpani"
+        \concat {
+          "in "
+          #(make-timp-pitches pitch-high acc-high pitch-low acc-low)
+        }
+      }
+    }
+  #})
+
+transposedTimpShort = #(define-scheme-function
+  (parser location pitch-high acc-high pitch-low acc-low)
+  (string? string? string? string?)
+  #{
+    \markup {
+      \center-column {
+        "timp"
+        \concat {
+          "("
+          #(make-timp-pitches pitch-high acc-high pitch-low acc-low)
+          ")"
+        }
+      }
+    }
+  #})
+
+
+
 tempoMarkup = #(define-music-function
   (parser location arg)
   (markup?)

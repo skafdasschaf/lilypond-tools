@@ -192,6 +192,26 @@ These commands modify the vertical spacing of staff groups and single staves:
 }
 ```
 
+- `\transposedName "<name>" "<pitch>" "<accidental>"`
+- `\transposedNameShort "<name>" "<pitch>" "<accidental>"`
+- `\transposedTimp "<pitch-high>" "<acc-high>" "<pitch-low>" "<acc-low>"`
+- `\transposedTimpShort "<pitch-high>" "<acc-high>" "<pitch-low>" "<acc-low>"`
+- `make-one-pitch`
+- `make-timp-pitches`
+
+These commands print an instrument name including pitches. `\transposedName` and `\transposedTimp` should be used for the first movement, commands ending in `…Short` should be used for subsequent movements. For special cases, the Scheme functions `make-one-pitch` and `make-timp-pitches` are available.
+
+```lilypond
+\new Staff {
+  \set Staff.instrumentName = \transposedName "Clarino" "B" "flat"
+  \Clarino
+}
+\new Staff {
+  \set Staff.instrumentName = \transposedTimp "B" "flat" "F" ""
+  \Timpani
+}
+```
+
 
 ### Sectioning and TOC
 
