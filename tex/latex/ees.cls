@@ -41,7 +41,7 @@
 
 % Load base class ---------------------------------------------------------
 
-\LoadClass[parskip=full]{scrreprt}
+\LoadClass[parskip=full-]{scrreprt}
 
 \setcounter{secnumdepth}{-1}
 \RedeclareSectionCommand[pagestyle=plain,afterskip=10pt plus 1pt]{chapter}
@@ -192,21 +192,20 @@
 \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@refgenre}}{%
   \def\ees@movement@labelwidth{6.5em}%
   \def\ees@movement@leftmargin{8.5em}%
-  \def\ees@movement@topsep{0pt}%
 }{%
   \def\ees@movement@labelwidth{0em}%
   \def\ees@movement@leftmargin{2em}%
-  \def\ees@movement@topsep{-\parskip}%
 }
 
 
 \newlist{ees@movement}{description}{1}
 \setlist[ees@movement]{
+  partopsep=0pt,
   labelindent=2em,
   labelwidth=\ees@movement@labelwidth,
   leftmargin=\ees@movement@leftmargin,
   labelsep=0pt,
-  first=\vspace*{\ees@movement@topsep}\ltseries,
+  first=\ltseries,
   font=\normalfont\itshape\ltseries
 }
 \newenvironment{movement}[1]{%
@@ -298,9 +297,16 @@
   \or%
   \equal{\ees@tocstyle}{\ees@tocstyle@refgenre}%
 }{%
-  \newcommand\newtocentry[6]{\newlabel{#1}{{#3}{#4}{#5}{#6}}}%
+  \newcommand\newtocentry[6]{%
+    \ifPrintFrontMatter%
+      \@ifundefined{ees@toclabel@#1}%
+        \relax%
+        {\ClassWarning{ees}{TOC label '#1' multiply defined}}%
+      \global\@namedef{ees@toclabel@#1}{{#3}{#4}{#5}{#6}}%
+    \fi%
+    \bookmark[level=#2,dest=score.#6]{#5}%
+  }%
 }{}
-\providecommand\newtocentry[6]{}
 
 
 \def\ees@ref@getnumber#1#2#3#4{#1}
@@ -308,42 +314,54 @@
 \def\ees@ref@gettitle#1#2#3#4{#3}
 \def\ees@ref@getpage#1#2#3#4{#4}
 
+\def\ees@setref#1#2#3{%
+  \ifx#1\relax%
+    \ClassWarning{ees}{TOC label '#3' undefined}%
+  \else%
+   \expandafter#2#1%
+  \fi%
+}
+
 \def\ees@ref@number#1{%
-  \expandafter\@setref\csname r@#1\endcsname\ees@ref@getnumber{#1}%
+  \expandafter\ees@setref\csname ees@toclabel@#1\endcsname%
+  \ees@ref@getnumber{#1}%
 }
 \def\ees@ref@genre#1{%
-  \expandafter\@setref\csname r@#1\endcsname\ees@ref@getgenre{#1}%
+  \expandafter\ees@setref\csname ees@toclabel@#1\endcsname%
+  \ees@ref@getgenre{#1}%
 }
 \def\ees@ref@title#1{%
-  \expandafter\@setref\csname r@#1\endcsname\ees@ref@gettitle{#1}%
+  \expandafter\ees@setref\csname ees@toclabel@#1\endcsname%
+  \ees@ref@gettitle{#1}%
 }
 \def\ees@ref@page#1{%
-  \expandafter\@setref\csname r@#1\endcsname\ees@ref@getpage{#1}%
+  \expandafter\ees@setref\csname ees@toclabel@#1\endcsname%
+  \ees@ref@getpage{#1}%
 }
 
 
 \def\ees@toc@part#1{%
-  \begingroup%
-  \makebox[0pt][l]{\sbseries\color{eesred}\ees@ref@number{#1}}%
-  \hspace*{2em}%
-  \makebox[0pt][l]{\sbseries\ees@ref@title{#1}}%
-  \hfill%
-  \sbseries\ees@ref@page{#1}%
-  \endgroup%
+  \hyperlink{score.\ees@ref@page{#1}}{%
+    \makebox[0pt][l]{\sbseries\color{eesred}\ees@ref@number{#1}}%
+    \hspace*{2em}%
+    \makebox[0pt][l]{\sbseries\ees@ref@title{#1}}%
+    \hfill%
+    \sbseries\ees@ref@page{#1}%
+  }%
 }
 
 \def\ees@toc@section#1{%
-  \begingroup%
-  \makebox[0pt][l]{\color{eesred}\ees@ref@number{#1}}%
-  \hspace*{2em}%
-  \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@refgenre}}{%
-    \makebox[0pt][l]{\ltseries\ees@ref@genre{#1}}%
-    \hspace*{6.5em}%
-  }{}%
-  \ees@ref@title{#1}%
-  \ees@dotfill%
-  \ees@ref@page{#1}%
-  \endgroup%
+  \hyperlink{score.\ees@ref@page{#1}}{%
+    \makebox[0pt][l]{\color{eesred}\ees@ref@number{#1}}%
+    \hspace*{2em}%
+    \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@refgenre}}{%
+      \makebox[0pt][l]{\ltseries\ees@ref@genre{#1}}%
+      \hspace*{6.5em}%
+    }{}%
+    \ees@ref@title{#1}%
+    \ees@dotfill%
+    \ees@ref@page{#1}%
+  }%
 }
 
 
