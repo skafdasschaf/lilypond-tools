@@ -219,7 +219,7 @@ These commands print an instrument name including pitches. `\transposedName` and
 
 Sectioning commands:
 - `\insertEmptyPage`: Inserts an empty page (useful if parts should start on the right page).
-- `\part "<number>" "<title>"`: Adds a part page, followed by an empty left page. Must be used inside a `\book`.
+- `\part "<label>" "<number>" "<title>"`: Adds a part page, followed by an empty left page. Must be used inside a `\book`. For technical reasons, a `<label>` has to be supplied even if the command is used for a default TOC.
 - `\section "<title>"`,
 - `\section "<number>" "<title>"`, or
 - `\section "<number>" "<genre>" "<title>"`: Adds a section heading. The number of arguments is determined by the option `option-movement-title-format`.
@@ -227,12 +227,12 @@ Sectioning commands:
 
 TOC commands:
 - `\addTocEntry`: Adds a TOC entry; should be used immediately after a heading command.
-- `\addTocLabel "<label>"`: Adds a labeled TOC entry.
+- `\addTocLabel "<label>"`: Adds a labeled TOC entry. The `<label>` must be unique throughout the score.
 
 ```lilypond
 % normal TOC entries
 \book {
-  \part "1" "First part"
+  \part "" "1" "First part"
   \bookpart {
     \section "1" "Kyrie"
     \addTocEntry
@@ -247,6 +247,7 @@ TOC commands:
 
 % labeled TOC entries
 \book {
+  \part "firstpart" "1" "First part"
   \bookpart {
     \section "2" "Recitativo" "Title"
     \addTocLabel "label2"

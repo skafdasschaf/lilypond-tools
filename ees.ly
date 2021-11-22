@@ -749,8 +749,8 @@ insertEmptyPage = #(define-void-function
     #}))
 
 part = #(define-void-function
-  (number title)
-  (string? string?)
+  (label number title)
+  (string? string? string?)
   (ly:book-add-bookpart!
     (ly:parser-lookup '$current-book)
     #{
@@ -768,7 +768,7 @@ part = #(define-void-function
         #(set! ees-tocnumber number)
         #(set! ees-tocgenre "")
         #(set! ees-toctitle title)
-        \addTocEntry
+        \addTocLabel #label
         \new Staff \with {
           \remove "Clef_engraver"
           \remove "Time_signature_engraver"
