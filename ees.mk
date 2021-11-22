@@ -12,7 +12,8 @@ $(scores:%=tmp/%.pdf): tmp/%.pdf: scores/%.ly \
                                   $(notes:%=notes/%.ly) \
                                   definitions.ly
 >mkdir -p tmp
->$(LILYPOND) -o tmp '$(shell realpath $<)'
+>$(LILYPOND) -dlog-file=$(basename $@).ly -o tmp '$(realpath $<)'
+>cat $(basename $@).ly.log
 
 ## all scores ('make scores')
 .PHONY: scores
@@ -25,14 +26,15 @@ scores: $(scores)
 $(scores:%=final/%): %: %.pdf
 $(scores:%=final/%.pdf): final/%.pdf: front_matter/critical_report.tex \
                                       tmp/%.pdf \
-		                                  metadata.yaml \
-		                                  CHANGELOG.md
+                                      metadata.yaml \
+                                      CHANGELOG.md
 >python $(EES_TOOLS_PATH)/read_metadata.py edition -t $*
 >latexmk -cd \
 >        -lualatex \
 >        -outdir=../final \
 >        -jobname=$* \
 >        front_matter/critical_report.tex
+> cp final/$*.log tmp/$*.tex.log
 >latexmk -c \
 >        -outdir=final \
 >        -jobname=$* \
