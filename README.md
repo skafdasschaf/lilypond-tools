@@ -508,3 +508,48 @@ By default, these macros use the respective values in `metadata.yaml`.
 ## .github/workflows/engrave-and-release.yaml
 
 This GitHub Actions workflow engraves scores using the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker container and creates a GitHub release that includes the generated PDFs. It is triggered whenever a [SemVer](https://semver.org) tag is pushed to GitHub.
+
+
+## Appendix
+
+### Useful LilyPond snippets
+
+Increase length of multi measure rest.
+
+```lilypond
+\override MultiMeasureRest.minimum-length = #40
+R\breve.*123 \bar "||"
+```
+
+Adjust overall horizontal spacing.
+
+```lilypond
+\layout { \context { \Score \override SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8) } }
+```
+
+Define a left-aligned mark.
+
+```lilypond
+markFine = {
+  \mark \markup { \remarkE "Fine" }
+}
+```
+
+Change displayed time signature fraction.
+
+```lilypond
+\set Staff.timeSignatureFraction = 3/8
+```
+
+
+### Spacing recommendations
+
+Given units “a/b” correspond to (a) `system-system-spacing.basic-distance` and `.minimum-distance`, and (b) `systems-per-page`.
+
+Staves|Full score|Vocal score|Notes
+--|---|---|--
+6|–/2||also for choral
+5|35/2||  
+4|22/3|35/2|30/2 for two stanzas  
+3|20/4 or 30/3||  
+2|23/5|22/5 or 18/6|  
