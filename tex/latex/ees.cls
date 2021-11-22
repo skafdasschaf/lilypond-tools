@@ -306,7 +306,7 @@
     \ifPrintFrontMatter%
       \contentsline{#2}{\numberline{#3}#5}{#6}{score.#6}%
     \fi%
-    \bookmark[level=#2,dest=score.#6]{#5}%
+    \bookmark[level=#2,dest=score.#6]{#3 #5}%
   }%
 }{}
 \ifthenelse{%
@@ -321,7 +321,7 @@
         {\ClassWarning{ees}{TOC label '#1' multiply defined}}%
       \global\@namedef{ees@toclabel@#1}{{#3}{#4}{#5}{#6}}%
     \fi%
-    \bookmark[level=#2,dest=score.#6]{#5}%
+    \bookmark[level=#2,dest=score.#6]{#3 #4: #5}%
   }%
 }{}
 
