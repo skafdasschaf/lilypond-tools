@@ -534,9 +534,9 @@
   }{}%
   \bookmarksetup{startatroot,openlevel=5}%
   \InputIfFileExists%
-    {../tmp/lilypond.toc}%
+    {../tmp/\jobname.toc}%
     {}%
-    {\InputIfFileExists{../lilypond.toc}{}{}}%
+    {\InputIfFileExists{../\jobname.toc}{}{}}%
   \ifthenelse{%
     \boolean{PrintFrontMatter}\and%
     \not\equal{\ees@tocstyle}{\ees@tocstyle@none}%

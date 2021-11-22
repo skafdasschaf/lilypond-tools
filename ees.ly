@@ -699,7 +699,7 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
   \set figuredBassFormatter = #new-format-bass-figure
 }
 
-
+#(use-modules (ice-9 regex))
 #(define (ly:create-toc-file layout pages)
   (let* ((label-table (ly:output-def-lookup layout 'label-page-table)))
     (if (not (null? label-table))
@@ -713,7 +713,13 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
                  (format #f "~a{~a}" text page))))
              (formatted-toc-items (map format-line (toc-items)))
              (whole-string (string-join formatted-toc-items "\n"))
-             (outfilename "lilypond.toc")
+             (infilename
+               (match:substring
+                 (string-match "(\\w+)\\.ly$" input-file-name)))
+             (outfilename
+               (string-append
+                 (substring infilename 0 (- (string-length infilename) 2))
+                 "toc"))
              (outfile (open-output-file outfilename)))
        (if (output-port? outfile)
            (display whole-string outfile)
