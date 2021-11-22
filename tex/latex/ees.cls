@@ -117,6 +117,7 @@
 
 
 \RequirePackage{lilyglyphs}
+\defaultfontfeatures[emmentaler-16]{ItalicFont=emmentaler-16}
 
 \let\ees@oldflat\flat
 \def\flat#1{#1\kern.1em\ees@oldflat}
