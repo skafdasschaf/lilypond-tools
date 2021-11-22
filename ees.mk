@@ -43,6 +43,7 @@ $(scores:%=final/%.pdf): final/%.pdf: front_matter/critical_report.tex \
 ## all final scores (`make final/scores')
 .PHONY: final/scores
 final/scores: $(scores:%=final/%)
+>python $(EES_TOOLS_PATH)/parse_logs.py | tee tmp/_logs.txt
 
 # info
 space := $(subst ,, )

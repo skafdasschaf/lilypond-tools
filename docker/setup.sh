@@ -12,7 +12,7 @@ git clone https://github.com/edition-esser-skala/ees-tools.git
 mv ees-tools /ees-tools
 
 # Python packages
-pip install numpy pandas GitPython PyYAML
+pip install GitPython numpy pandas PyYAML termcolor texoutparse
 
 # TinyTex
 wget https://yihui.org/tinytex/install-bin-unix.sh

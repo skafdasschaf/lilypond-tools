@@ -21,6 +21,7 @@
   - [Polyphony](#polyphony)
   - [Bass figures](#bass-figures)
 - [ees.mk](#eesmk)
+  - [parse_logs.py](#parse_logspy)
 - [instrument_data.csv](#instrument_datacsv)
 - [read_metadata.py](#read_metadatapy)
   - [Subcommand `edition`](#subcommand-edition)
@@ -335,6 +336,11 @@ Makefile that defines rules for engraving scores. This file is included by the `
 - `final/full_score`, `final/b`, `final/vl1` etc: individual final scores (LilyPond output + front matter)
 - `final/scores`: all final scores
 - `info`: usage details
+
+
+### parse_logs.py
+
+Each run of LilyPond and LuaLaTeX generates a log file, which is stored in *tmp/<score>.ly.log* and *tmp/<score>.tex.log*, respectively. This script collects all errors, warnings, and full boxes from these logs and stores them in *tmp/_logs.txt*.
 
 
 
