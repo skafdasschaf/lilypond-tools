@@ -168,6 +168,9 @@
 \microtypesetup{verbose=silent}
 
 
+\RequirePackage{ragged2e}
+
+
 \RequirePackage{booktabs,xltabular}
 
 
@@ -225,19 +228,32 @@
   labelsep=0pt,
   font=\normalfont\sbseries,
   parsep=\baselineskip,
+  itemsep=0pt,
+  first=\RaggedRight
+}
+
+\newlist{sourcedetails}{description}{2}
+\setlist[sourcedetails]{
+  labelindent=0pt,
+  labelwidth=6em,
+  leftmargin=6em,
+  labelsep=0pt,
+  font=\normalfont\itshape,
+  parsep=0pt,
   itemsep=0pt
 }
 
-\def\ees@sourceitemlabel#1{\makebox[6em][l]{\itshape#1}}
 \newcommand\sourceitem[8]{%
   \item[#1]%
-    \ees@sourceitemlabel{Library}\textmd{#2}\newline%
-    \ees@sourceitemlabel{Shelfmark}\textmd{#3}\newline%
-    \ees@sourceitemlabel{Category}#4\newline%
-    \ees@sourceitemlabel{Date}#5\newline%
-    \ees@sourceitemlabel{RISM ID}#6\newline%
-    \ees@sourceitemlabel{URL}\url{#7}%
-    \ifthenelse{\equal{#8}{\@empty}}{}{\newline\ees@sourceitemlabel{Notes}#8}%
+    \begin{sourcedetails}%
+      \item[Library] #2%
+      \item[Shelfmark] #3%
+      \item[Category] #4%
+      \item[Date] #5%
+      \item[RISM ID] #6%
+      \item[URL] \url{#7}%
+      \ifthenelse{\equal{#8}{\@empty}}{}{\item[Notes] #8}%
+    \end{sourcedetails}%
 }
 
 \def\A#1{\textsb{A#1}}
