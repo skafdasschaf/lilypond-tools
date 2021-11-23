@@ -35,6 +35,9 @@
   - [Document structure](#document-structure)
   - [Manual TOC](#manual-toc)
 - [.github/workflows/engrave-and-release.yaml](#githubworkflowsengrave-and-releaseyaml)
+- [Appendix](#appendix)
+  - [Useful LilyPond snippets](#useful-lilypond-snippets)
+  - [Spacing recommendations](#spacing-recommendations)
 
 
 
@@ -544,12 +547,25 @@ Change displayed time signature fraction.
 
 ### Spacing recommendations
 
-Given units “a/b” correspond to (a) `system-system-spacing.basic-distance` and `.minimum-distance`, and (b) `systems-per-page`.
+Vertical spacing is changed by modifying
+- the *top margin* via `top-system-spacing` (default: 20 staff spaces), `top-markup-spacing` (5), and `markup-system-spacing` (15);
+- the distance *between systems* via `system-system-spacing` (20); and
+- distances *within a system* via `\smallGroupDistance`, `\smallStaffDistance`, and user-defined similar commands.
+
+Note that both the `.basic-distance` and `.minimum-distance` must be changed.
+
+For full scores with **seven staves** (e.g., Vienna church trio and four-part choir), decrease the top margin and show two systems per page:
+- `top-system-spacing` -> 10
+- `top-markup-spacing` -> 0
+- `markup-system-spacing` -> 10
+- `systems-per-page` -> 2
+
+For scores with **six or less staves**, change (a) the distance between systems and (b) the number of systems per page (written as “a/b” in the table below):
 
 Staves|Full score|Vocal score|Notes
 --|---|---|--
 6|–/2||also for choral
-5|35/2||  
-4|22/3|35/2|30/2 for two stanzas  
-3|20/4 or 30/3||  
-2|23/5|22/5 or 18/6|  
+5|30/2||
+4|22/3|35/2|
+3|20/4 or 30/3||
+2|23/5|22/5 or 18/6|
