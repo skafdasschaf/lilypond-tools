@@ -17,6 +17,7 @@ paralist
 csvsimple
 gobble
 datetime2
+datetime2-english
 tracklang
 pdflscape
 fontawesome5
