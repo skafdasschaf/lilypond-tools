@@ -54,7 +54,6 @@
   systems-per-page = #9
 }
 
-
 #(if
   (not (defined? 'option-instrument-name))
   (define option-instrument-name "")

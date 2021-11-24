@@ -54,10 +54,15 @@
   systems-per-page = #6
 }
 
+#(if
+  (not (defined? 'option-instrument-name))
+  (define option-instrument-name "org")
+)
+
 \layout {
   \context {
     \PianoStaff
-    instrumentName = "org"
+    instrumentName = #option-instrument-name
   }
 }
 
