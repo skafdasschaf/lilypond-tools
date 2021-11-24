@@ -192,6 +192,8 @@ def read_metadata(metadata_file, score_type="draft"):
     # instrument metadata. Can be overridden by the `parts` key.
     # Roman numbers are automatically appended.
 
+    if "parts" not in metadata:
+        metadata["parts"] = None
     metadata["score_type"] = get_score_type(score_type, metadata["parts"])
 
     ## Repository
