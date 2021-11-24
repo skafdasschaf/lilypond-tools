@@ -19,50 +19,63 @@
 #(define-markup-command
   (printBookTitle layout props)
   ()
-  (cond ((string= option-movement-title-format "genre-number-title")
-         (interpret-markup layout props #{
-           \markup {
-             \fill-line {
-               \line {
-                 \fontsize #4 {
-                   \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
-                   \hspace #2
-                   \italic { \fromproperty #'header:genre }
-                   \hspace #2
-                   \fromproperty #'header:title
-                 }
-               }
+  (cond
+    ((string= option-movement-title-format "genre-number-title")
+      (interpret-markup layout props #{
+       \markup {
+         \fill-line {
+           \line {
+             \fontsize #4 {
+               \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
+               \hspace #2
+               \italic { \fromproperty #'header:genre }
+               \hspace #2
+               \fromproperty #'header:title
              }
            }
-         #}))
-        ((string= option-movement-title-format "number-title")
-         (interpret-markup layout props #{
-           \markup {
-             \fill-line {
-               \line {
-                 \fontsize #4 {
-                   \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
-                   \hspace #2
-                   \fromproperty #'header:title
-                 }
-                 \fontsize #3 \fromproperty #'header:subtitle
-               }
+         }
+       }
+      #}))
+    ((string= option-movement-title-format "number-title")
+      (interpret-markup layout props #{
+       \markup {
+         \fill-line {
+           \line {
+             \fontsize #4 {
+               \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
+               \hspace #2
+               \fromproperty #'header:title
+             }
+             \fontsize #3 \fromproperty #'header:subtitle
+           }
+         }
+       }
+      #}))
+    ((string= option-movement-title-format "title")
+      (interpret-markup layout props #{
+       \markup {
+         \fill-line {
+           \line {
+             \fontsize #4 {
+               \fromproperty #'header:title
+             }
+             \fontsize #3 \fromproperty #'header:subtitle
+           }
+         }
+       }
+      #}))
+    ((string= option-movement-title-format "number")
+      (interpret-markup layout props #{
+       \markup {
+         \fill-line {
+           \line {
+             \fontsize #4 {
+               \with-color #(rgb-color .8313 0 0) { \fromproperty #'header:number }
              }
            }
-         #}))
-        ((string= option-movement-title-format "title")
-         (interpret-markup layout props #{
-           \markup {
-             \fill-line {
-               \line {
-                 \fontsize #4 {
-                   \fromproperty #'header:title
-                 }
-                 \fontsize #3 \fromproperty #'header:subtitle
-               }
-             }
-           }
-         #}))))
+         }
+       }
+      #}))))
 
 
 \paper {
@@ -790,7 +803,8 @@ section =
           (set! ees-tocgenre "")
           (set! ees-toctitle title)
           #{ \header { title = #title } #})))
-    ((string= option-movement-title-format "number-title")
+    ((or (string= option-movement-title-format "number-title")
+        (string= option-movement-title-format "number"))
       (define-scheme-function
         (parser location number title)
         (string? string?)
