@@ -164,15 +164,15 @@
 make-one-pitch = #(define-scheme-function
   (parser location pitch acc)
   (string? string?)
-  #{
-    \markup {
-      \concat {
-        #pitch
-        \hspace #(if (string= acc "") 0 0.25)
-        \fontsize #-2 \raise #.5 \musicglyph #(string-append "accidentals." acc )
-      }
-    }
-  #})
+  (markup #:concat (
+    pitch
+    (if (string= acc "")
+      (markup #:null)
+      (markup
+        #:hspace .25
+        #:fontsize -2
+        #:raise .5
+        #:musicglyph (string-append "accidentals." acc ))))))
 
 make-timp-pitches = #(define-scheme-function
   (parser location pitch-high acc-high pitch-low acc-low)
