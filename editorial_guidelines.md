@@ -1,9 +1,11 @@
-# Introduction
+# Editorial guidelines
+
+## Introduction
 
 This document describes v2021.12.0 of the editorial guidelines for the Edition Esser-Skala. These guidelines mainly follow the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
 
 
-# Contents
+## Contents
 
 - [Prefatory material](#prefatory-material)
   - [Title page](#title-page)
@@ -30,11 +32,11 @@ This document describes v2021.12.0 of the editorial guidelines for the Edition E
 
 
 
-# Prefatory material
+## Prefatory material
 
 Prefatory material comprises the [title and copyright page](#title-page). In addition, the full score also contains a [critical report](#critical-report),  [changelog](#changelog), and [table of contents](#table-of-contents).
 
-## Title page
+### Title page
 
 The *title page* (p. i) includes the following information:
 - a header with the composer's last name and the (possibly abbreviated) work title
@@ -62,17 +64,17 @@ The *copyright page* (p. ii) includes:
 
 
 
-## Critical report
+### Critical report
 
 The critical report consists of three secions [Abbreviations](#abbreviations), [Sources](#sources), and [Commentary](#commentary).
 
 
-### Abbreviations
+#### Abbreviations
 
 This section contains a table of used abbreviations. Instruments are abbreviated according to [RISM](https://opac.rism.info/scoring-abbreviations).
 
 
-### Sources
+#### Sources
 
 This section describes the used sources of a given work. Each source is labeled with a bold capital letter (indicating the source category) followed by an index number:
 - **A**: autograph manuscripts
@@ -93,14 +95,14 @@ For each source, the following information is included:
 - notes (optional)
 
 
-### Commentary
+#### Commentary
 
 Each edition is based upon a single principal source, which is explicitly identified in section [Sources](#sources). Any substantial difference between the edition and the principal source is
 
 1. indicated with an asterisk in the score and
 2. reported in this section as an editorial *emendation*.
 
-However, the following elements are *tacitly* modernized or standardized (see section [Conventions of notation](#conventions-of-notations) for details): Tempo indications, instrument names, clefs, accidentals, beaming and stem directions, rests, placement of dynamics/slurs/ties, treatment of shorthand notations, bar numbering, bar lines, and repeats.
+However, the following elements are *tacitly* modernized or standardized (see section [Conventions of notation](#conventions-of-notation) for details): Tempo indications, instrument names, clefs, accidentals, beaming and stem directions, rests, placement of dynamics/slurs/ties, treatment of shorthand notations, bar numbering, bar lines, and repeats.
 
 The table of emendations comprises the following columns:
 - movement (only if there are several movements in the work)
@@ -120,22 +122,22 @@ The following conventions apply to the commentary:
 
 
 
-## Changelog
+### Changelog
 
 The changelog contains a curated, chronologically ordered list of notable changes for each version of the edition. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and the edition adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
 
 
 
-## Table of contents
+### Table of contents
 
 The table of contents list all individual movements with their number, title, and page number. For each movement, its genre as well as lyrics may be included. If a work has a single movement, the table of contents will be omitted.
 
 
 
-# Conventions of notation
+## Conventions of notation
 
-## Score order
+### Score order
 
 The score order from top to bottom is:
 - woodwind instruments
@@ -171,35 +173,35 @@ with automatic part combining. In the latter case,
 Each part is spelled out in full on the first system of the first movement (singular form of modern Italian names), and abbreviated on the first system of each subsequent movement. Divided parts are indicated by Roman numerals in the first movement and by Arabic numbers in each subsequent movement. Transposing instruments include their pitch (e.g., “Clarino I, II in C” in the first movement and “clno (C) 1, 2” in subsequent movements). The part with figured bass is typically labeled “Organo e Bassi” or “Fondamento”.
 
 
-## Clefs
+### Clefs
 
 Keyboard music in soprano clef is notated in treble clef. Vocal music in soprano or alto clef is changed to
 treble clef; the tenor clef is changed to treble ottavo. Other clefs (e.g., alto for viola parts) are generally not altered. In the first movement, the original clef is given as incipit.
 
 
-## Key signatures
+### Key signatures
 
 The original key signature is retained, while the order and position of sharps and flats is modernized.
 
 
-## Tempo indications and movement designations
+### Tempo indications and movement designations
 
 Tempo indications appear in the original language; inconsistent spelling is regularized. Only the first word of Italian terms is capitalized (e.g., “Poco andante”). Movement designations may be retained in the original language (“Chor”) or translated to Italian (“Coro”),
 
 Individual movements are numbered by the editor if numbers are absent in the source.
 
 
-## Bar numbering
+### Bar numbering
 
 Each new system except the first includes a bar number (bar 1 is the first full measure). Changes of tempo and meter within a movement are through-numbered. Bar numbering begins at 1 in each new movement, even where the movements are continuous (as indicated by thin-thin bar lines).
 
 
-## Accidentals
+### Accidentals
 
 An accidental remains in force throughout a measure unless canceled by another accidental. Cautionary accidentals are tacitly added, redundant accidentals are tacitly deleted.
 
 
-## Slurs and ties
+### Slurs and ties
 
 Slurs are carefully regularized. In vocal music, melismatic slurring in vocal music is shown even when beaming reflects syllabification. However, such slurs are usually not longer than one measure. Source slurring that shows phrasing is retained.
 
@@ -208,31 +210,31 @@ If two notes of the same pitch are tied, the note value is changed as appropriat
 Editorial slurs and ties are dashed.
 
 
-## Bass figures
+### Bass figures
 
 Figures are set below the continuo line. Accidentals are placed before the figures to which they apply. Editorial figures are parenthesized.
 
 
-## Embellishments
+### Embellishments
 
 Ornaments are generally reproduced exactly as they appear in the principal source. Slurs are added from appoggiaturas to the main note, except if they appear under a longer slur. The rhythmic value of grace notes is tacitly emended to half the length of the main note. Editorial expressive marks are parenthesized.
 
 
-## Articulation
+### Articulation
 
 Generally, both dots and strokes in the source are rendered as strokes in the edition. Dots are only retained if they are required in a particular context such as portato (i.e., notes that are both slurred and dotted). Editorial articulation signs are parenthesized.
 
 
-## Dynamics and directives
+### Dynamics and directives
 
 Dynamics and other directives are usually standardized to modern Italian and placed below the staff, but above the staff in vocal music. Source dynamics are typeset upright, editorial additions or changes are typeset in italics.
 
 
-## Notational shorthand
+### Notational shorthand
 
 Generally, notational shorthand is realized in full. Slashed stems may be used to indicate repeated notes if this improves readability.
 
 
-## Vocal texts
+### Vocal texts
 
 Latin texts are standardized and modernized. Archaic German spelling is retained (notably, lyrics distinguish between long ſ and round s). Editorial changes are indicated by italic type. When text is repeated in vocal music, a period is only used if a complete sentence is repeated; otherwise, a comma is used. Syllabification of German text is standardized according to the Duden. Groups of notes sung to a single syllable are beamed together, notes sung to separate syllables are stemmed separately.
