@@ -164,9 +164,17 @@ def get_score_type(abbr, parts):
         error_exit(f"No long form for {abbr} defined")
 
 
-def read_metadata(metadata_file, score_type="draft"):
-    with open(metadata_file) as f:
-        metadata = yaml.load(f, Loader=UniqueKeyLoader)
+def parse_metadata(file=None,
+                   string=None,
+                   score_type="draft",
+                   checksum_from="tag"):
+    if file is not None:
+        with open(file) as f:
+            metadata = yaml.load(f, Loader=UniqueKeyLoader)
+    elif string is not None:
+        metadata = yaml.load(string, Loader=UniqueKeyLoader)
+    else:
+        error_exit("No metadata specified.")
 
     ## Names
     # The `composer` key is required. If the value is a single string,
@@ -201,22 +209,23 @@ def read_metadata(metadata_file, score_type="draft"):
     # as are the version, date, and SHA1 of HEAD or the most recent tag.
     # In the former case, set version to "work in progress".
 
-    github_repo = re.search("github\\.com.(.+)", Repo(".").remotes.origin.url)
-    if github_repo is None:
-        error_exit("URL of origin repository has unknown format.")
-    metadata["repository"] = github_repo.group(1).removesuffix(".git")
+    if checksum_from is not None:
+        github_repo = re.search("github\\.com.(.+)", Repo(".").remotes.origin.url)
+        if github_repo is None:
+            error_exit("URL of origin repository has unknown format.")
+        metadata["repository"] = github_repo.group(1).removesuffix(".git")
 
-    if args.checksum_from == "tag":
-        if Repo(".").tags:
-            metadata["version"] = Repo(".").tags[-1].name
-            commit = Repo(".").tags[-1].commit
+        if checksum_from == "tag":
+            if Repo(".").tags:
+                metadata["version"] = Repo(".").tags[-1].name
+                commit = Repo(".").tags[-1].commit
+            else:
+                error_exit("ERROR: No tag found – unable to retrieve metadata.")
         else:
-            error_exit("ERROR: No tag found – unable to retrieve metadata.")
-    else:
-        metadata["version"] = "work in progress"
-        commit = Repo(".").head.commit
-    metadata["date"] = commit.committed_datetime.strftime("%Y-%m-%d")
-    metadata["checksum"] = commit.hexsha
+            metadata["version"] = "work in progress"
+            commit = Repo(".").head.commit
+        metadata["date"] = commit.committed_datetime.strftime("%Y-%m-%d")
+        metadata["checksum"] = commit.hexsha
 
     ## LilyPond version
     # The LilyPond version is obtained from the executable.
@@ -315,7 +324,9 @@ def read_metadata(metadata_file, score_type="draft"):
 # Dispatcher functions ----------------------------------------------------
 
 def prepare_edition(args):
-    metadata = read_metadata(args.input, args.type)
+    metadata = parse_metadata(
+        file=args.input, score_type=args.type, checksum_from=args.checksum_from
+    )
 
     # assemble macros
     if args.type in ("draft", "full_score"):
@@ -362,7 +373,7 @@ def prepare_table(args):
                 continue
             try:
                 f = os.path.join(full_work_dir, "metadata.yaml")
-                metadata = read_metadata(f)
+                metadata = parse_metadata(file=f)
             except FileNotFoundError:
                 print("WARNING: No metadata found in", full_work_dir)
                 continue
@@ -377,75 +388,69 @@ def prepare_table(args):
     df[INCLUDED_COLUMNS].to_csv(args.output, index=False)
 
 
-def prepare_website(args):
-    raise NotImplementedError()
-
-
 
 # Parse arguments ---------------------------------------------------------
 
-parser = argparse.ArgumentParser(add_help=True)
-subparsers = parser.add_subparsers(
-    title="subcommands",
-    help="additional help available for each subcommand",
-    required=True
-)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(add_help=True)
+    subparsers = parser.add_subparsers(
+        title="subcommands",
+        help="additional help available for each subcommand",
+        required=True
+    )
 
-parser_edition = subparsers.add_parser("edition")
-parser_edition.add_argument(
-    "-i",
-    "--input",
-    default="metadata.yaml",
-    help="read metadata from FILE (default: 'metadata.yaml')",
-    metavar="FILE"
-)
-parser_edition.add_argument(
-    "-o",
-    "--output",
-    default="front_matter/critical_report.macros",
-    help="""write the macros to FILE
-            (default: 'front_matter/critical_report.macros')""",
-    metavar="FILE"
-)
-parser_edition.add_argument(
-    "-t",
-    "--type",
-    default="draft",
-    help="""select score TYPE for front matter
-            ('full_score', 'draft', or part name;
-            default: 'draft')"""
-)
-parser_edition.add_argument(
-    "-c",
-    "--checksum-from",
-    choices=["head", "tag"],
-    default="head",
-    help="""obtain version, date, and checksum from HEAD or the most recent tag
-            (default: head)"""
-)
-parser_edition.set_defaults(func=prepare_edition)
+    parser_edition = subparsers.add_parser("edition")
+    parser_edition.add_argument(
+        "-i",
+        "--input",
+        default="metadata.yaml",
+        help="read metadata from FILE (default: 'metadata.yaml')",
+        metavar="FILE"
+    )
+    parser_edition.add_argument(
+        "-o",
+        "--output",
+        default="front_matter/critical_report.macros",
+        help="""write the macros to FILE
+                (default: 'front_matter/critical_report.macros')""",
+        metavar="FILE"
+    )
+    parser_edition.add_argument(
+        "-t",
+        "--type",
+        default="draft",
+        help="""select score TYPE for front matter
+                ('full_score', 'draft', or part name;
+                default: 'draft')"""
+    )
+    parser_edition.add_argument(
+        "-c",
+        "--checksum-from",
+        choices=["head", "tag"],
+        default="head",
+        help="""obtain version, date, and checksum from HEAD
+                or the most recent tag (default: head)"""
+    )
+    parser_edition.set_defaults(func=prepare_edition)
 
-parser_table = subparsers.add_parser("table")
-parser_table.add_argument(
-    "-d",
-    "--root-directory",
-    default=".",
-    help="""read metadata from all repositories in ROOT,
-            assuming the folder structure root -> composer -> repository
-            (default: current folder)""",
-    metavar="ROOT"
-)
-parser_table.add_argument(
-    "-o",
-    "--output",
-    default="works.csv",
-    help="write the table to FILE (default: 'works.csv')",
-    metavar="FILE"
-)
-parser_table.set_defaults(func=prepare_table)
+    parser_table = subparsers.add_parser("table")
+    parser_table.add_argument(
+        "-d",
+        "--root-directory",
+        default=".",
+        help="""read metadata from all repositories in ROOT,
+                assuming the folder structure root -> composer -> repository
+                (default: current folder)""",
+        metavar="ROOT"
+    )
+    parser_table.add_argument(
+        "-o",
+        "--output",
+        default="works.csv",
+        help="write the table to FILE (default: 'works.csv')",
+        metavar="FILE"
+    )
+    parser_table.set_defaults(func=prepare_table)
 
-parser_website = subparsers.add_parser("website")
-parser_website.set_defaults(func=prepare_website)
-
-args = parser.parse_args()
-args.func(args)
+    args = parser.parse_args()
+    args.func(args)

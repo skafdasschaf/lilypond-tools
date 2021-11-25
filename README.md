@@ -26,7 +26,6 @@
 - [read_metadata.py](#read_metadatapy)
   - [Subcommand `edition`](#subcommand-edition)
   - [Subcommand `table`](#subcommand-table)
-  - [Subcommand `website`](#subcommand-website)
   - [metadata.yaml](#metadatayaml)
 - [tex/latex/ees.cls](#texlatexeescls)
   - [Class options](#class-options)
@@ -419,10 +418,6 @@ Collect metadata from several repositories and save it as a table. The subcomman
 - `-d`, `--root-directory ROOT`: read metadata from all repositories in `ROOT`, assuming the folder structure root -> composer -> repository (default: current folder)
 - `-o`, `--output FILE`: write the table to `FILE` (default: `works.csv`)
 
-
-### Subcommand `website`
-
-TBD
 
 
 ### metadata.yaml
