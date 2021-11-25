@@ -555,6 +555,13 @@ Change displayed time signature fraction.
 \set Staff.timeSignatureFraction = 3/8
 ```
 
+Add name to choir staff group.
+
+```lilypond
+\set ChoirStaff.instrumentName = \markup { \rotate #90 "C O R O   1" \hspace #8 }
+```
+
+
 
 ### Spacing recommendations
 
@@ -575,8 +582,15 @@ For scores with **six or less staves**, change (a) the distance between systems 
 
 Staves|Full score|Vocal score|Notes
 --|---|---|--
-6|–/2||also for choral
+6|–/2||
 5|30/2||
 4|22/3|35/2|
 3|20/4 or 30/3||
-2|23/5|22/5 or 18/6|
+2|23/5|22/5 or 18/6||
+
+For chorals, use the following settings:
+
+Stanzas|`system-system-spacing`|`systems-per-page`|`choir-staff-distance`
+-|-|-|-
+1|–|2|
+2|35|2|15/20
