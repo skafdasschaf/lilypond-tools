@@ -1,8 +1,7 @@
 # Editorial guidelines
 
-## Introduction
-
 This document describes v2021.12.0 of the editorial guidelines for the Edition Esser-Skala. These guidelines mainly follow the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
+
 
 
 ## Contents
