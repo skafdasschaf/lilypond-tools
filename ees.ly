@@ -396,39 +396,36 @@ decrescE = #(make-music
   'span-text (markup (#:normal-text #:small #:italic "decresc.")))
 
 
-smallGroupDistance = {
-  \override StaffGrouper.staffgroup-staff-spacing =
-    #'((basic-distance . 12)
-       (minimum-distance . 12)
-       (padding . -100)
-       (stretchability . 0))
-  \override StaffGrouper.staff-staff-spacing =
-    #'((basic-distance . 12)
-       (minimum-distance . 12)
-       (padding . -100)
-       (stretchability . 0))
-}
+setGroupDistance = #(define-scheme-function
+  (parser location staff-staff after-group)
+  (number? number?)
+  #{
+    \override StaffGrouper.staff-staff-spacing.basic-distance = #staff-staff
+    \override StaffGrouper.staff-staff-spacing.minimum-distance = #staff-staff
+    \override StaffGrouper.staff-staff-spacing.padding = #-100
+    \override StaffGrouper.staff-staff-spacing.stretchability = #0
+    \override StaffGrouper.staffgroup-staff-spacing.basic-distance = #after-group
+    \override StaffGrouper.staffgroup-staff-spacing.minimum-distance = #after-group
+    \override StaffGrouper.staffgroup-staff-spacing.padding = #-100
+    \override StaffGrouper.staffgroup-staff-spacing.stretchability = #0
+  #})
 
-normalGroupDistance = {
-  \override StaffGrouper.staffgroup-staff-spacing =
-    #'((basic-distance . 15)
-       (minimum-distance . 15)
-       (padding . -100)
-       (stretchability . 0))
-  \override StaffGrouper.staff-staff-spacing =
-    #'((basic-distance . 12)
-       (minimum-distance . 12)
-       (padding . -100)
-       (stretchability . 0))
-}
+smallGroupDistance = \setGroupDistance #12 #12
+normalGroupDistance = \setGroupDistance #12 #15
 
-smallStaffDistance = {
-  \override VerticalAxisGroup.staff-staff-spacing =
-    #'((basic-distance . 12)
-       (minimum-distance . 12)
-       (padding . -100)
-       (stretchability . 0))
-}
+
+setStaffDistance = #(define-scheme-function
+  (parser location after-staff)
+  (number?)
+  #{
+    \override VerticalAxisGroup.staff-staff-spacing.basic-distance = #after-staff
+    \override VerticalAxisGroup.staff-staff-spacing.minimum-distance = #after-staff
+    \override VerticalAxisGroup.staff-staff-spacing.padding = #-100
+    \override VerticalAxisGroup.staff-staff-spacing.stretchability = #0
+  #})
+
+smallStaffDistance = \setStaffDistance #12
+
 
 twofourtime = {
   \overrideTimeSignatureSettings
@@ -621,29 +618,11 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
     \StaffGroup
     \override SystemStartBracket.collapse-height = #1
     \override InstrumentName.font-shape = #'italic
-    \override StaffGrouper.staffgroup-staff-spacing =
-      #'((basic-distance . 15)
-         (minimum-distance . 15)
-         (padding . -100)
-         (stretchability . 0))
-    \override StaffGrouper.staff-staff-spacing =
-      #'((basic-distance . 12)
-         (minimum-distance . 12)
-         (padding . -100)
-         (stretchability . 0))
+    \setGroupDistance #12 #15
   }
   \context {
     \ChoirStaff
-    \override StaffGrouper.staffgroup-staff-spacing =
-      #'((basic-distance . 15)
-         (minimum-distance . 15)
-         (padding . -100)
-         (stretchability . 0))
-    \override StaffGrouper.staff-staff-spacing =
-      #'((basic-distance . 13)
-         (minimum-distance . 13)
-         (padding . -100)
-         (stretchability . 0))
+    \setGroupDistance #13 #15
     \override StaffGrouper.nonstaff-nonstaff-spacing =
       #'((basic-distance . 2)
          (minimum-distance . 2)
@@ -653,30 +632,12 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
   \context {
     \GrandStaff
     \override InstrumentName.font-shape = #'italic
-    \override StaffGrouper.staffgroup-staff-spacing =
-      #'((basic-distance . 15)
-         (minimum-distance . 15)
-         (padding . -100)
-         (stretchability . 0))
-    \override StaffGrouper.staff-staff-spacing =
-      #'((basic-distance . 12)
-         (minimum-distance . 12)
-         (padding . -100)
-         (stretchability . 0))
+    \setGroupDistance #12 #15
   }
   \context {
     \PianoStaff
     \override InstrumentName.font-shape = #'italic
-    \override StaffGrouper.staffgroup-staff-spacing =
-      #'((basic-distance . 15)
-         (minimum-distance . 15)
-         (padding . -100)
-         (stretchability . 0))
-    \override StaffGrouper.staff-staff-spacing =
-      #'((basic-distance . 12)
-         (minimum-distance . 12)
-         (padding . -100)
-         (stretchability . 0))
+    \setGroupDistance #12 #15
   }
   \context {
     \Staff

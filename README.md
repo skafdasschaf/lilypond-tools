@@ -171,18 +171,28 @@ Include one of the following files in subfolder `score_settings` at the beginnin
 
 ### System configuration
 
+- `\setGroupDistance <staff-staff> <after-group>`
+- `\setStaffDistance <after-staff>`
+
+These commands modify the vertical spacing of staff groups and single staves. `<staff-staff>` will be the spacing between staves in the group, while `<after-group>` and `<after-staff>` will be the distance after the group and staff, respectively.
+
+```lilypond
+\new Staff \with { \setStaffDistance #10 } { … }
+
+\new StaffGroup <<
+  \new GrandStaff \with { \setGroupDistance #12 #15 } <<
+    \new Staff { … }
+    \new Staff { … }
+  >>
+  \new Staff { … }
+>>
+```
+
 - `\smallGroupDistance`
 - `\normalGroupDistance`
 - `\smallStaffDistance`
 
-These commands modify the vertical spacing of staff groups and single staves:
-
-```lilypond
-\new Staff \with { \smallStaffDistance } {
-  \set Staff.instrumentName = "clno"
-  \Clarino
-}
-```
+For convenience, these three commands for changing distances are predefined.
 
 - `\incipit "<name>" "<clef>" #<space1> #<space2>`
 - `\incipitSoprano`
