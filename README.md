@@ -300,16 +300,7 @@ TOC commands:
 
 ### Inside the staff
 
-- `\twofourtime` and `\twotwotime` adjust automatic beaming in 2/4 and 2/2 time, respectively:
-  ```lilypond
-  KyrieViolinoI = {
-    \relative c' {
-      \clef treble
-      \twotwotime \key c \major \time 2/2 \tempoKyrie
-      ...
-    }
-  }
-  ```
+- `\twofourtime` and `\twotwotime` adjust automatic beaming in 2/4 and 2/2 time, respectively.
 - The following dynamics commands are redefined and supplemented by an editorial variant: `\ff` (plus `\ffE` etc), `\f`, `\mf`, `\mp`, `\p`, `\pp`, `\sf`, `\sfp`, `\sfz`, `\fp`, `\fz`, `\rf`, `\rfz`, `\piuF`, `\piuP`, `\pocoF`, `\pocoP`, `\cresc`, and `\decresc`.
 - `\bp`: override beam positions
 - `\extraNat`: force accidental
