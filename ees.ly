@@ -422,6 +422,10 @@ setStaffDistance = #(define-scheme-function
     \override VerticalAxisGroup.staff-staff-spacing.minimum-distance = #after-staff
     \override VerticalAxisGroup.staff-staff-spacing.padding = #-100
     \override VerticalAxisGroup.staff-staff-spacing.stretchability = #0
+    \override VerticalAxisGroup.default-staff-staff-spacing.basic-distance = #after-staff
+    \override VerticalAxisGroup.default-staff-staff-spacing.minimum-distance = #after-staff
+    \override VerticalAxisGroup.default-staff-staff-spacing.padding = #-100
+    \override VerticalAxisGroup.default-staff-staff-spacing.stretchability = #0
   #})
 
 smallStaffDistance = \setStaffDistance #12
