@@ -325,9 +325,13 @@
         {\ClassWarning{ees}{TOC label '#1' multiply defined}}%
       \global\@namedef{ees@toclabel@#1}{{#3}{#4}{#5}{#6}}%
     \fi%
-    \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@ref}}%
-      {\bookmark[level=#2,dest=score.#6]{#3 #5}}%
-      {\bookmark[level=#2,dest=score.#6]{#3 #4: #5}}%
+    \ifthenelse{\equal{\ees@tocstyle}{\ees@tocstyle@ref}}{%
+      \bookmark[level=#2,dest=score.#6]{#3 #5}%
+     }{%
+       \ifthenelse{\equal{#2}{part}}%
+         {\bookmark[level=#2,dest=score.#6]{#3: #5}}%
+         {\bookmark[level=#2,dest=score.#6]{#3 #4: #5}}%
+     }%
   }%
 }{}
 
