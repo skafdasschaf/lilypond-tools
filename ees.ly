@@ -493,7 +493,7 @@ markDaCapo = {
 
 incipit = #(define-music-function
   (name clef name-staff-space staff-system-space)
-  (string? string? number? number?)
+  (markup? string? number? number?)
   #{
     \set Staff.instrumentName = \markup {
       #name \hspace #name-staff-space \score {
