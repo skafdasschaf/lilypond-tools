@@ -603,6 +603,8 @@ For full scores with **seven staves** (e.g., Vienna church trio and four-part ch
 }
 ```
 
+Alternatively, decrease system-system spacing to 20 and use `\smallGroupDistance`; this allows to preserve the top margin..
+
 For scores with **six or less staves**, change (a) the distance between systems and (b) the number of systems per page (written as “a/b” in the table below):
 
 ```lilypond
@@ -613,17 +615,19 @@ For scores with **six or less staves**, change (a) the distance between systems 
 }
 ```
 
-Staves|Full score|Vocal score|Notes
---|---|---|--
-6|–/2||
-5|30/2||
-4|22/3|35/2|
-3|20/4 or 30/3||
-2|23/5|22/5 or 18/6||
+Staves|Full score|Vocal score
+--|---|---
+6|–/2|?
+5|30/2|–/2
+4|22/3|?
+3|20/4 (or 30/3)|22/4
+2|21/5 (or 18/6 with `\smallGroupDistace`) |20/6|
 
-For chorals, use the following settings:
+If a work contains **chorals with two stanzas**, define
 
-Stanzas|`system-system-spacing`|`systems-per-page`|`choir-staff-distance`
--|-|-|-
-1|–|2|
-2|35|2|15/20
+```lilypond
+twoStanzaDistance = \setGroupDistance #15 #20
+twoStanzaDistanceCoro = \setGroupDistance #13 #13
+```
+
+and apply these to the choir staff in the full and vocal score, respectively. In the vocal score, also increase system-system spacing to 15 if there are three systems on the page.
