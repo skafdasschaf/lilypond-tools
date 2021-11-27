@@ -129,10 +129,14 @@
 \def\doublesharp#1{#1\kern.1em\ees@olddoublesharp}
 \let\ees@oldflatflat\flatflat
 \def\flatflat#1{#1\kern.1em\ees@oldflatflat}
-\let\ees@oldwholeNoteRest\wholeNoteRest
-\def\wholeNoteRest{\kern.12em\ees@oldwholeNoteRest\kern.2em}
-\let\ees@oldhalfNoteRest\halfNoteRest
-\def\halfNoteRest{\kern.12em\ees@oldhalfNoteRest\kern.2em}
+\renewcommand*\wholeNoteRest[1][]{%
+	\setkeys{lilyDesignOptions}{scale=1.3,raise=0.4}%
+	\kern.12em\lilyPrint[#1]{\hspace*{0.25ex}\lilyGetGlyph{rests.0o}}\kern.2em%
+}
+\renewcommand*\halfNoteRest[1][]{%
+	\setkeys{lilyDesignOptions}{scale=1.3,raise=0.4}%
+	\kern.12em\lilyPrint[#1]{\hspace*{0.25ex}\lilyGetGlyph{rests.1o}}\kern.2em%
+}
 
 \newcommand*\demisemiquaverRest[1][]{%
   \setkeys{lilyDesignOptions}{scale=1.3,raise=0.5}%
