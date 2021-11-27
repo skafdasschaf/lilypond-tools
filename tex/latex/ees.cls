@@ -228,8 +228,8 @@
 \newlist{sources}{description}{1}
 \setlist[sources]{
   labelindent=0pt,
-  labelwidth=\ees@abbrwidth,
-  leftmargin=\ees@abbrwidth,
+  labelwidth=3em,
+  leftmargin=3em,
   labelsep=0pt,
   font=\normalfont\sbseries,
   parsep=\baselineskip,
