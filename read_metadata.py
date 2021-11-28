@@ -145,6 +145,7 @@ PRINT_SCORE_TEMPLATE = """
 
 # Prepare metadata --------------------------------------------------------
 
+# derive the score type shown on the title page from the score type abbreviation
 def get_score_type(abbr, parts):
     if abbr == "draft":
         return "Draft"
@@ -162,6 +163,15 @@ def get_score_type(abbr, parts):
         return f"{name} {number}".strip()
     except (KeyError, AttributeError):
         error_exit(f"No long form for {abbr} defined")
+
+
+# get the long form of a scoring abbreviation
+def get_abbr(a):
+    try:
+        res = INSTRUMENT_METADATA.loc[a, "long"]
+    except KeyError:
+        error_exit(f"Abbreviation {a} unknown.")
+    return res
 
 
 def parse_metadata(file=None,
@@ -308,10 +318,14 @@ def parse_metadata(file=None,
         if a[-1] == ")":
             a = re.match("[^\(]+", a).group(0).strip()
         a = a.lstrip("0123456789 ").removesuffix("solo").rstrip()
-        try:
-            abbr[a] = INSTRUMENT_METADATA.loc[a, "long"]
-        except KeyError:
-            error_exit(f"Abbreviation {a} unknown.")
+        abbr[a] = get_abbr(a)
+
+    if "extra_abbreviations" in metadata:
+        for a, long in metadata["extra_abbreviations"].items():
+            if long is None:
+                abbr[a] = get_abbr(a)
+            else:
+                abbr[a] = long
 
     abbr_items = [ABBR_ITEM_TEMPLATE.format(short=k, long=v)
                   for k, v in sorted(abbr.items(), key=lambda x: x[0].lower())]

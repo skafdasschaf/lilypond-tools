@@ -434,6 +434,7 @@ This file describes metadata for each work and comprises the following keys:
 - `imslp` (optional): IMSLP identifier (only used on the webpage).
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
 - `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.
+- `extra_abbreviations` (optional): Additional abbreviations and their long forms (subkeys and values, respectively) to be included in the critical report. If the subkey corresponds to a known abbreviation, its value may be empty.
 
 
 
@@ -444,7 +445,7 @@ LaTeX class for printing scores with prefatory material.
 ### Class options
 
 Type and default value in parentheses.
-- `abbrwidth` (length, 3em): width of the first column in the list of abbreviations and the list of sources
+- `abbrwidth` (length, 3em): width of the first column in the list of abbreviations
 - `shortnamesize` (number, 80): font size for the composer name in the title page head
 - `shorttitlesize` (number, 60): font size for the work title in the title page head
 - `tocstyle` (string, `default`): selects a style for the table of contents
