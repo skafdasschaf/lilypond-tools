@@ -616,13 +616,13 @@ For scores with **six or less staves**, change (a) the distance between systems 
 }
 ```
 
-Staves|Full score|Vocal score
---|---|---
-6|–/2|?
-5|30/2|–/2
-4|22/3|?
-3|20/4 (or 30/3)|22/4
-2|21/5 (or 18/6 with `\smallGroupDistace`) |20/6|
+Staves|Full score                                |Vocal score
+------|------------------------------------------|-----------
+6     |–/2                                       |–/2
+5     |30/2                                      |–/–
+4     |22/3                                      |25/3
+3     |20/4 (or 30/3)                            |22/4
+2     |21/5 (or 18/6 with `\smallGroupDistance`) |20/6
 
 If a work contains **chorals with two stanzas**, define
 
@@ -632,3 +632,5 @@ twoStanzaDistanceCoro = \setGroupDistance #13 #13
 ```
 
 and apply these to the choir staff in the full and vocal score, respectively. In the vocal score, also increase system-system spacing to 15 if there are three systems on the page.
+
+In **accompagnatos**, parts comprise up to 5 staves per page by default. The number of staves may be increased to six per page if system-system spacing is 16 and the choir staff uses `\smallGroupDistance`.
