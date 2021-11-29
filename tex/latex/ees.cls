@@ -16,6 +16,7 @@
 }
 
 \DeclareStringOption[3em]{abbrwidth}
+\DeclareBoolOption[true]{changelog}
 \DeclareStringOption[80]{shortnamesize}
 \DeclareStringOption[60]{shorttitlesize}
 \DeclareStringOption[default]{tocstyle}
@@ -526,8 +527,10 @@
             \end{xltabular}%
           }%
         \fi% ifees@toe
-    \cleardoublepage%
-    \markdownInput{../CHANGELOG.md}%
+    \ifees@changelog%
+      \cleardoublepage%
+      \markdownInput{../CHANGELOG.md}%
+    \fi%
   \fi% ifPrintFrontMatter
 }
 
