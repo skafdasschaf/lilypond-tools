@@ -187,9 +187,12 @@ def parse_metadata(file=None,
         error_exit("No metadata specified.")
 
     ## Names
-    # The `composer` key is required. If the value is a single string,
-    # it will be split into first and last name.
+    # The `composer` key is optional to accomodate collections of works.
+    # If the value is a single string, it will be split into first
+    # and last name.
 
+    if "composer" not in metadata:
+        metadata["composer"] = "(unknown), (unknown)"
     if isinstance(metadata["composer"], dict):
         if "suffix" not in metadata["composer"]:
             metadata["composer"]["suffix"] = ""

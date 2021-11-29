@@ -414,10 +414,12 @@ Collect metadata from several repositories and save it as a table. The subcomman
 ### metadata.yaml
 
 This file describes metadata for each work and comprises the following keys:
-- `composer` (required): The composer's name. The value should either be a single string with format `last name, first name`, or contain the following subkeys:
+- `composer` (optional): The composer's name. The value should either be a single string with format `last name, first name`, or contain the following subkeys:
   - `first` (required): first name (-> `\MetadataFirstname`)
   - `last` (required): last name (-> `\MetadataLastname`)
   - `suffix` (optional): name suffix (-> `\MetadataNamesuffix`)
+
+  Note that this key is optional mainly to facilitate collections of works by the same composer (such as the [Proprium Missae](https://github.com/edition-esser-skala/haydn-m-proprium-missae) project). If the key is missing, first and last name are set to “(unknown)”.
 - `title` (required): Work title (-> `\MetadataTitle`).
 - `subtitle` (optional): Work subtitle. The subtitle is combined with the work identifier and stored in `\MetadataSubtitle`. If this key is missing, the work identifier is used alone.
 - `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the principal source are used.
