@@ -40,7 +40,8 @@ LILYPOND_MESSAGE_TEMPLATE = """
 {context_line_2}
 """
 
-r = re.compile("([^:]+):([^:]+):([^:]+):([^:]+):(.+)")
+re_warning_error = re.compile("([^:]+):([^:]+):([^:]+):([^:]+):(.+)")
+re_other_warning = re.compile("$warning:|$Warnung:")
 
 ly_errors_found = False
 for ly_logs in glob.glob("tmp/*.ly.log"):
@@ -49,7 +50,7 @@ for ly_logs in glob.glob("tmp/*.ly.log"):
 
     messages = []
     for line_no, line in enumerate(lines):
-        message = r.match(line)
+        message = re_warning_error.match(line)
         if message:
             message_type = message.group(4).strip()
             if message_type in ["Fehler", "Error"]:
@@ -69,12 +70,18 @@ for ly_logs in glob.glob("tmp/*.ly.log"):
                     color=color
                 )
             )
+        message = re_other_warning.match(line)
+        if message:
+            messages.append(line)
 
     if messages:
         cprint(f"File: {ly_logs}", attrs=["underline"])
         ly_errors_found = True
         for m in messages:
-            cprint(LILYPOND_MESSAGE_TEMPLATE.format(**m), m["color"])
+            try:
+                cprint(LILYPOND_MESSAGE_TEMPLATE.format(**m), m["color"])
+            except TypeError:
+                cprint(m, "yellow")
 
 if not ly_errors_found:
     cprint("No problems detected! :)", "green")
