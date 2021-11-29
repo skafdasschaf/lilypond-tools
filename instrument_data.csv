@@ -32,6 +32,7 @@ org,organ,Organo,Organo,c,bass,true,none,figures
 org_realized,organ,Organo,Organo (basso continuo realizzato),c,bass,true,none,figures
 cemb,cembalo,Cembalo,Cembalo,c,bass,true,none,figures
 pf,piano,Piano,Piano,c,bass,true,none,none
+pf_red,piano reduction,Piano,Piano reduction,c,bass,true,none,none
 b,basses,Bassi,Bassi,c,bass,true,none,none
 bc,basso continuo,BassoContinuo,Basso continuo,c,bass,true,none,none
 fond,fondamento,Fondamento,Fondamento,c,bass,true,none,none
