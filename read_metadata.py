@@ -137,7 +137,7 @@ PRINT_SCORE_TEMPLATE = """
   \\cleardoublepage%
   \\pagenumbering{{arabic}}%
   \\setcounter{{page}}{{1}}%
-  \\includepdf[pages=-,link=true,linkname=score]{{../tmp/{}.pdf}}%
+  \\includepdf[pages=-,link=true,linkname=score]{{{score_dir}/{type}.pdf}}%
 }}
 """
 
@@ -356,7 +356,9 @@ def prepare_edition(args):
     if args.type == "draft":
         macros_scores = ""
     else:
-        macros_scores = PRINT_SCORE_TEMPLATE.format(args.type)
+        macros_scores = PRINT_SCORE_TEMPLATE.format(
+            type=args.type, score_dir=args.score_directory
+        )
 
     # save macros
     with open(args.output, "w") as f:
@@ -447,6 +449,13 @@ if __name__ == "__main__":
         default="head",
         help="""obtain version, date, and checksum from HEAD
                 or the most recent tag (default: head)"""
+    )
+    parser_edition.add_argument(
+        "-s",
+        "--score-directory",
+        default="../tmp",
+        help="""read included scores from this directory (default: ../tmp)""",
+        metavar="DIR"
     )
     parser_edition.set_defaults(func=prepare_edition)
 
