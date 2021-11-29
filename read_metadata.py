@@ -100,6 +100,8 @@ METADATA_TEMPLATE = """
 \\def\\MetadataAbbreviations{{{abbr_env}}}
 """
 
+ADDITIONAL_METADATA_TEMPLATE = "\\ees@def@metadata{{{key}}}{{{value}}}"
+
 SUBTITLE_TEMPLATE = "{}\\newline {}"
 
 PRINCIPAL_SRC_TEMPLATE = "{} (principal source)"
@@ -353,6 +355,12 @@ def prepare_edition(args):
 
     macros_metadata = METADATA_TEMPLATE.format(**metadata)
 
+    macros_additional_keys = "\n".join([
+        ADDITIONAL_METADATA_TEMPLATE.format(key=k, value=metadata[k])
+        for k in args.additional_keys
+        if k in metadata
+    ])
+
     if args.type == "draft":
         macros_scores = ""
     else:
@@ -364,6 +372,7 @@ def prepare_edition(args):
     with open(args.output, "w") as f:
         f.writelines(macros_conditionals)
         f.writelines(macros_metadata)
+        f.writelines(macros_additional_keys)
         f.writelines(macros_scores)
 
 
@@ -449,6 +458,13 @@ if __name__ == "__main__":
         default="head",
         help="""obtain version, date, and checksum from HEAD
                 or the most recent tag (default: head)"""
+    )
+    parser_edition.add_argument(
+        "-k",
+        "--additional-keys",
+        nargs="*",
+        help="""process additional KEYS""",
+        metavar="KEYS"
     )
     parser_edition.add_argument(
         "-s",

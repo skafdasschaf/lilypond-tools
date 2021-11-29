@@ -389,6 +389,7 @@ Generate a set of LaTeX macros that can be imported by `front_matter/critical_re
     - do *not* print critical report, changelog and TOC
     - print the respective score
 - `-c`, `--checksum-from {head,tag}`: obtain version, date, and checksum from HEAD or the most recent tag (default: `head`)
+- `-k`, `--additional-keys [KEYS ...]`: process additional KEYS
 - `-s`, `--score_directory DIR`: read included scores from this directory (default: `../tmp`)
 
 The long form of a scoring abbreviation is looked up [instrument_data.csv](#instrument_datacsv). The abbreviation may end in an Arabic number, which is converted to a Roman numeral (e.g., `vl2` -> "Violino II"). Abbreviations can also be defined in `metadata.yaml` via the `parts` key (e.g., `clno12` -> "Clarino I, II in C").
@@ -438,6 +439,7 @@ This file describes metadata for each work and comprises the following keys:
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
 - `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.
 - `extra_abbreviations` (optional): Additional abbreviations and their long forms (subkeys and values, respectively) to be included in the critical report. If the subkey corresponds to a known abbreviation, its value may be empty.
+- By default, all *other keys* are silently ignored. However, any keys specified in the `--additional-keys` option of [read_metadata.py](#read_metadatapy) will be available in LaTeX via the `\insertmetadata` macro.
 
 
 
@@ -488,8 +490,9 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\repository{}`: name with owner of the GitHub repository (default: `\MetadataRepository`)
 - `\version{}`: version of the most recent git tag (default: `\MetadataVersion`)
 - `\date{}`: date of the most recent git tag (default: `\MetadataDate`)
-- `\ckecksum{}`: checksum of the most recent git tag (default: `\MetadataChecksum`)
+- `\checksum{}`: checksum of the most recent git tag (default: `\MetadataChecksum`)
 
+The values of additional metadata keys can be retrieved via `\insertmetadata{<key>}`.
 
 ### Document structure
 
