@@ -15,7 +15,7 @@ This document describes v2021.12.0 of the editorial guidelines for the Edition E
   - [Changelog](#changelog)
   - [Table of contents](#table-of-contents)
 - [Conventions of notation](#conventions-of-notation)
-  - [Score order](#score-order)
+  - [Score design](#score-design)
   - [Clefs](#clefs)
   - [Key signatures](#key-signatures)
   - [Tempo indications and movement designations](#tempo-indications-and-movement-designations)
@@ -136,9 +136,9 @@ The table of contents list all individual movements with their number, title, an
 
 ## Conventions of notation
 
-### Score order
+### Score design
 
-The score order from top to bottom is:
+The *score order* from top to bottom is:
 - woodwind instruments
   - flutes
   - cornetts
@@ -170,6 +170,8 @@ with automatic part combining. In the latter case,
 - the unison (a due) parts are marked with the text “a 2”.
 
 Each part is spelled out in full on the first system of the first movement (singular form of modern Italian names), and abbreviated on the first system of each subsequent movement. Divided parts are indicated by Roman numerals in the first movement and by Arabic numbers in each subsequent movement. Transposing instruments include their pitch (e.g., “Clarino I, II in C” in the first movement and “clno (C) 1, 2” in subsequent movements). The part with figured bass is typically labeled “Organo e Bassi” or “Fondamento”.
+
+In recitatives, instrumental parts also contain the solo vocal part. This convention typically applies to continuo parts in seccos and continuo plus string parts in accompagnatos.
 
 
 ### Clefs
