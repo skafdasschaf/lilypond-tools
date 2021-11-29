@@ -214,7 +214,8 @@
   leftmargin=\ees@movement@leftmargin,
   labelsep=0pt,
   first=\ltseries,
-  font=\normalfont\itshape\ltseries
+  font=\normalfont\itshape\ltseries,
+  style=multiline
 }
 \newenvironment{movement}[1]{%
   \section{#1}%
