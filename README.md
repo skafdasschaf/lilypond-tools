@@ -345,7 +345,7 @@ Makefile that defines rules for engraving scores. This file is included by the `
 
 ### parse_logs.py
 
-Each run of LilyPond and LuaLaTeX generates a log file, which is stored in *tmp/<score>.ly.log* and *tmp/<score>.tex.log*, respectively. This script collects all errors, warnings, and full boxes from these logs and stores them in *tmp/_logs.txt*.
+Each run of LilyPond and LuaLaTeX generates a log file, which is stored in *tmp/<score>.ly.log* and *tmp/<score>.tex.log*, respectively. This script collects all errors, warnings, and full boxes from these logs and stores them in *tmp/_logs.txt*. Its single optional argument allows to change the directory where log files are searched (default: `tmp`).
 
 
 

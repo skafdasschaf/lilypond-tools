@@ -1,9 +1,22 @@
 #!/bin/python
 
+import argparse
 import glob
 import re
 from termcolor import cprint
 from texoutparse import LatexLogParser
+
+
+parser = argparse.ArgumentParser(
+    description="Check LaTeX and LilyPond log files for errors/warnings."
+)
+parser.add_argument(
+    "dir",
+    nargs="?",
+    default="tmp",
+    help="search this directory"
+)
+args = parser.parse_args()
 
 
 cprint(
@@ -13,7 +26,7 @@ cprint(
 
 parser = LatexLogParser()
 tex_errors_found = False
-for tex_logs in glob.glob("tmp/*.tex.log"):
+for tex_logs in glob.glob(f"{args.dir}/*.tex.log"):
     with open(tex_logs) as f:
         parser.process(f)
 
@@ -44,7 +57,7 @@ re_warning_error = re.compile("([^:]+):([^:]+):([^:]+):([^:]+):(.+)")
 re_other_warning = re.compile("$warning:|$Warnung:")
 
 ly_errors_found = False
-for ly_logs in glob.glob("tmp/*.ly.log"):
+for ly_logs in glob.glob(f"{args.dir}/*.ly.log"):
     with open(ly_logs) as f:
         lines = list(f.readlines())
 
