@@ -25,3 +25,4 @@ bibleref
 fmtcount
 bookmark
 ragged2e
+mfirstuc
