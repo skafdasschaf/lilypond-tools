@@ -439,7 +439,7 @@ This file describes metadata for each work and comprises the following keys:
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
 - `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.
 - `extra_abbreviations` (optional): Additional abbreviations and their long forms (subkeys and values, respectively) to be included in the critical report. If the subkey corresponds to a known abbreviation, its value may be empty.
-- By default, all *other keys* are silently ignored. However, any keys specified in the `--additional-keys` option of [read_metadata.py](#read_metadatapy) will be available in LaTeX via the `\insertmetadata` macro.
+- By default, all *other keys* are silently ignored. However, any `<key>` specified in the `--additional-keys` option of [read_metadata.py](#read_metadatapy) will be available in LaTeX via a `\\Metadata<Key>` macro.
 
 
 
@@ -492,7 +492,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\date{}`: date of the most recent git tag (default: `\MetadataDate`)
 - `\checksum{}`: checksum of the most recent git tag (default: `\MetadataChecksum`)
 
-The values of additional metadata keys can be retrieved via `\insertmetadata{<key>}`.
+The value of any additional metadata `<key>` can be retrieved via `\Metadata<Key>`. Note the uppercase key name in the macro: For instance, the key `genre` will provide a macro `\MetadataGenre`.
 
 ### Document structure
 

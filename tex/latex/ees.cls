@@ -423,11 +423,6 @@
 
 % Metadata ----------------------------------------------------------------
 
-\newcommand\ees@def@metadata[2]{%
-  \@namedef{ees@metadata@#1}{#2}%
-}
-\newcommand\insertmetadata[1]{\@nameuse{ees@metadata@#1}}
-
 \newif\ifPrintFrontMatter\PrintFrontMattertrue
 
 \InputIfFileExists{critical_report.macros}{}{}

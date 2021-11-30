@@ -100,7 +100,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataAbbreviations{{{abbr_env}}}
 """
 
-ADDITIONAL_METADATA_TEMPLATE = "\\ees@def@metadata{{{key}}}{{{value}}}"
+ADDITIONAL_METADATA_TEMPLATE = "\\def\\Metadata{key}{{{value}}}"
 
 SUBTITLE_TEMPLATE = "{}\\newline {}"
 
@@ -356,7 +356,7 @@ def prepare_edition(args):
     macros_metadata = METADATA_TEMPLATE.format(**metadata)
 
     macros_additional_keys = "\n".join([
-        ADDITIONAL_METADATA_TEMPLATE.format(key=k, value=metadata[k])
+        ADDITIONAL_METADATA_TEMPLATE.format(key=k.title(), value=metadata[k])
         for k in args.additional_keys
         if k in metadata
     ])
