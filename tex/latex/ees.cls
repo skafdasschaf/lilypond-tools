@@ -19,6 +19,7 @@
 \DeclareBoolOption[true]{changelog}
 \DeclareStringOption[80]{shortnamesize}
 \DeclareStringOption[60]{shorttitlesize}
+\DeclareStringOption[../tmp]{tocdir}
 \DeclareStringOption[default]{tocstyle}
 \DeclareBoolOption[true]{toe}
 
@@ -548,7 +549,7 @@
   }{}%
   \bookmarksetup{startatroot,openlevel=5}%
   \InputIfFileExists%
-    {../tmp/\jobname.toc}%
+    {\ees@tocdir/\jobname.toc}%
     {}%
     {\InputIfFileExists{../\jobname.toc}{}{}}%
   \ifthenelse{%

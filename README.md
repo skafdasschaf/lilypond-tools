@@ -454,6 +454,7 @@ Type and default value in parentheses.
 - `changelog` (Boolean, true): print the changelog (i.e., include *CHANGELOG.md*)
 - `shortnamesize` (number, 80): font size for the composer name in the title page head
 - `shorttitlesize` (number, 60): font size for the work title in the title page head
+- `tocdir` (string, `../tmp`): directory where LilyPond saves the TOC file
 - `tocstyle` (string, `default`): selects a style for the table of contents
   - `none`: do not print a TOC
   - `default`: print a normal TOC
