@@ -463,6 +463,7 @@ if __name__ == "__main__":
         "-k",
         "--additional-keys",
         nargs="*",
+        default=[],
         help="""process additional KEYS""",
         metavar="KEYS"
     )
