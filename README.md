@@ -164,8 +164,8 @@ Include one of the following files in subfolder `score_settings` at the beginnin
 - `three-staves.ly`: Format parts with three staves, of which the upper two are bracketed (e.g., ottoni). `option-instrument-name-upper` and `option-instrument-name-lower` set the instrument name of the bracket and lower staff, respectively.
 - `four-staves.ly`: Format parts with four staves, of which the upper three are bracketed (e.g., ottoni with three trumpets). `option-instrument-name-upper` and `option-instrument-name-lower` set the instrument name of the bracket and lower staff, respectively.
 - `full-score.ly`: Format the full score.
-- `coro.ly`: Format the vocal score.
-- `org-realized.ly`: Format the realized organ part.
+- `coro.ly`: Format the vocal score. `option-instrument-name` sets the instrument name of the lowermost staff.
+- `org-realized.ly`: Format the realized organ part. `option-instrument-name` sets the instrument name of the lower staff.
 
 
 ### System configuration

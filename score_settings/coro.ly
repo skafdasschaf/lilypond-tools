@@ -52,6 +52,12 @@
   systems-per-page = #3
 }
 
+#(if
+  (not (defined? 'option-instrument-name))
+  (define option-instrument-name "org")
+)
+
+
 \layout {
   \context {
     \Lyrics
@@ -72,7 +78,7 @@
   }
   \context {
     \Staff
-    instrumentName = "org"
+    instrumentName = #option-instrument-name
   }
 }
 
