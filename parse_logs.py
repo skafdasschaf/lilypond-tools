@@ -54,7 +54,7 @@ LILYPOND_MESSAGE_TEMPLATE = """
 """
 
 re_warning_error = re.compile("([^:]+):([^:]+):([^:]+):([^:]+):(.+)")
-re_other_warning = re.compile("$warning:|$Warnung:")
+re_other_warning = re.compile("$warning:|Warnung:")
 
 ly_errors_found = False
 for ly_logs in glob.glob(f"{args.dir}/*.ly.log"):
@@ -85,7 +85,8 @@ for ly_logs in glob.glob(f"{args.dir}/*.ly.log"):
             )
         message = re_other_warning.match(line)
         if message:
-            messages.append(line)
+            if line.count("MIDI") + line.count("modulo") == 0:
+                messages.append(line)
 
     if messages:
         cprint(f"File: {ly_logs}", attrs=["underline"])
