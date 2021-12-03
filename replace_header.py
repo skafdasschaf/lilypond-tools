@@ -18,7 +18,17 @@ KNOWN_HEADERS = {
     "K Y R I E   E L E I S O N": "Kyrie eleison",
     "P A T E R   D E   C O E L I S": "Pater de cœlis",
     "R O S A   M Y S T I C A": "Rosa mystica",
-    "S A L U S   I N F I R M O R U M": "Salus infirmorum"
+    "S A L U S   I N F I R M O R U M": "Salus infirmorum",
+    "S A N C T A   M A R I A": "Sancta Maria",
+    "R E G I N A   A N G E L O R U M": "Regina angelorum",
+
+    "D I X I T   D O M I N U S": "Dixit Dominus",
+    "C O N F I T E B O R": "Confitebor",
+    "B E A T U S   V I R": "Beatus vir",
+    "D E   P R O F U N D I S": "De profundis",
+    "M E M E N T O,   D O M I N E,   D A V I D": "Memento, Domine, David",
+    "S A L V E T E,   F L O R E S   M A R T Y R U M": "Salvete, flores martyrum",
+    "M A G N I F I C A T": "Magnificat"
 }
 
 OLD_HEADERS = {
