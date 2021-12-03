@@ -190,17 +190,11 @@ def parse_metadata(file=None,
 
     ## Names
     # The `composer` key is optional to accomodate collections of works.
-    # If the value is a single string, it will be split into first
-    # and last name.
 
     if "composer" not in metadata:
-        metadata["composer"] = "(unknown), (unknown)"
-    if isinstance(metadata["composer"], dict):
-        if "suffix" not in metadata["composer"]:
-            metadata["composer"]["suffix"] = ""
-    else:
-        last_name, first_name = metadata["composer"].split(", ")
-        metadata["composer"] = dict(first=first_name, last=last_name, suffix="")
+        metadata["composer"] = {"first": "(unknown)", "last": "(unknown)"}
+    if "suffix" not in metadata["composer"]:
+        metadata["composer"]["suffix"] = ""
 
     ## Score type
     # The score type depends on the value of `-t` and is either set to "Draft",

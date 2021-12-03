@@ -416,7 +416,7 @@ Collect metadata from several repositories and save it as a table. The subcomman
 ### metadata.yaml
 
 This file describes metadata for each work and comprises the following keys:
-- `composer` (optional): The composer's name. The value should either be a single string with format `last name, first name`, or contain the following subkeys:
+- `composer` (optional): The composer's name, specified by the following subkeys:
   - `first` (required): first name (-> `\MetadataFirstname`)
   - `last` (required): last name (-> `\MetadataLastname`)
   - `suffix` (optional): name suffix (-> `\MetadataNamesuffix`)
