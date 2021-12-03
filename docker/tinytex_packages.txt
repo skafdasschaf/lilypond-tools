@@ -24,5 +24,4 @@ fontawesome5
 bibleref
 fmtcount
 bookmark
-ragged2e
 mfirstuc

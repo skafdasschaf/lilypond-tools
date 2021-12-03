@@ -175,9 +175,6 @@
 \microtypesetup{verbose=silent}
 
 
-\RequirePackage{ragged2e}
-
-
 \RequirePackage{booktabs,xltabular}
 
 
@@ -236,8 +233,7 @@
   labelsep=0pt,
   font=\normalfont\sbseries,
   parsep=\baselineskip,
-  itemsep=0pt,
-  first=\RaggedRight
+  itemsep=0pt
 }
 
 \newlist{sourcedetails}{description}{2}
@@ -248,7 +244,8 @@
   labelsep=0pt,
   font=\normalfont\itshape,
   parsep=0pt,
-  itemsep=0pt
+  itemsep=0pt,
+  first=\raggedright
 }
 
 \newcommand\sourceitem[8]{%
