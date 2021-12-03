@@ -33,7 +33,8 @@ This document describes v2021.12.0 of the editorial guidelines for the Edition E
 
 ## Prefatory material
 
-Prefatory material comprises the [title and copyright page](#title-page). In addition, the full score also contains a [critical report](#critical-report),  [changelog](#changelog), and [table of contents](#table-of-contents).
+Prefatory material comprises the [title and copyright page](#title-page). In addition, the full score also contains a [critical report](#critical-report), [changelog](#changelog), and [table of contents](#table-of-contents).
+
 
 ### Title page
 
@@ -55,17 +56,18 @@ The *scoring* lists all vocal parts and instruments:
 - Instruments that are not available in all sources or have been added by the editor are surrounded by brackets (e.g., “[2 fl]”).
 
 The *copyright page* (p. ii) includes:
-- the copyright statement (typically, the CC BY-SA 4.0 License)
+- the copyright statement (typically, the CC BY-SA 4.0 or CC BY-NC-SA 4.0 license)
 - an indication of used software and fonts
 - contact details (email address)
 - a link to the GitHub repository
 - the current version, date, and SHA1 of the git repository
 
+If possible, editions are released under a Creative Commons Attribution-ShareAlike 4.0 International license (CC BY-SA 4.0) to foster the free and open source notion of the Edition Esser-Skala. However, a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license (CC BY-NC-SA 4.0) may be chosen to warrant [compatibility](https://creativecommons.org/share-your-work/licensing-considerations/compatible-licenses/) with a non-commercial license of the principal source.
 
 
 ### Critical report
 
-The critical report consists of three secions [Abbreviations](#abbreviations), [Sources](#sources), and [Commentary](#commentary).
+The critical report (p. iii et sqq.) consists of three secions [Abbreviations](#abbreviations), [Sources](#sources), and [Commentary](#commentary).
 
 
 #### Abbreviations
@@ -82,7 +84,7 @@ This section describes the used sources of a given work. Each source is labeled 
 - **D**: manuscripts not used for the edition
 - **E**: prints not used for the edition
 
-Within each category, sources are labeled in order of importance.
+Within each category, sources are labeled in order of importance. Notably, categories D and E are applied if the sources are only available under incompatible licenses (e.g., CC BY-SA 4.0 and CC BY-NC-SA 4.0).
 
 For each source, the following information is included:
 - RISM library siglum and shelfmark
@@ -91,6 +93,7 @@ For each source, the following information is included:
 - date
 - RISM identifier
 - link to digital version
+- license
 - notes (optional)
 
 

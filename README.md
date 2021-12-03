@@ -102,7 +102,7 @@ The new repository will contain the following folders and files:
 - **scores/*.ly** – LilyPond files containing score definitions
 - **CHANGELOG.md** – the [changelog](https://keepachangelog.com/en/1.0.0/)
 - **definitions.ly** – general definitions; include [ees.ly](#eesly)
-- **LICENSE** – the [license](https://creativecommons.org/licenses/by-sa/4.0/)
+- **LICENSE** – the license ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) or [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/))
 - **Makefile** – configuration file for `make`; imports [ees.mk](#eesmk)
 - **metadata.yaml** – metadata whose format is described [below](#metadatayaml); can be processed with [read_metadata.py](#read_metadatapy)
 - **.github/workflows/engrave-and-release.yaml** – GitHub Actions workflow that reuses the [workflow of the same name](#githubworkflowsengrave-and-releaseyaml) from EES Tools
@@ -427,14 +427,16 @@ This file describes metadata for each work and comprises the following keys:
 - `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the principal source are used.
 - `genre` (required): Work genre (only used on the webpage).
 - `scoring` (required): Scoring of the work (-> `\MetadataScoring`). See the editorial guidelines for the scoring syntax. The list of abbreviations in the critical report is also assembled from the scoring information (-> `\MetadataAbbreviations`)
+- `license` (required): License of the edition (-> `\MetadataLicense`). Currently, the following values are supported: `cc-by-sa-4.0` and `cc-by-nc-sa-4.0`.
 - `sources` (required): Manuscript and print sources used for the edition (-> `\MetadataSources`). The name of each subkey will be used as source identifier (e.g., A1, B2). Each source is described by the following keys:
   - `siglum` (required): RISM library siglum
   - `shelfmark` (required): shelfmark
   - `date` (optional): date
   - `rism` (optional): RISM identifier
   - `url` (optional): link to digital version
+  - `license` (required): license of the source
   - `notes` (optional): miscellaneous notes
-  - `principal` (optional): Boolean that denotes whether this source is the principal source. Exactly one source *must* contain this key with a true value.
+  - `principal` (optional/required): Boolean that denotes whether this source is the principal source. Exactly one source *must* contain this key with a true value.
 - `imslp` (optional): IMSLP identifier (only used on the webpage).
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
 - `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.
@@ -487,6 +489,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\shorttitle{}`: work title for the title page head (default: `\MetadataTitle`)
 - `\subtitle{}`: work subtitle (default: `\MetadataSubtitle`)
 - `\scoring{}`: scoring information (default: `\MetadataScoring`)
+- `\license{}`: license of the edition (default: `\MetadataLicense`)
 - `\scoretype{}`: score type printed on the title page (default: `\MetadataScoretype`)
 - `\repository{}`: name with owner of the GitHub repository (default: `\MetadataRepository`)
 - `\version{}`: version of the most recent git tag (default: `\MetadataVersion`)

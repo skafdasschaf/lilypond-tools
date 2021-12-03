@@ -248,16 +248,17 @@
   first=\raggedright
 }
 
-\newcommand\sourceitem[8]{%
+\newcommand\sourceitem[9]{%
   \item[#1]%
     \begin{sourcedetails}%
       \item[Library] #2%
       \item[Shelfmark] #3%
       \item[Category] #4%
-      \item[Date] #5%
-      \item[RISM ID] #6%
-      \item[URL] \url{#7}%
-      \ifthenelse{\equal{#8}{\@empty}}{}{\item[Notes] #8}%
+      \item[Date] \ifthenelse{\equal{#5}{\@empty}}{unknown}{#5}%
+      \item[RISM ID] \ifthenelse{\equal{#6}{\@empty}}{not available}{\href{https://opac.rism.info/search?id=#6&View=rism}{#6}}%
+      \item[License] #7%
+      \item[URL] \ifthenelse{\equal{#8}{\@empty}}{unknown}{\url{#8}}%
+      \ifthenelse{\equal{#9}{\@empty}}{}{\item[Notes] #9}%
     \end{sourcedetails}%
 }
 
@@ -411,6 +412,7 @@
 \def\shorttitle#1{\def\@shorttitle{#1}}
 \def\namesuffix#1{\def\@namesuffix{#1}}
 \def\scoring#1{\def\@scoring{#1}}
+\def\license#1{\def\@license{#1}}
 \def\scoretype#1{\def\@scoretype{#1}}
 \def\repository#1{\def\@repository{#1}}
 \def\version#1{\def\@version{#1}}
@@ -430,6 +432,7 @@
 \providecommand\MetadataTitle{\relax}
 \providecommand\MetadataSubtitle{\relax}
 \providecommand\MetadataScoring{\relax}
+\providecommand\MetadataLicense{cc-by-sa-4.0}
 \providecommand\MetadataScoretype{\relax}
 \providecommand\MetadataRepository{\relax}
 \providecommand\MetadataVersion{\relax}
@@ -449,6 +452,7 @@
 \shorttitle{\MetadataTitle}
 \subtitle{\MetadataSubtitle}
 \scoring{\MetadataScoring}
+\license{\MetadataLicense}
 \scoretype{\MetadataScoretype}
 \repository{\MetadataRepository}
 \version{\MetadataVersion}
@@ -458,6 +462,18 @@
 
 
 % Text blocks -------------------------------------------------------------
+
+\ifthenelse{\equal{\@license}{cc-by-sa-4.0}}{%
+  \def\ees@license@statement{%
+    This edition is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-sa/4.0/}.%
+  }
+}{}
+
+\ifthenelse{\equal{\@license}{cc-by-nc-sa-4.0}}{%
+  \def\ees@license@statement{%
+    This edition is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.%
+  }
+}{}
 
 \def\eesTitlePage{%
   \begin{titlepage}%
@@ -480,17 +496,17 @@
 
   \vspace*{\fill}
 
-  \raisebox{-4mm}{\includegraphics{by-sa}}\hspace*{1em}%
+  \raisebox{-4mm}{\includegraphics{\@license}}\hspace*{1em}%
   Edition Esser-Skala, \DTMfetchyear{tagdate}
 
-  © \DTMfetchyear{tagdate} by Edition Esser-Skala. This edition is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit \url{https://creativecommons.org/licenses/by-sa/4.0/}.
+  © \DTMfetchyear{tagdate} by Edition Esser-Skala. \ees@license@statement
 
   Music engraving by LilyPond \MetadataLilypondVersion~(\url{https://www.lilypond.org}).\\
   Front matter typeset with Source Sans and Fredericka the Great.
 
   Please report any errors or mistakes to \url{edition@esser-skala.at.}
 
-  \faGithub~\@repository\\
+  \faGithub~\href{https://github.com/\@repository}{\@repository}\\
   \textit{\@version, \DTMusedate{tagdate} (\@checksum)}
 
   \vspace*{2cm}%

@@ -72,6 +72,11 @@ SOURCE_CATEGORIES = {
     "E": "print not used for this edition"
 }
 
+LICENSE_HEADINGS = {
+    "cc-by-sa-4.0": "Attribution-ShareAlike 4.0 International",
+    "cc-by-nc-sa-4.0": "Attribution-NonCommercial-ShareAlike 4.0 International"
+}
+
 # subfolders ignored when preparing the table
 IGNORED_COMPOSER_DIRS = ["Misc", "TODO"]
 
@@ -91,6 +96,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataSubtitle{{{subtitle}}}
 \\def\\MetadataScoring{{{scoring}}}
 \\def\\MetadataScoretype{{{score_type}}}
+\\def\\MetadataLicense{{{license}}}
 \\def\\MetadataRepository{{{repository}}}
 \\def\\MetadataVersion{{{version}}}
 \\def\\MetadataDate{{{date}}}
@@ -122,6 +128,7 @@ SOURCE_ITEM_TEMPLATE = """
   {{{category}}}%
   {{{date}}}%
   {{{rism}}}%
+  {{{license}}}%
   {{{url}}}%
   {{{notes}}}
 """
@@ -179,7 +186,8 @@ def get_abbr(a):
 def parse_metadata(file=None,
                    string=None,
                    score_type="draft",
-                   checksum_from="tag"):
+                   checksum_from="tag",
+                   check_license=True):
     if file is not None:
         with open(file) as f:
             metadata = yaml.load(f, Loader=UniqueKeyLoader)
@@ -255,16 +263,16 @@ def parse_metadata(file=None,
         info["category"] = SOURCE_CATEGORIES[id[0]]
 
         if "date" not in info or info["date"] is None:
-            info["date"] = "unknown"
+            info["date"] = ""
 
         if "rism" not in info or info["rism"] is None:
-            info["rism"] = "not available"
+            info["rism"] = ""
 
         if "notes" not in info or info["notes"] is None:
             info["notes"] = ""
 
         if "url" not in info or info["url"] is None:
-            info["url"] = "none"
+            info["url"] = ""
 
         if "principal" in info and info["principal"]:
             if "principal_id" in metadata:
@@ -325,6 +333,24 @@ def parse_metadata(file=None,
     abbr_items = [ABBR_ITEM_TEMPLATE.format(short=k, long=v)
                   for k, v in sorted(abbr.items(), key=lambda x: x[0].lower())]
     metadata["abbr_env"] = ABBR_TEMPLATE.format("\n  ".join(abbr_items))
+
+    ## License
+    # Check whether the license key (a) exists, (b) has a known value, and
+    # (c) correponds to the LICENSE file (optionally).
+
+    if "license" not in metadata:
+        error_exit("Key 'license' missing.")
+    if metadata["license"] not in LICENSE_HEADINGS:
+        error_exit(f'Unknown license: {metadata["license"]}')
+
+    if check_license:
+        try:
+            with open("LICENSE") as f:
+                license_heading = f.readline().strip()
+        except FileNotFoundError:
+            error_exit("No LICENSE file found.")
+        if license_heading != LICENSE_HEADINGS[metadata["license"]]:
+            error_exit("LICENSE does not match the 'license' key.")
 
     return metadata
 
@@ -391,7 +417,7 @@ def prepare_table(args):
                 continue
             try:
                 f = os.path.join(full_work_dir, "metadata.yaml")
-                metadata = parse_metadata(file=f)
+                metadata = parse_metadata(file=f, check_license=False)
             except FileNotFoundError:
                 print("WARNING: No metadata found in", full_work_dir)
                 continue
