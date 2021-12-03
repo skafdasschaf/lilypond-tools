@@ -202,13 +202,6 @@ def parse_metadata(file=None,
         last_name, first_name = metadata["composer"].split(", ")
         metadata["composer"] = dict(first=first_name, last=last_name, suffix="")
 
-    ## Scoring
-    # The `scoring` key may be a string or array.
-    # In the latter case, its elements are joined by newlines.
-
-    if isinstance(metadata["scoring"], list):
-        metadata["scoring"] = "\\newline ".join(metadata["scoring"])
-
     ## Score type
     # The score type depends on the value of `-t` and is either set to "Draft",
     # "Full Score", or the respective part as specified in the
@@ -316,7 +309,10 @@ def parse_metadata(file=None,
     # in parentheses, these elements are removed.
 
     abbr = DEFAULT_ABBR
-    for a in metadata["scoring"].replace("\\newline", "").split(","):
+    for a in (metadata["scoring"]
+              .replace("\\newline", "")
+              .replace("\\\\", "")
+              .split(",")):
         a = a.strip(" \n")
         if a[0] == "[":
             a = a[1:-1]
