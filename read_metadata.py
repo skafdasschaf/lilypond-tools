@@ -187,7 +187,8 @@ def parse_metadata(file=None,
                    string=None,
                    score_type="draft",
                    checksum_from="tag",
-                   check_license=True):
+                   check_license=True,
+                   license_directory="."):
     if file is not None:
         with open(file) as f:
             metadata = yaml.load(f, Loader=UniqueKeyLoader)
@@ -345,7 +346,7 @@ def parse_metadata(file=None,
 
     if check_license:
         try:
-            with open("LICENSE") as f:
+            with open(os.path.join(license_directory, "LICENSE")) as f:
                 license_heading = f.readline().strip()
         except FileNotFoundError:
             error_exit("No LICENSE file found.")
@@ -360,7 +361,10 @@ def parse_metadata(file=None,
 
 def prepare_edition(args):
     metadata = parse_metadata(
-        file=args.input, score_type=args.type, checksum_from=args.checksum_from
+        file=args.input,
+        score_type=args.type,
+        checksum_from=args.checksum_from,
+        license_directory=args.license_directory
     )
 
     # assemble macros
@@ -488,6 +492,13 @@ if __name__ == "__main__":
         "--score-directory",
         default="../tmp",
         help="""read included scores from this directory (default: ../tmp)""",
+        metavar="DIR"
+    )
+    parser_edition.add_argument(
+        "-l",
+        "--license-directory",
+        default=".",
+        help="""check the LICENSE in this directory (default: current dir)""",
         metavar="DIR"
     )
     parser_edition.set_defaults(func=prepare_edition)

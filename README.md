@@ -391,6 +391,7 @@ Generate a set of LaTeX macros that can be imported by `front_matter/critical_re
 - `-c`, `--checksum-from {head,tag}`: obtain version, date, and checksum from HEAD or the most recent tag (default: `head`)
 - `-k`, `--additional-keys [KEYS ...]`: process additional KEYS
 - `-s`, `--score_directory DIR`: read included scores from this directory (default: `../tmp`)
+- `-l`, `--license-directory DIR`: check the LICENSE in this directory (default: current dir)
 
 The long form of a scoring abbreviation is looked up [instrument_data.csv](#instrument_datacsv). The abbreviation may end in an Arabic number, which is converted to a Roman numeral (e.g., `vl2` -> "Violino II"). Abbreviations can also be defined in `metadata.yaml` via the `parts` key (e.g., `clno12` -> "Clarino I, II in C").
 
