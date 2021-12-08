@@ -623,8 +623,8 @@ For scores with **six or less staves**, change (a) the distance between systems 
 ```lilypond
 \paper {
   system-system-spacing.basic-distance = <a>
-  system-system-spacing.minimum-distance = <b>
-  systems-per-page = #2
+  system-system-spacing.minimum-distance = <a>
+  systems-per-page = <b>
 }
 ```
 
@@ -643,6 +643,14 @@ twoStanzaDistance = \setGroupDistance #15 #20
 twoStanzaDistanceCoro = \setGroupDistance #13 #13
 ```
 
-and apply these to the choir staff in the full and vocal score, respectively. In the vocal score, also increase system-system spacing to 15 if there are three systems on the page.
+and apply these to the choir staff in the full and vocal score, respectively. In the vocal score, also decrease system-system spacing to 15 or 14 if there are three systems on the page.
+
+If a work contains **chorals with three stanzas**, define
+
+```lilypond
+threeStanzaDistance = \setGroupDistance #18 #22
+```
+
+and apply these to the choir staff in both the full and vocal score. In the vocal score, only show two systems per page.
 
 In **accompagnatos**, parts comprise up to 5 staves per page by default. The number of staves may be increased to six per page if system-system spacing is 16 and the choir staff uses `\smallGroupDistance`.
