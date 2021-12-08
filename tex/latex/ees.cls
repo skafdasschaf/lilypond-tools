@@ -541,6 +541,8 @@
             \end{xltabular}%
           }%
         \fi% ifees@toe
+        \ifthenelse{\equal{\eesCommentaryAfterToe}{\@empty}}{}%
+          {\par\eesCommentaryAfterToe}%
     \ifees@changelog%
       \cleardoublepage%
       \markdownInput{../CHANGELOG.md}%
@@ -551,6 +553,8 @@
 \def\eesCommentaryIntro{%
   In general, this edition closely follows the principal source. Any changes that were introduced by the editor are indicated by italic type (lyrics, dynamics and directives), parentheses (expressive marks and bass figures) or dashes (slurs and ties). Accidentals are used according to modern conventions. For further details, consult the Editorial Guidelines available on the Edition's webpage.%
 }
+
+\def\eesCommentaryAfterToe{}
 
 \long\def\eesToc#1{%
   \ifthenelse{%

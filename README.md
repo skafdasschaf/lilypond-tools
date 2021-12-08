@@ -504,6 +504,7 @@ The value of any additional metadata `<key>` can be retrieved via `\Metadata<Key
 - `\eesTitlePage`: Print the default title and copyright page.
 - `\eesCriticalReport{<table rows>}`: Print the critical report (abbreviations, sources, and commentary) and the changelog. The single argument may contain rows for the table of emendations, which comprises three columns if `tocstyle=none`, and four columns otherwise. If `toe` is false, the argument is ignored.
 - `\eesCommentaryIntro`: Print the default introduction of the commentary section (automatically invoked by `\eesCriticalReport`).
+- `\eesCommentaryAfterToe`: Text that should be printed after the table of emendations (by default empty).
 - `\eesToc{<contents>}`: Setup pdf bookmarks; print the table of contents unless `tocstyle=none`. If `tocstyle=ref` or `ref-genre`, the value of the argument is printed under the headline *Contents* and allows to format the TOC manually (see below).
 - `\eesScore`: Print the included score.
 - `\ifPrintFrontMatter` … `\fi`: Additional content in the prefatory material should be surrounded by this conditional, which ensures that it is only printed in the full score and draft.
