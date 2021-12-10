@@ -631,7 +631,7 @@ For scores with **six or less staves**, change (a) the distance between systems 
 
 Staves|Full score                                |Vocal score
 ------|------------------------------------------|-----------
-6     |–/2                                       |–/2
+6     |–/2                                       |25/2
 5     |30/2                                      |–/–
 4     |22/3                                      |25/–
 3     |20/4 (or 30/3)                            |22/4
