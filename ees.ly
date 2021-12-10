@@ -627,6 +627,7 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
   \context {
     \ChoirStaff
     \setGroupDistance #13 #15
+    \override InstrumentName.font-shape = #'italic
     \override StaffGrouper.nonstaff-nonstaff-spacing =
       #'((basic-distance . 2)
          (minimum-distance . 2)
