@@ -1,6 +1,6 @@
 # Editorial guidelines
 
-This document describes v2021.12.0 of the editorial guidelines for the Edition Esser-Skala. These guidelines mainly follow the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
+This document describes v2022.01.0 of the editorial guidelines for the Edition Esser-Skala, which were inspired by the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
 
 
 
@@ -40,7 +40,7 @@ Prefatory material comprises the [title and copyright page](#title-page). In add
 
 The *title page* (p. i) includes the following information:
 - a header with the composer's last name and the (possibly abbreviated) work title
-- the composer's full name (last name printed red)
+- the composer's full name (last name printed in red)
 - the title of the work (bold)
 - a subtitle (if applicable)
 - the catalog of works number; if unavailable, the RISM library siglum and shelfmark of the principal source
@@ -50,7 +50,7 @@ The *title page* (p. i) includes the following information:
 
 The *scoring* lists all vocal parts and instruments:
 - Individual instruments are separated by commas (e.g., “S, vla, org”).
-- An Arabic numeral indicates the number of each instrument (e.g., “2 vl”).
+- An Arabic numeral prefix indicates the number of each instrument (e.g., “2 vl”).
 - The pitch of transposing instruments is given in parentheses (e.g., “timp (C–G)”).
 - Solo and chorus vocal parts are distinguished (e.g., “S, A (solo), S, A, T, B (coro)”).
 - Instruments that are not available in all sources or have been added by the editor are surrounded by brackets (e.g., “[2 fl]”).
@@ -62,12 +62,12 @@ The *copyright page* (p. ii) includes:
 - a link to the GitHub repository
 - the current version, date, and SHA1 of the git repository
 
-If possible, editions are released under a Creative Commons Attribution-ShareAlike 4.0 International license (CC BY-SA 4.0) to foster the free and open source notion of the Edition Esser-Skala. However, a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license (CC BY-NC-SA 4.0) may be chosen to warrant [compatibility](https://creativecommons.org/share-your-work/licensing-considerations/compatible-licenses/) with a non-commercial license of the principal source.
+Whenever possible, editions are released under a Creative Commons Attribution-ShareAlike 4.0 International license (CC BY-SA 4.0) to foster the Free Content notion of the Edition Esser-Skala. However, a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license (CC BY-NC-SA 4.0) may be chosen to warrant [compatibility](https://creativecommons.org/share-your-work/licensing-considerations/compatible-licenses/) with a non-commercial license of the principal source.
 
 
 ### Critical report
 
-The critical report (p. iii et sqq.) consists of three secions [Abbreviations](#abbreviations), [Sources](#sources), and [Commentary](#commentary).
+The critical report (p. iii et sqq.) consists of three sections [Abbreviations](#abbreviations), [Sources](#sources), and [Commentary](#commentary).
 
 
 #### Abbreviations
@@ -118,7 +118,7 @@ The following conventions apply to the commentary:
 - Helmholtz pitch notation is applied, with symbols for sharp, flat, and natural signs, and order name–accidental–octave (e.g., “c#′”).
 - Rests are written as symbol.
 - A sequence of pitches is separated by en dashes (e.g., “c′4–d′8–e′8”)
-- Chords are spelled with a plus sign between pitches from lowest to highest pitch (e.g., “c′+e′+g′”).
+- Chords are spelled with a plus sign between pitches from lowest to highest pitch (e.g., “c′+e′+g′4”).
 - Modern English instrument names are used.
 - Foreign words are typeset italic.
 
@@ -190,7 +190,7 @@ The original key signature is retained, while the order and position of sharps a
 
 ### Tempo indications and movement designations
 
-Tempo indications appear in the original language; inconsistent spelling is regularized. Only the first word of Italian terms is capitalized (e.g., “Poco andante”). Movement designations may be retained in the original language (“Chor”) or translated to Italian (“Coro”),
+Tempo indications appear in the original language; inconsistent spelling is regularized. Only the first word of Italian terms is capitalized (e.g., “Poco andante”). Movement designations may be retained in the original language (“Chor”) or translated to Italian (“Coro”).
 
 Individual movements are numbered by the editor if numbers are absent in the source.
 
@@ -236,7 +236,7 @@ Dynamics and other directives are usually standardized to modern Italian and pla
 
 ### Notational shorthand
 
-Generally, notational shorthand is realized in full. Slashed stems may be used to indicate repeated notes if this improves readability.
+Generally, notational shorthand is realized in full. Slashed stems may be used to indicate repeated notes if readability is improved.
 
 
 ### Vocal texts

@@ -1,6 +1,6 @@
 # EES Tools
 
-*EES Tools* is a collection of scripts that are required for engraving scores for the Edition Esser-Skala. In addition, this repository includes instructions to build a Docker container *ees-tools* with these tools and all dependencies.
+[EES Tools](https://github.com/edition-esser-skala/ees-tools) is a collection of scripts that are required for engraving scores for the Edition Esser-Skala. In addition, this repository includes instructions to build a Docker container *ees-tools* with these tools and all dependencies.
 
 
 
@@ -70,10 +70,10 @@ sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
 ### … using a manual installation
 
 Install the following dependencies:
-- [Python](https://python.org/) v3.9 with packages [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [GitPython](https://github.com/gitpython-developers/GitPython), and [PyYAML](https://pyyaml.org/)
+- [Python](https://python.org/) v3.9 with packages [GitPython](https://github.com/gitpython-developers/GitPython), [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [PyYAML](https://pyyaml.org/), [termcolor](https://pypi.org/project/termcolor/), and [texoutparse](https://github.com/inakleinbottle/texoutparse).
 - [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
 - [TinyTex](https://yihui.org/tinytex/) v2021.11 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
-- [LilyPond](https://lilypond.org/) v2.22.1
+- [LilyPond](https://lilypond.org/) v2.22.0
 
 Clone the repository and make sure that the files can be found by the respective programs:
 - Define the shell variable `EES_TOOLS_PATH` to point to this directory.
@@ -88,7 +88,7 @@ From the root directory of an edition, invoke `make` to engrave scores:
 
 ## Structure of a score repository
 
-In order to create a new edition, clone the [ees-template](https://github.com/edition-esser-skala/ees-tools) repository:
+In order to create a new edition, clone the [ees-template](https://github.com/edition-esser-skala/ees-template) repository:
 
 ```bash
 gh repo create edition-esser-skala/<repository> \
@@ -100,6 +100,7 @@ gh repo create edition-esser-skala/<repository> \
 The new repository will contain the following folders and files:
 - **notes/*.ly** – LilyPond files containing individual voices; add new variables with [add_variables.py](#add_variablespy)
 - **scores/*.ly** – LilyPond files containing score definitions
+- **.gitignore** – excludes irrelevant files from the repository
 - **CHANGELOG.md** – the [changelog](https://keepachangelog.com/en/1.0.0/)
 - **definitions.ly** – general definitions; include [ees.ly](#eesly)
 - **LICENSE** – the license ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) or [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/))
@@ -152,7 +153,7 @@ Set these Scheme variables before including the file, like
 ```
 
 - `option-movement-title-markup`: Select the format of the movement title and the number of arguments for `\section`. Choices: `"genre-number-title"`, `"number-title"`, and `"title"` (default).
-- `option-init-toc`: If true, generate a table of contents in `lilypond.toc`, which can be interpreted by LaTeX (default: true).
+- `option-init-toc`: If true, generate table of contents files that can be interpreted by LaTeX (default: true).
 - `option-print-all-bar-numbers`: If true, print all bar numbers (useful when preparing a score; default: false).
 
 
@@ -165,7 +166,7 @@ Include one of the following files in subfolder `score_settings` at the beginnin
 - `four-staves.ly`: Format parts with four staves, of which the upper three are bracketed (e.g., ottoni with three trumpets). `option-instrument-name-upper` and `option-instrument-name-lower` set the instrument name of the bracket and lower staff, respectively.
 - `full-score.ly`: Format the full score.
 - `coro.ly`: Format the vocal score. `option-instrument-name` sets the instrument name of the lowermost staff.
-- `org-realized.ly`: Format the realized organ part. `option-instrument-name` sets the instrument name of the lower staff.
+- `org-realized.ly`: Format the realized organ part. `option-instrument-name` sets the instrument name of the bracket.
 
 
 ### System configuration
@@ -232,11 +233,11 @@ These commands print an instrument name including pitches. `\transposedName` and
 
 Sectioning commands:
 - `\insertEmptyPage`: Inserts an empty page (useful if parts should start on the right page).
-- `\part "<label>" "<number>" "<title>"`: Adds a part page, followed by an empty left page. Must be used inside a `\book`. For technical reasons, a `<label>` has to be supplied even if the command is used for a default TOC.
+- `\part "<label>" "<number>" "<title>"`: Adds a part page, followed by an empty page. Must be used inside a `\book`. For technical reasons, a `<label>` has to be supplied even if the command is used for a default TOC.
 - `\section "<title>"`,
 - `\section "<number>" "<title>"`, or
-- `\section "<number>" "<genre>" "<title>"`: Adds a section heading. The number of arguments is determined by the option `option-movement-title-format`.
-- `\subsection "<title>"`: Adds an unnumbered subsection heading. `\section` and `\subsection` must be used inside a `\bookpart`.
+- `\section "<number>" "<genre>" "<title>"`: Adds a section heading. The number of arguments is determined by the option `option-movement-title-format`. Must be used inside a `\bookpart`.
+- `\subsection "<title>"`: Adds an unnumbered subsection heading. Must be used inside a `\bookpart`.
 
 TOC commands:
 - `\addTocEntry`: Adds a TOC entry; should be used immediately after a heading command.
@@ -273,7 +274,7 @@ TOC commands:
 
 ### Markup
 
-- `\remark{<text>}` and `\remarkE{<text>}`: Format source directives (upright) and editorial directives (italic), respectively. In addition, several directives are predefined with source and editorial variants (e.g., `\solo` and `\soloE`):
+- `\remark <markup>` and `\remarkE <markup>`: Format source directives (upright) and editorial directives (italic), respectively. In addition, several directives are predefined with source and editorial variants (e.g., `\solo` and `\soloE`):
 
   Command|Printed text  
   --|--
@@ -345,7 +346,7 @@ Makefile that defines rules for engraving scores. This file is included by the `
 
 ### parse_logs.py
 
-Each run of LilyPond and LuaLaTeX generates a log file, which is stored in *tmp/<score>.ly.log* and *tmp/<score>.tex.log*, respectively. This script collects all errors, warnings, and full boxes from these logs and stores them in *tmp/_logs.txt*. Its single optional argument allows to change the directory where log files are searched (default: `tmp`).
+Each run of LilyPond and LuaLaTeX generates a log file, which is stored in `tmp/<score>.ly.log` and `tmp/<score>.tex.log`, respectively. This script collects all errors, warnings, and full boxes from these logs, prints them on the terminal, and stores them in `tmp/_logs.txt`. Its single optional argument allows to change the directory where log files are searched (default: tmp).
 
 
 
@@ -393,7 +394,7 @@ Generate a set of LaTeX macros that can be imported by `front_matter/critical_re
 - `-s`, `--score_directory DIR`: read included scores from this directory (default: `../tmp`)
 - `-l`, `--license-directory DIR`: check the LICENSE in this directory (default: current dir)
 
-The long form of a scoring abbreviation is looked up [instrument_data.csv](#instrument_datacsv). The abbreviation may end in an Arabic number, which is converted to a Roman numeral (e.g., `vl2` -> "Violino II"). Abbreviations can also be defined in `metadata.yaml` via the `parts` key (e.g., `clno12` -> "Clarino I, II in C").
+The long form of a scoring abbreviation is looked up [instrument_data.csv](#instrument_datacsv). The abbreviation may end in an Arabic number, which is converted to a Roman numeral (e.g., `vl2` -> "Violino II"). Abbreviations can also be defined in `metadata.yaml` via the `parts` key (e.g., `clno12: Clarino I, II in C`).
 
 The subcommand also obtains the following information from the git metadata:
 - name of the remote repository `origin` (-> `\MetadataRepository`)
@@ -422,7 +423,7 @@ This file describes metadata for each work and comprises the following keys:
   - `last` (required): last name (-> `\MetadataLastname`)
   - `suffix` (optional): name suffix (-> `\MetadataNamesuffix`)
 
-  Note that this key is optional mainly to facilitate collections of works by the same composer (such as the [Proprium Missae](https://github.com/edition-esser-skala/haydn-m-proprium-missae) project). If the key is missing, first and last name are set to “(unknown)”.
+  Note that this key is optional mainly to facilitate collections of works by the same composer (such as the [Proprium Missæ](https://github.com/edition-esser-skala/haydn-m-proprium-missae) project). If the key is missing, first and last name are set to “(unknown)”.
 - `title` (required): Work title (-> `\MetadataTitle`).
 - `subtitle` (optional): Work subtitle. The subtitle is combined with the work identifier and stored in `\MetadataSubtitle`. If this key is missing, the work identifier is used alone.
 - `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the principal source are used.
@@ -515,7 +516,7 @@ The value of any additional metadata `<key>` can be retrieved via `\Metadata<Key
 - `\part{<label>}`: Print a TOC entry for the part with `<label>` as defined in the LY file via `\addTocLabel`.
 - `\section{<label>}`: Print a TOC entry for the section with `<label>`.
 - `\begin{movement}{<label>} <lyrics> \end{movement}`: Print the TOC entry (section level) for the movement with `<label>`. The `<lyrics>` may comprise
-  - continuous text, which represents all lyrics of the respective movement (as seen, for instance, in Michael Haydn's [Litaniae MH 532](https://github.com/edition-esser-skala/haydn-m-litaniae-mh-532)); or
+  - continuous text, which represents all lyrics of the respective movement (as seen, for instance, in Michael Haydn's [Litaniæ MH 532](https://github.com/edition-esser-skala/haydn-m-litaniae-mh-532)); or
   - text blocks labeled with the associated voice (as seen, for instance, in Stölzel's [Jeſu, Deine Paßion](https://github.com/edition-esser-skala/stoelzel-jesu-deine-passion)). `\voice[<label>]` sets the `<label>` of each text block.
 
 
@@ -617,7 +618,7 @@ For full scores with **seven staves** (e.g., Vienna church trio and four-part ch
 }
 ```
 
-Alternatively, decrease system-system spacing to 20 and use `\smallGroupDistance`; this allows to preserve the top margin..
+Alternatively, decrease system-system spacing to 20 and use `\smallGroupDistance`; this allows to preserve the top margin.
 
 For scores with **six or less staves**, change (a) the distance between systems and (b) the number of systems per page (written as “a/b” in the table below):
 
