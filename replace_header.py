@@ -36,9 +36,10 @@ KNOWN_HEADERS = {
     "K Y R I E   E L E I S O N": "Kyrie eleison",
     "P A T E R   D E   C O E L I S": "Pater de cœlis",
     "R O S A   M Y S T I C A": "Rosa mystica",
+    "S P E C U L U M   I U S T I T I A E": "Speculum iustitiæ",
     "S A L U S   I N F I R M O R U M": "Salus infirmorum",
     "S A N C T A   M A R I A": "Sancta Maria",
-    "R E G I N A   A N G E L O R U M": "Regina angelorum",
+    "R E G I N A   A N G E L O R U M": "Regina Angelorum",
 
     "D I X I T   D O M I N U S": "Dixit Dominus",
     "C O N F I T E B O R": "Confitebor",
@@ -67,21 +68,35 @@ KNOWN_HEADERS = {
     "B E N I G N E   F A C": "Benigne fac",
     "G L O R I A   P A T R I": "Gloria Patri",
     "O F F E R T O R I U M": "Offertorium",
-    "C U M   S A N C T I S   T U I S": "Cum Sanctis Tuis"
+    "C U M   S A N C T I S   T U I S": "Cum Sanctis Tuis",
+
+    "A C C O M P A G N A T O": "Accompagnato",
+    "A C C O M P A G N A T O   /   C O R O": "Accompagnato, Coro",
+    "A R I A": "Aria",
+    "A R I O S O": "Arioso",
+    "C H O R A L": "Choral",
+    "C O R O": "Coro",
+    "D U E T T O": "Duetto",
+    "Q U A R T E T T O": "Quartetto",
+    "R E C I T A T I V O": "Recitativo",
+    "S C H L U S S C H O R A L": "Schlußchoral",
+    "T E R Z E T T O": "Terzetto"
 }
 
 OLD_HEADERS = {
     "number": r'\\header {\n\s*number = "(?P<number>.+?)"\n\s*}',
     "number-section": r'\\header {\n\s*number = "(?P<number>\d+)"\n\s*title = "(?P<title>.+?)"\n\s*}',
     "section": r'\\header {\n\s*title = "(?P<title>.+?)"\n\s*}',
-    "subsection": r'\\header {\n\s*subtitle = "(?P<title>.+?)"\n\s*}'
+    "subsection": r'\\header {\n\s*subtitle = "(?P<title>.+?)"\n\s*}',
+    "grt": r'\\header {\n\s*genre = "(?P<genre>.+)"\n\s*number = "(?P<number>.+)"\n\s*title = "(?P<title>.+?)"\n\s*}'
 }
 
 NEW_HEADERS = {
     "number": '\\section "{number}" ""\n    \\addTocEntry',
     "number-section": '\\section "{number}" "{title_new}"\n    \\addTocEntry',
     "section": '\\section "{title_new}"\n    \\addTocEntry',
-    "subsection": '\\subsection "{title_new}"\n    \\addTocEntry'
+    "subsection": '\\subsection "{title_new}"\n    \\addTocEntry',
+    "grt": '\\section "{number}" "{genre_new}" "{title}"\n    \\addTocEntry'
 }
 
 
@@ -118,6 +133,14 @@ def replace_headers(doc):
     if args.type == "number":
         print(f"Replacing old number '{match.group('number')}'")
         new_header = NEW_HEADERS[args.type].format(**match.groupdict())
+    elif args.type == "grt":
+        genre_new = KNOWN_HEADERS.get(match.group("genre"))
+        if genre_new is None:
+            print(f"Warning: Skipping unknown old genre '{match.group('genre')}'.")
+            new_header = match.group(0)
+        else:
+            print(f"Replacing old genre '{match.group('genre')}'")
+            new_header = NEW_HEADERS[args.type].format(genre_new=genre_new, **match.groupdict())
     else:
         title_new = KNOWN_HEADERS.get(match.group("title"))
         if title_new is None:
@@ -132,7 +155,7 @@ def replace_headers(doc):
     return doc_before + new_header + replace_headers(doc_after)
 
 
-# for score in ["scores/b.ly"]:
+# for score in ["scores/fag1.ly"]:
 for score in glob.glob("scores/*.ly"):
     with open(score) as f:
         doc = f.read()
