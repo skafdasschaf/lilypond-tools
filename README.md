@@ -419,8 +419,8 @@ Collect metadata from several repositories and save it as a table. The subcomman
 
 This file describes metadata for each work and comprises the following keys:
 - `composer` (optional): The composer's name, specified by the following subkeys:
-  - `first` (required): first name (-> `\MetadataFirstname`)
   - `last` (required): last name (-> `\MetadataLastname`)
+  - `first` (optional): first name (-> `\MetadataFirstname`)
   - `suffix` (optional): name suffix (-> `\MetadataNamesuffix`)
 
   Note that this key is optional mainly to facilitate collections of works by the same composer (such as the [Proprium Missæ](https://github.com/edition-esser-skala/haydn-m-proprium-missae) project). If the key is missing, first and last name are set to “(unknown)”.

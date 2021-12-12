@@ -199,9 +199,12 @@ def parse_metadata(file=None,
 
     ## Names
     # The `composer` key is optional to accomodate collections of works.
+    # The `first` subkey is optional to accomodate anonymous works.
 
     if "composer" not in metadata:
         metadata["composer"] = {"first": "(unknown)", "last": "(unknown)"}
+    if "first" not in metadata["composer"]:
+        metadata["composer"]["first"] = ""
     if "suffix" not in metadata["composer"]:
         metadata["composer"]["suffix"] = ""
 
