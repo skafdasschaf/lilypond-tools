@@ -33,7 +33,7 @@ org_realized,organ,Organo,Organo (basso continuo realizzato),c,bass,true,none,fi
 cemb,cembalo,Cembalo,Cembalo,c,bass,true,none,figures
 cemb_realized,cembalo,Cembalo,Cembalo (basso continuo realizzato),c,bass,true,none,figures
 pf,piano,Piano,Piano,c,bass,true,none,none
-pf_red,piano reduction,Piano,Piano reduction,c,bass,true,none,none
+pf_red,piano reduction,Piano,Riduzione per pianoforte,c,bass,true,none,none
 b,basses,Bassi,Bassi,c,bass,true,none,none
 bc,basso continuo,BassoContinuo,Basso continuo,c,bass,true,none,none
 bc_realized,basso continuo,BassoContinuo,Basso continuo realizzato,c,bass,true,none,none
