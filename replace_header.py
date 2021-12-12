@@ -48,6 +48,8 @@ KNOWN_HEADERS = {
     "M E M E N T O,   D O M I N E,   D A V I D": "Memento, Domine, David",
     "S A L V E T E,   F L O R E S   M A R T Y R U M": "Salvete, flores martyrum",
     "M A G N I F I C A T": "Magnificat",
+    "L A U D A T E   P U E R I": "Laudate pueri",
+    "L A U D A T E   D O M I N U M": "Laudate Dominum",
 
     "I N T R O I T U S": "Introitus",
     "T E   D E C E T   H Y M N U S": "Te decet hymnus",

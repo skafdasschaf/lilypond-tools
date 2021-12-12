@@ -257,7 +257,7 @@
       \item[Date] \ifthenelse{\equal{#5}{\@empty}}{unknown}{#5}%
       \item[RISM ID] \ifthenelse{\equal{#6}{\@empty}}{not available}{\href{https://opac.rism.info/search?id=#6&View=rism}{#6}}%
       \item[License] #7%
-      \item[URL] \ifthenelse{\equal{#8}{\@empty}}{unknown}{\url{#8}}%
+      \item[URL] \ifthenelse{\equal{#8}{\@empty}}{none}{\url{#8}}%
       \ifthenelse{\equal{#9}{\@empty}}{}{\item[Notes] #9}%
     \end{sourcedetails}%
 }
