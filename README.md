@@ -606,11 +606,11 @@ For full scores with **eight staves** (e.g., horns, Vienna church trio and four-
 \layout {
   \context {
     \StaffGroup
-    \smallGroupDistance
+    \setGroupDistance #11 #11
   }
   \context {
     \GrandStaff
-    \setGroupDistance #11 #12
+    \setGroupDistance #11 #11
   }
   \context {
     \ChoirStaff
