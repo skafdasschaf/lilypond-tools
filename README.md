@@ -562,6 +562,21 @@ Add name to choir staff group.
 \set ChoirStaff.instrumentName = \markup { \rotate #90 "C O R O   1" \hspace #8 }
 ```
 
+Incipits for two sopranos.
+
+```lilypond
+\incipit "Soprano I" "soprano" #-19.5 #-1.8
+\incipit "Soprano II" "soprano" #-20 #-1.8
+```
+
+Incipits for mixed chorus and continuo.
+
+```lilypond
+\incipit "Soprano" "soprano" #-20.5 #-0.3
+\incipit "Alto" "alto" #-18.3 #-0.3
+\incipit "Tenore" "tenor" #-19.7 #-0.3
+```
+
 
 
 ### Spacing recommendations
