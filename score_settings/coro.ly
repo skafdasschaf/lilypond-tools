@@ -65,16 +65,7 @@
   }
   \context {
     \ChoirStaff
-    \override StaffGrouper.staff-staff-spacing =
-      #'((basic-distance . 12)
-         (minimum-distance . 12)
-         (padding . -100)
-         (stretchability . 0))
-    \override StaffGrouper.staffgroup-staff-spacing =
-      #'((basic-distance . 13)
-         (minimum-distance . 13)
-         (padding . -100)
-         (stretchability . 0))
+    \setGroupDistance #12 #13
   }
   \context {
     \Staff

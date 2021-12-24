@@ -67,16 +67,7 @@
   \context {
     \GrandStaff
     instrumentName = #option-instrument-name-upper
-    \override StaffGrouper.staffgroup-staff-spacing =
-      #'((basic-distance . 12)
-         (minimum-distance . 12)
-         (padding . -100)
-         (stretchability . 0))
-    \override StaffGrouper.staff-staff-spacing =
-      #'((basic-distance . 12)
-         (minimum-distance . 12)
-         (padding . -100)
-         (stretchability . 0))
+    \setGroupDistance #12 #12
   }
   \context {
     \Staff
