@@ -334,6 +334,8 @@ dynScriptPrefix = #(define-scheme-function
         #:normal-text #:small prefix
         #:normal-text #:large #:bold sym)))))
 
+fff  = \dynScript "fff" ##f
+fffE = \dynScript "fff" ##t
 ff   = \dynScript "ff"  ##f
 ffE  = \dynScript "ff"  ##t
 "f"  = \dynScript "f"   ##f
@@ -346,6 +348,8 @@ p    = \dynScript "p"   ##f
 pE   = \dynScript "p"   ##t
 pp   = \dynScript "pp"  ##f
 ppE  = \dynScript "pp"  ##t
+ppp  = \dynScript "ppp" ##f
+pppE = \dynScript "ppp" ##t
 
 sf   = \dynScript "sf"  ##f
 sfE  = \dynScript "sf"  ##t
