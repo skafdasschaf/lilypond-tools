@@ -310,6 +310,7 @@ TOC commands:
 - `\hideTn`: hide a single tuplet number
 - `\kneeBeam` and `\noKneeBeam`: force/suppress kneed beams
 - `\markDaCapo`: print “da capo” right aligned above a bar line
+- `\mvDl`: move dynamic mark 2 staff spaces to the left
 - `\mvDll`: move dynamic mark 3 staff spaces to the left
 - `\parOn` and `\parOff`: only print the left/right parenthesis in `\parenthesize`
 - `\sbOn` and `\sbOff`: turn on/off subdivided beams

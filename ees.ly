@@ -455,6 +455,7 @@ mvTr = \once \override TextScript.X-offset = #2
 mvTrh = \once \override TextScript.X-offset = #2.5
 mvTrr = \once \override TextScript.X-offset = #3
 hideTn = \once \override TupletNumber.stencil = ##f
+mvDl = \once \override DynamicText.X-offset = #-2
 mvDll = \once \override DynamicText.X-offset = #-3
 scriptOut = \once \override Script.avoid-slur = #'outside
 pao = \once \partCombineApart
