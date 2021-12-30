@@ -51,7 +51,7 @@
        (padding . 0)
        (stretchability . 1.0e7))
 
-  systems-per-page = #3
+  systems-per-page = #2
 }
 
 #(if
