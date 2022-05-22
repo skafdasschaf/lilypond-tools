@@ -160,7 +160,7 @@ for instrument in args.notes:
     abbr, id = note_pattern.match(instrument).groups()
 
     try:
-        instrument_long = instrument_data.loc[abbr, 'long']
+        instrument_long = instrument_data.loc[abbr, 'variable']
     except KeyError:
         logging.warning(f"Ignoring unknown instrument '{instrument}'.")
         continue
