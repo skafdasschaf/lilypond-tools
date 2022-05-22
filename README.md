@@ -601,6 +601,21 @@ stopDeleted = {
 }
 ```
 
+Add time signature mark (add this to the next version!).
+
+```lilypond
+markTimeSig = #(define-music-function
+  (parser location meter)
+  (list?)
+  #{
+    \mark \markup {
+      \fontsize #-6
+      \override #'(padding . 0) \parenthesize
+      \compound-meter #meter
+    }
+  #})
+```
+
 Incipits for two sopranos.
 
 ```lilypond
