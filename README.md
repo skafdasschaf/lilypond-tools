@@ -558,6 +558,12 @@ Change displayed time signature fraction.
 \set Staff.timeSignatureFraction = 3/8
 ```
 
+Show only numerator of time signature.
+
+```lilypond
+\override Staff.TimeSignature.style = #'single-digit
+```
+
 Add name to choir staff group.
 
 ```lilypond
