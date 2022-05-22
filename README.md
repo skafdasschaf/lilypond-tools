@@ -583,6 +583,24 @@ extendLV = #(define-music-function
   #})
 ```
 
+Mark deleted parts of a score by gaps across the staves.
+
+```lilypond
+startDeleted = {
+  \once \override Staff.BarLine.color = #white
+  \once \override Staff.BarLine.layer = #10000
+  \once \override Staff.BarLine.thick-thickness = #10
+  \noBreak \mark \markup { \fontsize #-2 \musicglyph #'"pedal.*" } \bar "." \noBreak
+}
+
+stopDeleted = {
+  \once \override Staff.BarLine.color = #white
+  \once \override Staff.BarLine.layer = #10000
+  \once \override Staff.BarLine.thick-thickness = #10
+  \noBreak \bar "." \noBreak
+}
+```
+
 Incipits for two sopranos.
 
 ```lilypond
