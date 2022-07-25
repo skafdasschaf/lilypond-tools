@@ -538,10 +538,11 @@ Increase length of multi measure rest.
 R\breve.*123 \bar "||"
 ```
 
-Adjust overall horizontal spacing.
+Adjust overall horizontal spacing. (ADD in next version: command)
 
 ```lilypond
 \layout { \context { \Score \override SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8) } }
+tightNotes = \override Score.SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8)
 ```
 
 Define a left-aligned mark.
@@ -601,6 +602,12 @@ stopDeleted = {
 }
 ```
 
+Make a multirow short instrument name.
+
+```lilypond
+#(define option-instrument-name (markup #:center-column ("vla 1" "trb 1")))
+```
+
 Add time signature mark (add this to the next version!).
 
 ```lilypond
@@ -629,6 +636,23 @@ Incipits for mixed chorus and continuo.
 \incipit "Soprano" "soprano" #-20.5 #-0.3
 \incipit "Alto" "alto" #-18.3 #-0.3
 \incipit "Tenore" "tenor" #-19.7 #-0.3
+```
+
+Tacet function (add!; fist used in Caldara's Miserere).
+
+```lilypond
+tacet = #(define-scheme-function
+  (parser location title)
+  (string?)
+  (markup
+    #:vspace 10
+    #:fontsize 4
+    #:fill-line (
+      ""
+      #:center-column (title #:italic "tacet" )
+      ""
+    )
+  ))
 ```
 
 
