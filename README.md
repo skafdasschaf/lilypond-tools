@@ -638,7 +638,15 @@ Incipits for mixed chorus and continuo.
 \incipit "Tenore" "tenor" #-19.7 #-0.3
 ```
 
-Tacet function (add!; fist used in Caldara's Miserere).
+Incipits for solo voice and strings.
+
+```lilypond
+\incipit "Soprano" "soprano" #-18.0 #-2.8
+\incipit "Alto" "alto" #-15.8 #-2.8
+\incipit "Tenore" "tenor" #-17.2 #-2.8
+```
+
+Tacet function (add!; fist used in Caldara's Miserere; vspace may have to be adjusted to 5 if last on full page; fontsize may be 3 for subsections; make two commands tacetSection and tacetSubsection?).
 
 ```lilypond
 tacet = #(define-scheme-function
