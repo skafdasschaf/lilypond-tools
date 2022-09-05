@@ -623,6 +623,16 @@ markTimeSig = #(define-music-function
   #})
 ```
 
+Producing white (void) notation.
+
+```lilypond
+whOn = \override NoteHead.duration-log = #1
+whOff = \revert NoteHead.duration-log
+
+\whOn c8*2 d e f g a \whOff
+c2. \once \whOn h8*2 c2
+```
+
 Incipits for two sopranos.
 
 ```lilypond
