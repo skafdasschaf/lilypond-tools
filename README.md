@@ -34,6 +34,7 @@
   - [Document structure](#document-structure)
   - [Manual TOC](#manual-toc)
 - [.github/workflows/engrave-and-release.yaml](#githubworkflowsengrave-and-releaseyaml)
+- [documents/*](#documents)
 - [utils/*](#utils)
 - [Appendix](#appendix)
   - [Useful LilyPond snippets](#useful-lilypond-snippets)
@@ -526,6 +527,14 @@ The value of any additional metadata `<key>` can be retrieved via `\Metadata<Key
 ## .github/workflows/engrave-and-release.yaml
 
 This GitHub Actions workflow engraves scores using the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker container and creates a GitHub release that includes the generated PDFs. It is triggered whenever a [SemVer](https://semver.org) tag is pushed to GitHub.
+
+
+## documents/*
+
+This folder contains various documents:
+
+- `editorial_guidelines.md`: the current editorial guidelines
+- `imslp_instructions.md`: instructions for publishing scores at IMSLP
 
 
 ## utils/*
