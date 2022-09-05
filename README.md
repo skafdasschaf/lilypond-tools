@@ -34,6 +34,7 @@
   - [Document structure](#document-structure)
   - [Manual TOC](#manual-toc)
 - [.github/workflows/engrave-and-release.yaml](#githubworkflowsengrave-and-releaseyaml)
+- [utils/*](#utils)
 - [Appendix](#appendix)
   - [Useful LilyPond snippets](#useful-lilypond-snippets)
   - [Spacing recommendations](#spacing-recommendations)
@@ -525,6 +526,19 @@ The value of any additional metadata `<key>` can be retrieved via `\Metadata<Key
 ## .github/workflows/engrave-and-release.yaml
 
 This GitHub Actions workflow engraves scores using the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker container and creates a GitHub release that includes the generated PDFs. It is triggered whenever a [SemVer](https://semver.org) tag is pushed to GitHub.
+
+
+## utils/*
+
+This folder contains miscellaneous scripts:
+
+- `download_from_manuscriptorium.sh`: obtains high-resolution images from Manuscriptorium. Usage:
+
+```bash
+download_from_manuscriptorium.sh <ID> <last page>
+```
+
+where `<ID>` is the Manuscriptorium ID and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `0001r.jpg`, `0001v.jpg`, `0002r.jpg` etc.
 
 
 ## Appendix
