@@ -682,7 +682,7 @@ Incipits for solo voice and strings.
 \incipit "Tenore" "tenor" #-17.2 #-2.8
 ```
 
-Tacet function (add!; fist used in Caldara's Miserere; vspace may have to be adjusted to 5 if last on full page; fontsize may be 3 for subsections; make two commands tacetSection and tacetSubsection?).
+Tacet function (add!; fist used in Caldara's Miserere; vspace may have to be adjusted to 5 if last on full page -> optional argument?; fontsize may be 3 for subsections; make two commands tacetSection and tacetSubsection? it may be necessary to add \noPageBreak before \tacet).
 
 ```lilypond
 tacet = #(define-scheme-function
