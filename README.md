@@ -591,7 +591,7 @@ Show only numerator of time signature.
 Add name to choir staff group.
 
 ```lilypond
-\set ChoirStaff.instrumentName = \markup { \rotate #90 "C O R O   1" \hspace #8 }
+\set ChoirStaff.instrumentName = \markup { \rotate #90 "C O R O   1" \hspace #10 }
 ```
 
 Add a tie to the last note of a movement.
