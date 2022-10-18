@@ -754,7 +754,7 @@ For full scores with **seven staves** (e.g., Vienna church trio and four-part ch
 
 Alternatively, decrease system-system spacing to 20 and use `\smallGroupDistance`; this allows to preserve the top margin.
 
-For scores with **six or less staves**, change (a) the distance between systems and (b) the number of systems per page (written as “a/b” in the table below):
+For scores with **six or less staves**, change (a) the distance between systems and (b) the number of systems per page (written as “a/b” in the table below; brackets indicate default values):
 
 ```lilypond
 \paper {
@@ -766,9 +766,9 @@ For scores with **six or less staves**, change (a) the distance between systems 
 
 Staves|Full score                                |Vocal score
 ------|------------------------------------------|-----------
-6     |–/2                                       |25/2
-5     |30/2                                      |–/–
-4     |22/3                                      |25/–
+6     |[20]/2                                    |25/2
+5     |30/2                                      |[17]/[3]
+4     |22/3                                      |25/[3]
 3     |20/4 (or 30/3)                            |22/4
 2     |21/5 (or 18/6 with `\smallGroupDistance`) |20/6
 
