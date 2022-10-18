@@ -568,11 +568,14 @@ Adjust overall horizontal spacing. (ADD in next version: command)
 tightNotes = \override Score.SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8)
 ```
 
-Define a left-aligned mark.
+Define a right-aligned mark.
 
 ```lilypond
-markFine = {
-  \mark \markup { \remarkE "Fine" }
+markOsannaDaCapo = {
+  \once \override Score.RehearsalMark.break-visibility =
+    #begin-of-line-invisible
+  \once \override Score.RehearsalMark.self-alignment-X = #RIGHT
+  \mark \markup \remark "Osanna da capo"
 }
 ```
 
