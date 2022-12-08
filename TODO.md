@@ -6,7 +6,6 @@
 - \partCombine #'(0 . 10) in template
 - add articulate_ees.ly (diff?)
   - trill, staccatissimo
-- add_variables should add \twotwotime and \twofourtime
 - add macros for con/senza sordino
 - new scripts in utils/
 - updated folder structure

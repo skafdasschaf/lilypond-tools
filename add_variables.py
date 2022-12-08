@@ -28,7 +28,7 @@ INSTRUMENT_TEMPLATE = """
 {movement}{instrument} = {{
   \\relative {relative} {{
     \\clef {clef}
-    \\key {key} \\time {time} {autobeam}\\tempo{movement}
+    {time_modifier}\\key {key} \\time {time} {autobeam}\\tempo{movement}
     {flags}
   }}
 }}
@@ -170,6 +170,12 @@ for instrument in args.notes:
     else:
         key = instrument_data.loc[abbr, "default_key"]
 
+    time_modifier = ""
+    if args.time == "2/2":
+        time_modifier = "\\twotwotime "
+    elif args.time == "2/4":
+        time_modifier = "\\twofourtime "
+
     flags = []
     if args.current_bar:
         flags.append(f"  \\set Score.currentBarNumber = #{args.current_bar}")
@@ -180,6 +186,7 @@ for instrument in args.notes:
         movement=args.movement,
         instrument=f"{instrument_long}{arabic_to_roman(id)}",
         relative=instrument_data.loc[abbr, "relative"],
+        time_modifier=time_modifier,
         clef=instrument_data.loc[abbr, "clef"],
         key=make_key_signature(key),
         time=args.time,
