@@ -11,6 +11,7 @@
   - `download_from_manuscriptorium.sh`: obtains high-resolution images from Manuscriptorium
   - `split_image.sh`: splits double-sided PDFs
 - `articulate_ees.ly`, a customized MIDI articulation script
+- support for `chords` to `add_variables`
 - new commands:
   - `\tacet` for indicating movements where an instrument pauses
   - `\whOn` and `\whOff` for producing white (void) notation

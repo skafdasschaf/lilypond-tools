@@ -34,6 +34,19 @@ INSTRUMENT_TEMPLATE = """
 }}
 """
 
+CHORDS_TEMPLATE = """
+{movement}{instrument} = {{
+  \clef {clef}
+  {time_modifier}\\key {key} \\time {time} {autobeam}\\tempo{movement}
+  {flags}
+  << \\relative {relative} {{
+
+  }} \\ \\relative {relative} {{
+
+  }} >>
+}}
+"""
+
 LYRICS_TEMPLATE = """
 {movement}{instrument}Lyrics = \\lyricmode {{
 
@@ -208,7 +221,11 @@ for instrument in args.notes:
             continue
 
     with open(os.path.join("notes", f"{instrument}.ly"), "a+") as f:
-        f.write(INSTRUMENT_TEMPLATE.format(**keys))
+        if instrument_long == "Chords":
+            f.write(CHORDS_TEMPLATE.format(**keys))
+        else:
+            f.write(INSTRUMENT_TEMPLATE.format(**keys))
+
         if instrument_data.loc[abbr, "second_template"] == "lyrics":
             f.write(LYRICS_TEMPLATE.format(**keys))
         elif instrument_data.loc[abbr, "second_template"] == "figures":
