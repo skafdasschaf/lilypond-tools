@@ -279,7 +279,7 @@ TOC commands:
 
 - `\remark <markup>` and `\remarkE <markup>`: Format source directives (upright) and editorial directives (italic), respectively. In addition, several directives are predefined with source and editorial variants (e.g., `\solo` and `\soloE`):
 
-  Command|Printed text  
+  Command|Printed text
   --|--
   `\arco`|arco
   `\bassi`|Bassi
@@ -542,12 +542,16 @@ This folder contains various documents:
 This folder contains miscellaneous scripts:
 
 - `download_from_manuscriptorium.sh`: obtains high-resolution images from Manuscriptorium. Usage:
+  ```bash
+  download_from_manuscriptorium.sh <ID> <last page>
+  ```
+  where `<ID>` is the Manuscriptorium ID and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `0001r.jpg`, `0001v.jpg`, `0002r.jpg` etc.
 
-```bash
-download_from_manuscriptorium.sh <ID> <last page>
-```
-
-where `<ID>` is the Manuscriptorium ID and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `0001r.jpg`, `0001v.jpg`, `0002r.jpg` etc.
+- `split_image.sh`: splits double-sided PDFs. Usage:
+  ```bash
+  split_image.sh <file> <size>
+  ```
+  where `<file>` is a PDF file and `<size>` is the size of the half page in pixels, given as `[width]x[height]`
 
 
 ## Appendix
