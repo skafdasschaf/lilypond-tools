@@ -613,7 +613,7 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
       (let* ((format-line
               (lambda (toc-item)
                 (let* ((label (car toc-item))
-                       (text (cdaddr toc-item))
+                       (text (cdadr toc-item))
                        (label-page (and (list? label-table)
                                         (assoc label label-table)))
                        (page (and label-page (cdr label-page))))
