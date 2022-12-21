@@ -519,73 +519,6 @@ incipitAlto = \incipit "Alto" "alto" #-16.8 #-1.8
 incipitTenore = \incipit "Tenore" "tenor" #-18.2 #-1.8
 
 
-% modify the Scheme function 'format-bass-figure'
-% in usr/share/lilypond/current/scm/translation-functions.scm
-% to increase the size of figured bass accidentals
-#(define-public (new-format-bass-figure figure event context)
-  (let* ((fig (ly:event-property event 'figure))
-         (fig-markup (if (number? figure)
-             ((if (<= 10 figure)
-                  (lambda (y) (make-translate-scaled-markup
-                               (cons -0.7 0) y))
-                  identity)
-
-              (cond
-               ((eq? #t (ly:event-property event 'diminished))
-                (markup #:slashed-digit figure))
-               ((eq? #t (ly:event-property event 'augmented-slash))
-                (markup #:backslashed-digit figure))
-               (else (markup #:number (number->string figure 10)))))
-             #f))
-
-         (alt (ly:event-property event 'alteration))
-         (alt-markup
-          (if (number? alt)
-              (markup
-               #:general-align Y DOWN #:fontsize
-               (if (not (= alt DOUBLE-SHARP))
-                  0 2) ;; originally: -2 2
-               (alteration->text-accidental-markup alt))
-              #f))
-
-         (plus-markup (if (eq? #t (ly:event-property event 'augmented))
-                          (markup #:number "+")
-                          #f))
-
-         (alt-dir (ly:context-property context 'figuredBassAlterationDirection))
-         (plus-dir (ly:context-property context 'figuredBassPlusDirection)))
-
-    (if (and (not fig-markup) alt-markup)
-        (begin
-          (set! fig-markup
-            (markup #:left-align #:pad-x 0.3 alt-markup)) ;; originally pad-around
-          (set! alt-markup #f)))
-
-    (if alt-markup
-        (set! fig-markup
-              (markup #:put-adjacent
-                      X (if (number? alt-dir)
-                            alt-dir
-                            LEFT)
-                      fig-markup
-                      #:pad-x 0.2 alt-markup)))
-
-    (if plus-markup
-        (set! fig-markup
-              (if fig-markup
-                  (markup #:put-adjacent
-                          X (if (number? plus-dir)
-                                plus-dir
-                                LEFT)
-                          fig-markup
-                          #:pad-x 0.2 plus-markup)
-                  plus-markup)))
-
-    (if (markup? fig-markup)
-        (markup #:fontsize -2 fig-markup)
-        empty-markup)))
-
-
 #(define (ly:half-bass-figure-bracket which-side) (lambda (grob)
   (let* (
     (dir-h (if (negative? which-side) -1 +1))
@@ -676,11 +609,8 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
   \context {
     \FiguredBass
     figuredBassPlusDirection = #1
-    \override BassFigure.font-size = #-2
-    \override BassFigure.baseline-skip = #-3
     \override VerticalAxisGroup.nonstaff-nonstaff-spacing.padding = #-100
   }
-  \set figuredBassFormatter = #new-format-bass-figure
 }
 
 #(use-modules (ice-9 regex))
