@@ -592,7 +592,7 @@ Change displayed time signature fraction.
 Show only numerator of time signature.
 
 ```lilypond
-\override Staff.TimeSignature.style = #'single-digit
+\once \override Staff.TimeSignature.style = #'single-digit
 ```
 
 Add name to choir staff group.
