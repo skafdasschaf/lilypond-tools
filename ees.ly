@@ -475,16 +475,16 @@ sbOff = {
 }
 
 parOn = {
-  \once \override ParenthesesItem.font-size = #-3
-  \once \override ParenthesesItem.stencils = #(lambda (grob)
-    (let ((par-list (parentheses-item::calc-parenthesis-stencils grob))
+  \once \override Parentheses.font-size = #-3
+  \once \override Parentheses.stencils = #(lambda (grob)
+    (let ((par-list (parentheses-interface::calc-parenthesis-stencils grob))
           (right-par (grob-interpret-markup grob (markup #:null))))
       (list (car par-list) right-par )))
 }
 parOff = {
-  \once \override ParenthesesItem.font-size = #-3
-  \once \override ParenthesesItem.stencils = #(lambda (grob)
-    (let ((par-list (parentheses-item::calc-parenthesis-stencils grob))
+  \once \override Parentheses.font-size = #-3
+  \once \override Parentheses.stencils = #(lambda (grob)
+    (let ((par-list (parentheses-interface::calc-parenthesis-stencils grob))
           (left-par (grob-interpret-markup grob (markup #:null))))
       (list left-par (cadr par-list))))
 }
