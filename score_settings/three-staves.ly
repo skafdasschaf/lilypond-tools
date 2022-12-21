@@ -54,14 +54,14 @@
   systems-per-page = #4
 }
 
-#(if
-  (not (defined? 'option-instrument-name-upper))
-  (define option-instrument-name-upper "")
-)
-#(if
-  (not (defined? 'option-instrument-name-lower))
-  (define option-instrument-name-lower "")
-)
+#(define option-instrument-name-upper
+  (if (not (defined? 'option-instrument-name-upper))
+  ""
+  option-instrument-name-upper))
+#(define option-instrument-name-lower
+  (if (not (defined? 'option-instrument-name-lower))
+  ""
+  option-instrument-name-lower))
 
 \layout {
   \context {

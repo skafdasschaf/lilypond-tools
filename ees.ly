@@ -1,20 +1,15 @@
 \version "2.22.0"
 \language "deutsch"
 
-#(if
-  (not (defined? 'option-movement-title-format))
-  (define option-movement-title-format "title")
-)
+#(define option-movement-title-format
+  (if (not (defined? 'option-movement-title-format))
+    "title"
+    option-movement-title-format))
 
-#(if
-  (not (defined? 'option-init-toc))
-  (define option-init-toc #t)
-)
-
-#(if
-  (not (defined? 'option-print-all-bar-numbers))
-  (define option-print-all-bar-numbers #f)
-)
+#(define option-print-all-bar-numbers
+  (if (not (defined? 'option-print-all-bar-numbers))
+    #f
+    option-print-all-bar-numbers))
 
 #(define-markup-command
   (printBookTitle layout props)
@@ -155,9 +150,8 @@
 
   bookTitleMarkup = \markup \printBookTitle
 
-  #(if option-init-toc
-       (define (page-post-process layout pages)
-               (ly:create-toc-file layout pages)))
+  #(define (page-post-process layout pages)
+           (ly:create-toc-file layout pages))
 }
 
 

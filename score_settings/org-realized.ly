@@ -54,10 +54,10 @@
   systems-per-page = #6
 }
 
-#(if
-  (not (defined? 'option-instrument-name))
-  (define option-instrument-name "org")
-)
+#(define option-instrument-name
+  (if (not (defined? 'option-instrument-name))
+  "org"
+  option-instrument-name))
 
 \layout {
   \context {
