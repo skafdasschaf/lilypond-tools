@@ -488,11 +488,7 @@ parOff = {
       (list left-par (cadr par-list))))
 }
 
-markDaCapo = {
-  \once \override Score.RehearsalMark.self-alignment-X = #RIGHT
-  \mark \markup { \remark "da capo" }
-}
-
+markDaCapo = \textEndMark "da capo"
 
 incipit = #(define-music-function
   (name clef name-staff-space staff-system-space)
@@ -551,6 +547,7 @@ bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket R
   \context {
     \Score
     \compressEmptyMeasures
+    \override TextMark.font-size = #-1
     #(if option-print-all-bar-numbers
          #{ \override BarNumber.break-visibility = ##(#f #t #t) #})
   }
