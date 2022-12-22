@@ -8,24 +8,11 @@ from pandas import json_normalize, read_csv
 import re
 import subprocess
 import sys
-import yaml
+import strictyaml
 
 
 
 # General functions and classes -------------------------------------------
-
-# ensure that metadata.yaml contains no duplicate keys
-# after https://stackoverflow.com/questions/33490870
-class UniqueKeyLoader(yaml.SafeLoader):
-    def construct_mapping(self, node, deep=False):
-        mapping = []
-        for key_node, value_node in node.value:
-            key = self.construct_object(key_node, deep=deep)
-            if key in mapping:
-                error_exit("Duplicate YAML keys detected.")
-            mapping.append(key)
-        return super().construct_mapping(node, deep)
-
 
 # if an exception is caught, print an error message and exit gracefully
 def error_exit(msg):
@@ -191,11 +178,12 @@ def parse_metadata(file=None,
                    license_directory="."):
     if file is not None:
         with open(file) as f:
-            metadata = yaml.load(f, Loader=UniqueKeyLoader)
+            yaml_data = f.read()
     elif string is not None:
-        metadata = yaml.load(string, Loader=UniqueKeyLoader)
+        yaml_data = string
     else:
         error_exit("No metadata specified.")
+    metadata = strictyaml.load(yaml_data).data
 
     ## Names
     # The `composer` key is optional to accomodate collections of works.
@@ -252,7 +240,7 @@ def parse_metadata(file=None,
             text=True
         ).stdout
         metadata["lilypond_version"] = re.search(
-            "GNU LilyPond (.+)\n",
+            r"GNU LilyPond ([^\s]+)",
             lilypond_version
         ).group(1)
     except FileNotFoundError:
