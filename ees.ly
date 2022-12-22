@@ -499,7 +499,7 @@ incipit = #(define-music-function
         \new Staff \with {
           \remove Time_signature_engraver
         } {
-          \clef #clef s4 \bar empty
+          \clef #clef s4
         }
         \layout { }
       } \hspace #staff-system-space
