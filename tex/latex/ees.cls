@@ -501,7 +501,7 @@
 
   © \DTMfetchyear{tagdate} by Edition Esser-Skala. \ees@license@statement
 
-  Music engraving by LilyPond \MetadataLilypondVersion~(\url{https://www.lilypond.org}).\\
+  Music engraving by LilyPond \MetadataLilypondVersion~(\url{https://www.lilypond.org}) and EES Tools v2022.12.0.\\
   Front matter typeset with Source Sans and Fredericka the Great.
 
   Please report any errors or mistakes to \url{edition@esser-skala.at.}
