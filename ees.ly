@@ -303,6 +303,8 @@ kneeBeam = \once \override Beam.auto-knee-gap = #0
 noKneeBeam = \once \override Beam.auto-knee-gap = #5.5
 rh = \change Staff = "RH"
 lh = \change Staff = "LH"
+whOn = \override NoteHead.duration-log = #1
+whOff = \revert NoteHead.duration-log
 xE = \override LyricText.font-shape = #'italic
 x = \revert LyricText.font-shape
 
