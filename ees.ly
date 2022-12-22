@@ -287,6 +287,10 @@ colOrg =    \markup \remark  "col’Org."
 colOrgE =   \markup \remarkE "col’Org."
 dolce =     \markup \remark  "dolce"
 dolceE =    \markup \remarkE "dolce"
+conSord =   \markup \remark  "con sordino"
+conSordE =  \markup \remarkE "con sordino"
+senzaSord = \markup \remark  "senza sordino"
+senzaSordE =\markup \remarkE "senza sordino"
 
 
 t = \markup { \combine \transparent \figured-bass 0 \raise #.6 \draw-line #'(1 . 0) }
