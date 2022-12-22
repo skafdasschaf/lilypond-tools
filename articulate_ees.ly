@@ -1,5 +1,5 @@
 %
-% Copyright (C) 2008--2020 NICTA
+% Copyright (C) 2008--2022 NICTA
 % Author: Peter Chubb <peter.chubb AT nicta.com.au>
 % $Id: articulate.ly,v 1.7 2011-03-24 00:40:00 peterc Exp $
 %
@@ -133,14 +133,12 @@
 %  * Add Mordents (reported by Patrick Karl)
 %  * Thomas Morley: extend unfold-repeats to reflect the possibility to
 %    customize its effect to user-settable repeat-types. Here the most general
-%    setting is hard-coded, resulting in unchanged behaviour.
+%    setting is hard-coded, resulting in unchanged behavior.
 
-\version "2.19.22"
+\version "2.23.2"
 
-#(use-modules (srfi srfi-1))
 #(use-modules (srfi srfi-11))
-#(use-modules (ice-9 debug))
-#(use-modules (scm display-lily))
+#(use-modules (lily display-lily))
 
 % PARAMETERS
 % How much to compress notes marked Staccato.  CPE Bach says `as short as
@@ -173,14 +171,14 @@
 #(define ac:maxTwiddleTime (ly:make-moment 1/240))
 
 % How long ordinary grace notes should be relative to their notated
-% duration.  9/40 is LilyPond's built-in behaviour for MIDI output
+% duration.  9/40 is LilyPond's built-in behavior for MIDI output
 % (though the notation reference says 1/4).
 #(define ac:defaultGraceFactor 9/40)
 
 % What proportion of an ordinary grace note's time should be stolen
 % from preceding notes (as opposed to stealing from the principal note).
 % Composers' intentions for this vary.  Taking all from the preceding
-% notes is LilyPond's built-in behaviour for MIDI output.
+% notes is LilyPond's built-in behavior for MIDI output.
 #(define ac:defaultGraceBackwardness 1)
 
 
@@ -248,7 +246,7 @@
    #t
    (if (null? ac:eventsBackward)
     (begin
-     (ly:warning (_ "articulation failed to steal ~a note backward at beginning of music; stealing forward instead") tosteal)
+     (ly:warning (G_ "articulation failed to steal ~a note backward at beginning of music; stealing forward instead") tosteal)
      (set! ac:stealForward (+ ac:stealForward tosteal)))
     (let*
      ((lastev (car ac:eventsBackward))
@@ -260,7 +258,7 @@
       (begin
        (if (any (lambda (z) (eq? 'NoteEvent (ly:music-property z 'name)))
                 (ly:music-property lastev 'elements))
-        (ly:warning (_ "stealing the entirety of a note's time")))
+        (ly:warning (G_ "stealing the entirety of a note's time")))
        (set! (ly:music-property lastev 'elements) '())
        (set! ac:eventsBackward (cdr ac:eventsBackward))
        (ac:stealTimeBackward (- tosteal levlen))))))))
@@ -393,7 +391,7 @@
 #(define (ac:twiddletime music)
   (let* ((tr (filter (lambda (x)
                      (and (eq? 'ArticulationEvent (ly:music-property x 'name))
-                      (string= "trill" (ly:music-property x 'articulation-type))))
+                      (eq? 'trill (ly:music-property x 'articulation-type))))
               (ly:music-property music 'elements)))
          (pre-t (if (pair? tr) (ly:music-property (car tr) 'twiddle)
                  '()))
@@ -521,7 +519,7 @@
           (tremdur (ly:make-duration tremtype-log 0
                     (* (/ tgt-nrep eff-nrep) (ly:duration-scale totaldur)))))
          (or (and (= eff-nrep tgt-nrep) (= (ash 1 tremtype-log) tremtype))
-          (ly:warning (_ "non-integer tremolo ~a:~a")
+          (ly:warning (G_ "non-integer tremolo ~a:~a")
            (duration->lily-string (duration-visual totaldur) #:force-duration #t #:time-scale 1)
            tremtype))
          (for-each
@@ -536,6 +534,8 @@
       (make-sequential-music
        (list
         (make-music 'BarCheck)
+        (make-music 'EventChord
+          'elements (ly:music-property m 'articulations))
         (make-music 'SkipMusic 'duration (ly:music-property m 'duration))
         (make-music 'BarCheck))))
      (else
@@ -591,28 +591,28 @@
        ((BeamEvent) ; throw away beam events, or they'll be duplicated by turn or trill
         (loop factor newelements tail actions))
 
-       ((LineBreakEvent FingeringEvent MarkEvent BreathingEvent TieEvent SkipEvent RestEvent) ; pass through some events.
+       ((LineBreakEvent FingeringEvent MarkEvent BreathingEvent CaesuraEvent TieEvent SkipEvent RestEvent) ; pass through some events.
         (loop (cons 1 1) (cons e newelements) tail actions))
 
        ((ArticulationEvent)
-        (let ((articname (ly:music-property e 'articulation-type)))
+        (let ((artictype (ly:music-property e 'articulation-type)))
          ; TODO: add more here
          (cond
-          ((string= articname "staccato")
+          ((eq? artictype 'staccato)
            (loop ac:staccatoFactor newelements tail actions))
-          ((string= articname "staccatissimo")
+          ((eq? artictype 'staccatissimo)
            (loop ac:staccatissimoFactor newelements tail actions))
-          ((string= articname "portato")
+          ((eq? artictype 'portato)
            (loop ac:portatoFactor newelements tail actions))
-          ((string= articname "tenuto")
+          ((eq? artictype 'tenuto)
            (loop ac:tenutoFactor newelements tail actions))
-          ((string= articname "mordent")
+          ((eq? artictype 'mordent)
            (loop (cons 1 1) newelements tail (cons 'mordent actions)))
-          ((string= articname "prall")
+          ((eq? artictype 'prall)
            (loop (cons 1 1) newelements tail (cons 'prall actions)))
-          ((string= articname "trill")
+          ((eq? artictype 'trill)
            (loop (cons 1 1) newelements tail (cons 'trill actions)))
-          ((string= articname "turn")
+          ((eq? artictype 'turn)
            (loop (cons 1 1) newelements tail (cons 'turn actions)))
           (else (loop factor (cons e newelements) tail actions)))))
 
@@ -831,7 +831,7 @@
           (begin
            (if (any (lambda (z) (eq? 'NoteEvent (ly:music-property z 'name)))
                     (ly:music-property music 'elements))
-            (ly:warning (_ "stealing the entirety of a note's time")))
+            (ly:warning (G_ "stealing the entirety of a note's time")))
            (set! ac:stealForward (- steallen totallen))
            (make-sequential-music '()))
           (begin
@@ -855,7 +855,7 @@
       (let ((fev-pos (find-tail (lambda (m) (eq? m first-ev)) ac:eventsBackward)))
        (if fev-pos
         (set! ac:eventsBackward (cdr fev-pos))
-        (ly:warning (_ "articulation of grace notes has gone awry"))))))
+        (ly:warning (G_ "articulation of grace notes has gone awry"))))))
     (let*
      ((gmus (ly:music-compress (ly:music-property music 'element)
                                (ly:make-moment ac:defaultGraceFactor)))
@@ -908,7 +908,7 @@ articulate = #(define-music-function (music)
                 (lambda ()
                  (or (= ac:stealForward 0)
                   (begin
-                   (ly:warning (_ "articulation failed to steal ~a note at end of music") ac:stealForward)
+                   (ly:warning (G_ "articulation failed to steal ~a note at end of music") ac:stealForward)
                    (set! ac:stealForward 0)))
                  (set! ac:eventsBackward '()))))
 
@@ -999,9 +999,9 @@ articulate = #(define-music-function (music)
          (filter (lambda (z)
                   (and
                    (eq? 'ArticulationEvent (ly:music-property z 'name))
-                   (string= "trill" (ly:music-property z 'articulation-type))))
+                   (eq? 'trill (ly:music-property z 'articulation-type))))
           (ly:music-property main 'elements)))
-   (ac:add-articulation "tenuto" grace)
+   (ac:add-articulation 'tenuto grace)
    (make-sequential-music  (list (ly:music-compress main factor) (ly:music-compress grace grace-factor)))))
 
 % An appoggiatura takes half the duration of the main note,
