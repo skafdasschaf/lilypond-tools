@@ -556,6 +556,22 @@ bo = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket L
 bc = \once \override BassFigureBracket.stencil = #(ly:half-bass-figure-bracket RIGHT)
 
 
+tacet = #(define-scheme-function
+  (parser location level distance title)
+  (string? (number? 4) string?)
+  (markup
+    #:vspace distance
+    #:fontsize (cond ((string= level "section") 4)
+                     ((string= level "subsection") 3)
+                     (else (ly:error (G_ "unknown \\tacet level: ~s") level)))
+    #:fill-line (
+      ""
+      #:center-column (title #:italic "tacet" )
+      ""
+    )
+  ))
+
+
 \layout {
   \context {
     \Score
