@@ -289,8 +289,9 @@ dolce =     \markup \remark  "dolce"
 dolceE =    \markup \remarkE "dolce"
 
 
-t = \markup { \combine \transparent \figured-bass 5 \raise #.6 \draw-line #'(1 . 0) }
-tllur = \markup { \combine \figured-bass 5 \raise #.1 \draw-line #'(1 . 1) }
+t = \markup { \combine \transparent \figured-bass 0 \raise #.6 \draw-line #'(1 . 0) }
+l = \markup { \transparent \figured-bass 0 }
+tllur = \markup { \combine \figured-bass 0 \raise #.1 \draw-line #'(1 . 1) }
 critnote = \markup { \musicglyph #'"pedal.*" }
 trillE = \tweak self-alignment-X #CENTER ^\markup { \hspace #1.5 [ \musicglyph #'"scripts.trill" ] }
 extraNat = \once \override Accidental.restore-first = ##t
