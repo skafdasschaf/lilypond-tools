@@ -1,6 +1,6 @@
 # Editorial guidelines
 
-This document describes v2022.01.0 of the editorial guidelines for the Edition Esser-Skala, which were inspired by the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
+This document describes v2022.12.0 of the editorial guidelines for the Edition Esser-Skala, which were inspired by the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
 
 
 
@@ -127,7 +127,7 @@ The following conventions apply to the commentary:
 ### Changelog
 
 The changelog contains a curated, chronologically ordered list of notable changes for each version of the edition. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and the edition adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
+and the edition adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
 
@@ -216,7 +216,7 @@ Editorial slurs and ties are dashed.
 
 ### Bass figures
 
-Figures are set below the continuo line. Accidentals are placed before the figures to which they apply. Editorial figures are parenthesized.
+Figures are set below the continuo line. Accidentals are placed before the figures to which they apply. Editorial figures are parenthesized. A resolution of the six-four chord like `6 4 → 3` is explicitly completed to `6 4 → [5] 3` or `6 4 → [7] 3` to avoid ambiguity with `6 4 → [6] 3`.
 
 
 ### Embellishments
