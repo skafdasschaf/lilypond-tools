@@ -492,6 +492,17 @@ parOff = {
 
 markDaCapo = \textEndMark "da capo"
 
+markTimeSig = #(define-music-function
+  (parser location meter)
+  (list?)
+  #{
+    \textMark \markup {
+      \fontsize #-3
+      \override #'(padding . 0) \parenthesize
+      \compound-meter #meter
+    }
+  #})
+
 incipit = #(define-music-function
   (name clef name-staff-space staff-system-space)
   (markup? string? number? number?)
