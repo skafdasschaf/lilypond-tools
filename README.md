@@ -6,11 +6,12 @@
 
 ## Contents
 
+
+
 - [TL;DR: Engraving scores](#tldr-engraving-scores)
   - [… using the Docker image](#-using-the-docker-image)
   - [… using a manual installation](#-using-a-manual-installation)
 - [Structure of a score repository](#structure-of-a-score-repository)
-- [add_variables.py](#add_variablespy)
 - [ees.ly](#eesly)
   - [Options](#options)
   - [Score settings](#score-settings)
@@ -22,6 +23,7 @@
   - [Bass figures](#bass-figures)
 - [ees.mk](#eesmk)
   - [parse_logs.py](#parse_logspy)
+- [ees_articulate.ly](#ees_articulately)
 - [instrument_data.csv](#instrument_datacsv)
 - [read_metadata.py](#read_metadatapy)
   - [Subcommand `edition`](#subcommand-edition)
@@ -46,7 +48,7 @@
 
 ### … using the Docker image
 
-We recommend to engrave scores via the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker image. This image is based on [python:3.9](https://hub.docker.com/_/python), with all dependencies installed by [docker/setup.sh](docker/setup.sh). GitHub Actions uses this image to automatically engrave and release scores of the Edition Esser-Skala whenever a tag is pushed.
+We recommend to engrave scores via the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker image. This image is based on [python](https://hub.docker.com/_/python), with all dependencies installed by [docker/setup.sh](docker/setup.sh). GitHub Actions uses this image to automatically engrave and release scores of the Edition Esser-Skala whenever a tag is pushed.
 
 Build the image via
 
@@ -72,10 +74,10 @@ sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
 ### … using a manual installation
 
 Install the following dependencies:
-- [Python](https://python.org/) v3.9 with packages [GitPython](https://github.com/gitpython-developers/GitPython), [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [PyYAML](https://pyyaml.org/), [termcolor](https://pypi.org/project/termcolor/), and [texoutparse](https://github.com/inakleinbottle/texoutparse).
+- [Python](https://python.org/) v3.11 with packages [GitPython](https://github.com/gitpython-developers/GitPython), [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [strictyaml](https://hitchdev.com/strictyaml/), [termcolor](https://pypi.org/project/termcolor/), and [texoutparse](https://github.com/inakleinbottle/texoutparse).
 - [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
-- [TinyTex](https://yihui.org/tinytex/) v2021.11 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
-- [LilyPond](https://lilypond.org/) v2.22.0
+- [TinyTex](https://yihui.org/tinytex/) v2022.12 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
+- [LilyPond](https://lilypond.org/) v2.24.0
 
 Clone the repository and make sure that the files can be found by the respective programs:
 - Define the shell variable `EES_TOOLS_PATH` to point to this directory.
@@ -85,6 +87,39 @@ Clone the repository and make sure that the files can be found by the respective
 From the root directory of an edition, invoke `make` to engrave scores:
 - `make final/scores` generates all publication-ready scores in folder *final*.
 - `make info` lists all available build targets.
+
+Alternatively, configure your text editor to invoke LilyPond. For instance, use this task for VS Code:
+```json
+{
+  "label": "Run LilyPond with EES Tools",
+  "type": "shell",
+  "command": "lilypond",
+  "args": [
+    "--include=<path to EES tools>",
+    "--output=main",
+    "-dno-point-and-click",
+    "scores/full_score.ly"
+  ],
+  "options": {
+    "env": {
+      "LANG": "en"
+    }
+  },
+  "group": "build",
+  "problemMatcher": {
+    "owner": "ly",
+    "fileLocation": ["relative", "${workspaceFolder}"],
+    "pattern": {
+      "regexp": "^(.*):(\\d+):(\\d+):\\s+(\\w*):\\s+(.*)$",
+      "file": 1,
+      "line": 2,
+      "column": 3,
+      "severity": 4,
+      "message": 5
+    }
+  }
+}
+```
 
 
 
@@ -113,31 +148,6 @@ The new repository will contain the following folders and files:
 
 
 
-## add_variables.py
-
-This script extends LY files in subfolder `notes/` with variables for a new movement:
-
-- `-h`, `--help`:
-  show this help message and exit
-- `-m`, `--movement MOVEMENT`:
-  add this movement
-- `-n`, `--notes [NOTES ...]`:
-  add the movement to these instruments (default: all instruments in notes subfolder)
-- `-k`, `--key KEY`:
-  key signature (default: C major). Examples:
-  - `C` is C major
-  - `d` is D minor
-  - `d_dorian` is D dorian
-- `-t`, `--time TIME`:
-  time signature (default: 4/4)
-- `-p`, `--partial PARTIAL`:
-  duration of upbeat (default: no upbeat)
-- `-b`, `--current-bar CURRENT_BAR`:
-  start movement with this bar number (default: 1)
-- `-f`, `--force-file-creation`:
-  create missing files (default: false)
-
-
 ## ees.ly
 
 General LilyPond settings and macros. This file is included by `definitions.ly` in the repository of each work.
@@ -149,13 +159,11 @@ Set these Scheme variables before including the file, like
 
 ```lilypond
 #(define option-movement-title-markup "number-title")
-#(define option-init-toc #t)
 #(define option-print-all-bar-numbers #f)
 \include "ees.ly"
 ```
 
 - `option-movement-title-markup`: Select the format of the movement title and the number of arguments for `\section`. Choices: `"genre-number-title"`, `"number-title"`, and `"title"` (default).
-- `option-init-toc`: If true, generate table of contents files that can be interpreted by LaTeX (default: true).
 - `option-print-all-bar-numbers`: If true, print all bar numbers (useful when preparing a score; default: false).
 
 
@@ -241,6 +249,7 @@ Sectioning commands:
 - `\section "<number>" "<title>"`, or
 - `\section "<number>" "<genre>" "<title>"`: Adds a section heading. The number of arguments is determined by the option `option-movement-title-format`. Must be used inside a `\bookpart`.
 - `\subsection "<title>"`: Adds an unnumbered subsection heading. Must be used inside a `\bookpart`.
+- `\tacet "<level>" [<distance> = #4] "<title>"`: Adds `<title>` centered and the italic word “tacet” below. The optional argument `<distance>` allows to change the vertical distance to the preceding staff. `<level>` (either `section` or `subsection`) ensures that the font size matches the respective heading.
 
 TOC commands:
 - `\addTocEntry`: Adds a TOC entry; should be used immediately after a heading command.
@@ -284,10 +293,12 @@ TOC commands:
   `\arco`|arco
   `\bassi`|Bassi
   `\colOrg`|col’Org.
+  `\conSord`|con sordino
   `\dolce`|dolce
   `\org`|Org.
   `\pizz`|pizz.
   `\senzaOrg`|senza Org.
+  `\senzaSord`|senza sordino
   `\solo`|Solo
   `\tasto`|tasto solo
   `\tenuto`|ten.
@@ -312,12 +323,14 @@ TOC commands:
 - `\hideTn`: hide a single tuplet number
 - `\kneeBeam` and `\noKneeBeam`: force/suppress kneed beams
 - `\markDaCapo`: print “da capo” right aligned above a bar line
+- `\markTimeSig #'(n d)`: add a parenthesized time signature mark `n/d` above a bar line to indicate a different bar length
 - `\mvDl`: move dynamic mark 2 staff spaces to the left
 - `\mvDll`: move dynamic mark 3 staff spaces to the left
 - `\parOn` and `\parOff`: only print the left/right parenthesis in `\parenthesize`
 - `\sbOn` and `\sbOff`: turn on/off subdivided beams
 - `\scriptOut`: force script (like `-|`) to be printed outside of slur
 - `\trillE`: editorial (parenthesized) trill
+- `\whOn` and `\whOff`: switch on/off white (void) notation
 - `\xE` and `\x`: turn on/off editorial (italic) lyrics
 
 
@@ -332,7 +345,7 @@ TOC commands:
 ### Bass figures
 
 - `\bo` and `\bc`: only print the left/right bass figure bracket
-- `\l`: empty space instead of figure
+- `\l`: empty space instead of figure; works like `_` introduced in LilyPond 2.24.0, but yields centered extenders
 - `\t`: horizontal dash instead of figure
 - `\tllur`: dash from lower left to upper right instead of figure
 
@@ -352,6 +365,11 @@ Makefile that defines rules for engraving scores. This file is included by the `
 
 Each run of LilyPond and LuaLaTeX generates a log file, which is stored in `tmp/<score>.ly.log` and `tmp/<score>.tex.log`, respectively. This script collects all errors, warnings, and full boxes from these logs, prints them on the terminal, and stores them in `tmp/_logs.txt`. Its single optional argument allows to change the directory where log files are searched (default: tmp).
 
+
+
+## ees_articulate.ly
+
+A variant of LilyPond's `articulate.ly` with longer staccatissimo and slower trills.
 
 
 ## instrument_data.csv
@@ -541,6 +559,27 @@ This folder contains various documents:
 
 This folder contains miscellaneous scripts:
 
+- `add_variables.py`: extends LY files in subfolder `notes/` with variables for a new movement:
+  - `-h`, `--help`:
+    show this help message and exit
+  - `-m`, `--movement MOVEMENT`:
+    add this movement
+  - `-n`, `--notes [NOTES ...]`:
+    add the movement to these instruments (default: all instruments in notes subfolder)
+  - `-k`, `--key KEY`:
+    key signature (default: C major). Examples:
+    - `C` is C major
+    - `d` is D minor
+    - `d_dorian` is D dorian
+  - `-t`, `--time TIME`:
+    time signature (default: 4/4)
+  - `-p`, `--partial PARTIAL`:
+    duration of upbeat (default: no upbeat)
+  - `-b`, `--current-bar CURRENT_BAR`:
+    start movement with this bar number (default: 1)
+  - `-f`, `--force-file-creation`:
+    create missing files (default: false)
+
 - `download_from_manuscriptorium.sh`: obtains high-resolution images from Manuscriptorium. Usage:
   ```bash
   download_from_manuscriptorium.sh <ID> <last page>
@@ -575,12 +614,7 @@ tightNotes = \override Score.SpacingSpanner.common-shortest-duration = #(ly:make
 Define a right-aligned mark.
 
 ```lilypond
-markOsannaDaCapo = {
-  \once \override Score.RehearsalMark.break-visibility =
-    #begin-of-line-invisible
-  \once \override Score.RehearsalMark.self-alignment-X = #RIGHT
-  \mark \markup \remark "Osanna da capo"
-}
+markOsannaDaCapo = \textEndMark "Osanna da capo"
 ```
 
 Change displayed time signature fraction.
@@ -603,7 +637,7 @@ Add name to choir staff group.
 
 Add a tie to the last note of a movement.
 
-``lilypond
+```lilypond
 extendLV = #(define-music-function
   (parser location further)
   (number?)
@@ -638,31 +672,6 @@ Make a multirow short instrument name.
 #(define option-instrument-name (markup #:center-column ("vla 1" "trb 1")))
 ```
 
-Add time signature mark (add this to the next version!).
-
-```lilypond
-markTimeSig = #(define-music-function
-  (parser location meter)
-  (list?)
-  #{
-    \mark \markup {
-      \fontsize #-6
-      \override #'(padding . 0) \parenthesize
-      \compound-meter #meter
-    }
-  #})
-```
-
-Producing white (void) notation.
-
-```lilypond
-whOn = \override NoteHead.duration-log = #1
-whOff = \revert NoteHead.duration-log
-
-\whOn c8*2 d e f g a \whOff
-c2. \once \whOn h8*2 c2
-```
-
 Incipits for two sopranos.
 
 ```lilypond
@@ -685,24 +694,6 @@ Incipits for solo voice and strings.
 \incipit "Alto" "alto" #-15.8 #-2.8
 \incipit "Tenore" "tenor" #-17.2 #-2.8
 ```
-
-Tacet function (add!; fist used in Caldara's Miserere; vspace may have to be adjusted to 5 if last on full page -> optional argument?; fontsize may be 3 for subsections; make two commands tacetSection and tacetSubsection? it may be necessary to add \noPageBreak before \tacet).
-
-```lilypond
-tacet = #(define-scheme-function
-  (parser location title)
-  (string?)
-  (markup
-    #:vspace 10
-    #:fontsize 4
-    #:fill-line (
-      ""
-      #:center-column (title #:italic "tacet" )
-      ""
-    )
-  ))
-```
-
 
 
 ### Spacing recommendations
