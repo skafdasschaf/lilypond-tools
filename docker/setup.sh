@@ -27,6 +27,7 @@ mv /root/.TinyTeX /opt/tinytex
 /opt/tinytex/bin/x86_64-linux/tlmgr path add
 tlmgr conf auxtrees add $EES_TOOLS_PATH
 tlmgr install `cat tinytex_packages.txt`
+chmod -R a+rw /opt/tinytex
 
 # LilyPond
 wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.0/downloads/lilypond-2.24.0-linux-x86_64.tar.gz
