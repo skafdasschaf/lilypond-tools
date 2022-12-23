@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.9
+FROM python:3.11
 
 ARG user_id
 ARG group_id
 
-ENV EES_TOOLS_PATH=/ees-tools
-ENV PATH="/root/bin:${PATH}"
+ENV EES_TOOLS_PATH=/opt/ees-tools
+ENV PATH="/root/bin:/opt/lilypond/bin:${PATH}"
 
 WORKDIR /ees
 

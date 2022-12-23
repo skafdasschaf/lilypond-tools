@@ -25,3 +25,4 @@ bibleref
 fmtcount
 bookmark
 mfirstuc
+pgf

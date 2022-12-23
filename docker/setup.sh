@@ -7,26 +7,31 @@ if [ -n "$user_id" ] && [ -n "$group_id" ]; then
   adduser --disabled-password --gecos '' --uid $user_id --gid $group_id engraver
 fi
 
+# General utils
+apt-get update
+apt-get install zip
+
 # EES Tools
 git clone https://github.com/edition-esser-skala/ees-tools.git
-mv ees-tools /ees-tools
+mv ees-tools /opt/ees-tools
 
 # Python packages
-pip install GitPython numpy pandas PyYAML termcolor texoutparse
+pip install GitPython numpy pandas segno strictyaml termcolor texoutparse
 
 # TinyTex
 wget https://yihui.org/tinytex/install-bin-unix.sh
-TINYTEX_VERSION=2021.11
+export TINYTEX_VERSION=2022.12
 sh install-bin-unix.sh
-mv /root/.TinyTeX /ees-tools
-/ees-tools/.TinyTeX/bin/x86_64-linux/tlmgr option sys_bin /usr/local/bin
-/ees-tools/.TinyTeX/bin/x86_64-linux/tlmgr path add
+mv /root/.TinyTeX /opt/tinytex
+/opt/tinytex/bin/x86_64-linux/tlmgr option sys_bin /usr/local/bin
+/opt/tinytex/bin/x86_64-linux/tlmgr path add
 tlmgr conf auxtrees add $EES_TOOLS_PATH
 tlmgr install `cat tinytex_packages.txt`
 
 # LilyPond
-apt-get update
-apt-get install -y --no-install-recommends lilypond
+wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.0/downloads/lilypond-2.24.0-linux-x86_64.tar.gz
+tar xvfz lilypond-2.24.0-linux-x86_64.tar.gz
+mv lilypond-2.24.0 /opt/lilypond
 
 # Fonts
 wget https://github.com/google/fonts/raw/main/ofl/frederickathegreat/FrederickatheGreat-Regular.ttf
