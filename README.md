@@ -424,7 +424,7 @@ The subcommand also obtains the following information from the git metadata:
 - … date … (-> `\MetadataDate`)
 - … and checksum of HEAD or the most recent tag (-> `\MetadataChecksum`)
 
-Furthermore, the subcommand reads the LilyPond version from the output of `lilypond --version` (-> `\MetadataLilypondVersion`).
+Furthermore, the subcommand reads the LilyPond version from the output of `lilypond --version` (-> `\MetadataLilypondVersion`) and the EES Tools version from the most recent tag of the repository in `$EES_TOOLS_PATH` (-> `\MetadataEESToolsVersion`).
 
 
 ### Subcommand `table`

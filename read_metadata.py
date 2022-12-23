@@ -41,6 +41,8 @@ def arabic_to_roman(number=None):
 
 # Constants ---------------------------------------------------------------
 
+EES_TOOLS_PATH = os.getenv("EES_TOOLS_PATH")
+
 instrument_data_file = os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
     "instrument_data.csv"
@@ -89,6 +91,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataDate{{{date}}}
 \\def\\MetadataChecksum{{{checksum}}}
 \\def\\MetadataLilypondVersion{{{lilypond_version}}}
+\\def\\MetadataEESToolsVersion{{{eestools_version}}}
 \\def\\MetadataSources{{{sources_env}}}
 \\def\\MetadataAbbreviations{{{abbr_env}}}
 """
@@ -245,6 +248,12 @@ def parse_metadata(file=None,
         ).group(1)
     except FileNotFoundError:
         metadata["lilypond_version"] = "(not available)"
+
+    ## EES Tools version
+    # This version is obtained from the most recent tag of the repository
+    # in $EES_TOOLS_PATH.
+
+    metadata["eestools_version"] = Repo(EES_TOOLS_PATH).tags[-1].name
 
     ## Sources
     # For each entry in `sources`, add missing date, RISM information
