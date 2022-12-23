@@ -280,16 +280,16 @@ def parse_metadata(file=None,
     for id, info in metadata["sources"].items():
         info["category"] = SOURCE_CATEGORIES[id[0]]
 
-        if "date" not in info or info["date"] is None:
+        if "date" not in info or info["date"] == "":
             info["date"] = ""
 
-        if "rism" not in info or info["rism"] is None:
+        if "rism" not in info or info["rism"] == "":
             info["rism"] = ""
 
-        if "notes" not in info or info["notes"] is None:
+        if "notes" not in info or info["notes"] == "":
             info["notes"] = ""
 
-        if "url" not in info or info["url"] is None:
+        if "url" not in info or info["url"] == "":
             info["url"] = ""
 
         if "principal" in info and info["principal"]:
@@ -312,7 +312,7 @@ def parse_metadata(file=None,
     if "principal_id" not in metadata:
         error_exit("No principal source specified.")
 
-    if "id" not in metadata or metadata["id"] is None:
+    if "id" not in metadata or metadata["id"] == "":
         metadata["id"] = metadata["principal_id"]
 
     if "subtitle" not in metadata:
@@ -343,7 +343,7 @@ def parse_metadata(file=None,
 
     if "extra_abbreviations" in metadata:
         for a, long in metadata["extra_abbreviations"].items():
-            if long is None:
+            if long == "":
                 abbr[a] = get_abbr(a)
             else:
                 abbr[a] = long
