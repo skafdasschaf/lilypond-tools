@@ -190,7 +190,7 @@
 
 \RequirePackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
-\clearscrheadfoot
+\clearpairofpagestyles
 \cfoot[\thepage]{\thepage}
 \pagenumbering{roman}
 
