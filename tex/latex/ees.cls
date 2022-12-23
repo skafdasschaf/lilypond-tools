@@ -296,6 +296,9 @@
 \RequirePackage[open,openlevel=0]{bookmark}
 
 
+\RequirePackage{pgf}
+
+
 
 % TOC commands ------------------------------------------------------------
 
@@ -440,6 +443,7 @@
 \providecommand\MetadataChecksum{\relax}
 \providecommand\MetadataLilypondVersion{\relax}
 \providecommand\MetadataEESToolsVersion{\relax}
+\providecommand\MetadataQRCode{\relax}
 \providecommand\MetadataSources{\relax}
 \providecommand\MetadataAbbreviations{\relax}
 \providecommand\eesScore{\relax}
@@ -508,7 +512,8 @@
   Please report any errors or mistakes to \url{edition@esser-skala.at.}
 
   \faGithub~\href{https://github.com/\@repository}{\@repository}\\
-  \textit{\@version, \DTMusedate{tagdate} (\@checksum)}
+  \textit{\@version, \DTMusedate{tagdate} (\@checksum)}%
+  \hspace*{\fill}\raisebox{0pt}[0pt][0pt]{\MetadataQRCode}
 
   \vspace*{2cm}%
 }

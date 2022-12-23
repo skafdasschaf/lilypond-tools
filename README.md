@@ -74,7 +74,7 @@ sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
 ### … using a manual installation
 
 Install the following dependencies:
-- [Python](https://python.org/) v3.11 with packages [GitPython](https://github.com/gitpython-developers/GitPython), [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [strictyaml](https://hitchdev.com/strictyaml/), [termcolor](https://pypi.org/project/termcolor/), and [texoutparse](https://github.com/inakleinbottle/texoutparse).
+- [Python](https://python.org/) v3.11 with packages [GitPython](https://github.com/gitpython-developers/GitPython), [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [segno](https://segno.readthedocs.io/), [strictyaml](https://hitchdev.com/strictyaml/), [termcolor](https://pypi.org/project/termcolor/), and [texoutparse](https://github.com/inakleinbottle/texoutparse).
 - [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
 - [TinyTex](https://yihui.org/tinytex/) v2022.12 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
 - [LilyPond](https://lilypond.org/) v2.24.0
@@ -423,6 +423,7 @@ The subcommand also obtains the following information from the git metadata:
 - version … (-> `\MetadataVersion`)
 - … date … (-> `\MetadataDate`)
 - … and checksum of HEAD or the most recent tag (-> `\MetadataChecksum`)
+- a link to the score PDF in the current release, represented as a QR code made by PGF macros (-> `\MetadataQRCode`)
 
 Furthermore, the subcommand reads the LilyPond version from the output of `lilypond --version` (-> `\MetadataLilypondVersion`) and the EES Tools version from the most recent tag of the repository in `$EES_TOOLS_PATH` (-> `\MetadataEESToolsVersion`).
 

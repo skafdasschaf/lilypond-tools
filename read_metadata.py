@@ -3,9 +3,11 @@
 import argparse
 from datetime import date
 from git import Repo
+import io
 import os
 from pandas import json_normalize, read_csv
 import re
+import segno
 import subprocess
 import sys
 import strictyaml
@@ -92,6 +94,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataChecksum{{{checksum}}}
 \\def\\MetadataLilypondVersion{{{lilypond_version}}}
 \\def\\MetadataEESToolsVersion{{{eestools_version}}}
+\\def\\MetadataQRCode{{{qr_code}}}
 \\def\\MetadataSources{{{sources_env}}}
 \\def\\MetadataAbbreviations{{{abbr_env}}}
 """
@@ -254,6 +257,20 @@ def parse_metadata(file=None,
     # in $EES_TOOLS_PATH.
 
     metadata["eestools_version"] = Repo(EES_TOOLS_PATH).tags[-1].name
+
+    ## QR Code
+    # It will contain a link to the PDF in the current release.
+
+    if score_type == "draft":
+        metadata["qr_code"] = ""
+    else:
+        qr_url = (f"https://github.com/{metadata['repository']}/releases/"
+                  f"download/{metadata['version']}/{score_type}.pdf")
+        qr_buffer = io.StringIO()
+        segno.make_qr(qr_url).save(qr_buffer, kind="tex", scale=1.5, url=qr_url)
+        metadata["qr_code"] = qr_buffer.getvalue()
+        qr_buffer.close()
+
 
     ## Sources
     # For each entry in `sources`, add missing date, RISM information
