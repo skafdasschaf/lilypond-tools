@@ -12,6 +12,7 @@ ltablex
 pdfpages
 enumitem
 markdown
+lt3luabridge
 xstring
 paralist
 csvsimple
