@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Engrave
-        uses: docker://ghcr.io/edition-esser-skala/ees-tools:latest
+        uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2022.12.0
 
       - name: Release
         id: create_release
