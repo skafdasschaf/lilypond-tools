@@ -37,6 +37,7 @@ None, but you may
   - mark deleted parts of a score by gaps across the staves (`\startDeleted` and `\stopDeleted`)
   - show only the numerator of the time signature
 - the `zip` command to the `ees-tools` DOcker image
+- an argument to customize the QR code base URL (`-q`, `--qr-base-url`) to `parse_metadata.py`
 
 
 ### Changed

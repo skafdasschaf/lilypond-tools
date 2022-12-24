@@ -181,7 +181,8 @@ def parse_metadata(file=None,
                    score_type="draft",
                    checksum_from="tag",
                    check_license=True,
-                   license_directory="."):
+                   license_directory=".",
+                   qr_base_url=None):
     if file is not None:
         with open(file) as f:
             yaml_data = f.read()
@@ -264,8 +265,10 @@ def parse_metadata(file=None,
     if score_type == "draft":
         metadata["qr_code"] = ""
     else:
-        qr_url = (f"https://github.com/{metadata['repository']}/releases/"
-                  f"download/{metadata['version']}/{score_type}.pdf")
+        if qr_base_url is None:
+            qr_base_url = (f"https://github.com/{metadata['repository']}/"
+                           f"releases/download/{metadata['version']}")
+        qr_url = f"{qr_base_url}/{score_type}.pdf"
         qr_buffer = io.StringIO()
         segno.make_qr(qr_url).save(qr_buffer, kind="tex", scale=1.5, url=qr_url)
         metadata["qr_code"] = qr_buffer.getvalue()
@@ -381,7 +384,8 @@ def prepare_edition(args):
         file=args.input,
         score_type=args.type,
         checksum_from=args.checksum_from,
-        license_directory=args.license_directory
+        license_directory=args.license_directory,
+        qr_base_url=args.qr_base_url
     )
 
     # assemble macros
@@ -517,6 +521,14 @@ if __name__ == "__main__":
         default=".",
         help="""check the LICENSE in this directory (default: current dir)""",
         metavar="DIR"
+    )
+    parser_edition.add_argument(
+        "-q",
+        "--qr-base-url",
+        default=None,
+        help="""download score PDFs from this base URL
+                (default: current GitHub release)""",
+        metavar="URL"
     )
     parser_edition.set_defaults(func=prepare_edition)
 
