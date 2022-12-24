@@ -160,6 +160,7 @@ os.makedirs("notes", exist_ok=True)
 
 metadata_file = os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
+    "..",
     "instrument_data.csv"
 )
 instrument_data = pd.read_csv(metadata_file).set_index("abbreviation")
