@@ -616,7 +616,10 @@ tightNotes = \override Score.SpacingSpanner.common-shortest-duration = #(ly:make
 Define a right-aligned mark.
 
 ```lilypond
-markOsannaDaCapo = \textEndMark "Osanna da capo"
+markOsannaDaCapo = {
+  \once \override Score.RehearsalMark.self-alignment-X = #RIGHT
+  \mark \markup \remark "Osanna da capo"
+}
 ```
 
 Change displayed time signature fraction.

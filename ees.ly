@@ -490,14 +490,17 @@ parOff = {
       (list left-par (cadr par-list))))
 }
 
-markDaCapo = \textEndMark "da capo"
+markDaCapo = {
+  \once \override Score.RehearsalMark.self-alignment-X = #RIGHT
+  \mark \markup \remark "da capo"
+}
 
 markTimeSig = #(define-music-function
   (parser location meter)
   (list?)
   #{
-    \textMark \markup {
-      \fontsize #-3
+    \mark \markup {
+      \fontsize #-6
       \override #'(padding . 0) \parenthesize
       \compound-meter #meter
     }
@@ -576,7 +579,6 @@ tacet = #(define-scheme-function
   \context {
     \Score
     \compressEmptyMeasures
-    \override TextMark.font-size = #-1
     #(if option-print-all-bar-numbers
          #{ \override BarNumber.break-visibility = ##(#f #t #t) #})
   }

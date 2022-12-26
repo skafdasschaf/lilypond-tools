@@ -7,7 +7,6 @@
 None, but you may
 - remove `#(define option-init-toc #t)` from `definitions.ly`
 - replace `\l` by `_` if no extenders are printed
-- change the definition of custom marks to use `\textEndMark`
 
 
 ### Added
