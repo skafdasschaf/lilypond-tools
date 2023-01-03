@@ -606,7 +606,7 @@ Increase length of multi measure rest.
 R\breve.*123 \bar "||"
 ```
 
-Adjust overall horizontal spacing. (ADD in next version: command)
+Adjust overall horizontal spacing.
 
 ```lilypond
 \layout { \override Score.SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8) }
