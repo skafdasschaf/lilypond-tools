@@ -332,6 +332,13 @@ def parse_metadata(file=None,
     # in parentheses, these elements are removed.
 
     abbr = DEFAULT_ABBR
+    if "extra_abbreviations" in metadata:
+        for a, long in metadata["extra_abbreviations"].items():
+            if long == "":
+                abbr[a] = get_abbr(a)
+            else:
+                abbr[a] = long
+
     for a in (metadata["scoring"]
               .replace("\\newline", "")
               .replace("\\\\", "")
@@ -342,14 +349,8 @@ def parse_metadata(file=None,
         if a[-1] == ")":
             a = re.match("[^\(]+", a).group(0).strip()
         a = a.lstrip("0123456789 ").removesuffix("solo").rstrip()
-        abbr[a] = get_abbr(a)
-
-    if "extra_abbreviations" in metadata:
-        for a, long in metadata["extra_abbreviations"].items():
-            if long == "":
-                abbr[a] = get_abbr(a)
-            else:
-                abbr[a] = long
+        if a not in abbr:
+            abbr[a] = get_abbr(a)
 
     abbr_items = [ABBR_ITEM_TEMPLATE.format(short=k, long=v)
                   for k, v in sorted(abbr.items(), key=lambda x: x[0].lower())]
