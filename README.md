@@ -546,7 +546,12 @@ The value of any additional metadata `<key>` can be retrieved via `\Metadata<Key
 
 ## .github/workflows/engrave-and-release.yaml
 
-This GitHub Actions workflow engraves scores using the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker container and creates a GitHub release that includes the generated PDFs. It is triggered whenever a [SemVer](https://semver.org) tag is pushed to GitHub.
+This GitHub Actions workflow engraves scores using the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker container and creates a GitHub release that includes
+
+- all generated PDFs, and
+- a zip archive `midi_collection.zip` will all (manually curated) midi files in folder `midi` (only if the latter folder exists).
+
+It is triggered whenever a [SemVer](https://semver.org) tag is pushed to GitHub.
 
 
 ## documents/*
