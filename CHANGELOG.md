@@ -1,5 +1,13 @@
 # Changelog
 
+## 2023.02.0
+
+### Added
+
+- generation and release of a zip file `midi_collection.zip` with MIDI files in folder `midi`
+- inclusion of `ees_articulate.ly` in `ees-template`
+
+
 ## 2022.12.0
 
 ### Breaking changes
