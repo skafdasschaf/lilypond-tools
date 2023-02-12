@@ -10,11 +10,16 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Engrave
-        uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2022.12.0
+        uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2023.02.0
+       
+      - name: Optionally zip midi files
+        run: if [ -d midi ]; then zip -j final/midi_collection.zip midi/*; fi
 
       - name: Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files:
+          files: |
             final/*.pdf
+            final/midi_collection.zip
+          fail_on_unmatched_files: false
