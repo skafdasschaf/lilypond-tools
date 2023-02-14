@@ -17,6 +17,7 @@ mv ees-tools /opt/ees-tools
 
 # Python packages
 pip install GitPython numpy pandas segno strictyaml termcolor texoutparse
+git config --global --add safe.directory /ees  # required by GitPython
 
 # TinyTex
 wget https://yihui.org/tinytex/install-bin-unix.sh
