@@ -5,16 +5,15 @@ on: workflow_call
 jobs:
   engrave_scores:
     runs-on: ubuntu-latest
-    container: docker://ghcr.io/edition-esser-skala/ees-tools:v2023.02.0
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Engrave
-        run: make -B final/scores
+      - name: Fix git safe.directory in container
+        run: mkdir -p /home/runner/work/_temp/_github_home && printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
 
-      - name: Compress MIDI files
-        run: if [ -d midi ]; then zip -j final/midi_collection.zip midi/*; fi
+      - name: Engrave
+        uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2023.02.0
 
       - name: Release
         id: create_release

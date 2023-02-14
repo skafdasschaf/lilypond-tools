@@ -22,6 +22,13 @@ scores: $(scores)
 
 # dependencies of final scores (i.e., front matter + notes)
 
+## MIDI archive
+.PHONY: final/midi
+final/midi:
+>mkdir -p final
+>if [ -d midi ]; then zip -j final/midi_collection.zip midi/*; fi
+
+
 ## individual final scores (e.g., 'make final/full_score')
 $(scores:%=final/%): %: %.pdf
 $(scores:%=final/%.pdf): final/%.pdf: front_matter/critical_report.tex \
@@ -42,7 +49,7 @@ $(scores:%=final/%.pdf): final/%.pdf: front_matter/critical_report.tex \
 
 ## all final scores (`make final/scores')
 .PHONY: final/scores
-final/scores: $(scores:%=final/%)
+final/scores: final/midi $(scores:%=final/%)
 >python $(EES_TOOLS_PATH)/parse_logs.py | tee tmp/_logs.txt
 
 # info
@@ -55,5 +62,6 @@ info:
 >echo "* $${color}$(subst $(space),$(sep),$(scores))$${reset}: individual scores (LilyPond output only)"; \
 >echo "* $${color}scores$${reset}: all scores"; \
 >echo "* $${color}$(subst $(space),$(sep),$(scores:%=final/%))$${reset}: individual final scores (LilyPond output + front matter)"; \
->echo "* $${color}final/scores$${reset}: all final scores"; \
+>echo "* $${color}final/midi$${reset}: MIDI archive"; \
+>echo "* $${color}final/scores$${reset}: all final scores and the MIDI archive"; \
 >echo "* $${color}info$${reset}: prints this message"

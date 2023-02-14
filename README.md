@@ -357,7 +357,8 @@ Makefile that defines rules for engraving scores. This file is included by the `
 - `full_score`, `b`, `vl1` etc: individual scores (LilyPond output only)
 - `scores`: all scores
 - `final/full_score`, `final/b`, `final/vl1` etc: individual final scores (LilyPond output + front matter)
-- `final/scores`: all final scores
+- `final/midi`: MIDI archive
+- `final/scores`: all final scores and the MIDI archive
 - `info`: usage details
 
 

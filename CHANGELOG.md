@@ -4,8 +4,14 @@
 
 ### Added
 
-- generation and release of a zip file `midi_collection.zip` with MIDI files in folder `midi`
+- a make target `final/midi`, which creates a MIDI archive `midi_collection.zip` containing all MIDI files in folder `midi`
 - inclusion of `ees_articulate.ly` in `ees-template`
+
+
+### Changed
+
+- The make target `final/scores` now also generates the MIDI archive.
+- The GitHub Actions workflow now also includes the MIDI archive in the release.
 
 
 ## 2022.12.0
