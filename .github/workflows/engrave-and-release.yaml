@@ -9,9 +9,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Fix git safe.directory in container
+        run: mkdir -p /home/runner/work/_temp/_github_home && printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
+
       - name: Engrave
         uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2023.02.0
-       
+
       - name: Optionally zip midi files
         run: if [ -d midi ]; then zip -j final/midi_collection.zip midi/*; fi
 
