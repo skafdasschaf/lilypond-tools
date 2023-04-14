@@ -718,6 +718,13 @@ Incipits for solo voice and strings.
 \incipit "Tenore" "tenor" #-17.2 #-2.8
 ```
 
+Incipits for alto and tenor wih trombones.
+
+```lilypond
+\incipit \markup \center-column { "Alto" "Trombone I" } "alto" #-20.5 #-1.8
+\incipit \markup \center-column { "Tenore" "Trombone II" } "tenor" #-20.9 #-1.8
+```
+
 
 ### Spacing recommendations
 
