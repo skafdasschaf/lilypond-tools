@@ -595,6 +595,17 @@ This folder contains miscellaneous scripts:
   where `<ID>` is the Manuscriptorium ID and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `0001r.jpg`, `0001v.jpg`, `0002r.jpg` etc.
 
 - `download_from_slub.sh`: obtains high-resolution images from SLUB. Usage:
+  ```bash
+  download_from_slub.sh <ID> <last page>
+  ```
+  where `<ID>` is the SLUB ID and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `0000001.jpg`, `00000002.jpg` etc.
+
+- `download_from_spitz.sh`: obtains high-resolution images from Musikarchiv Spitz. Usage:
+  ```bash
+  download_from_spitz.sh <ID> <last page>
+  ```
+  where `<ID>` is the mirador ID (as evident from the IIIF manifest) and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `001.jpg`, `002.jpg` etc.
+
 - `split_image.sh`: splits double-sided PDFs. Usage:
   ```bash
   split_image.sh <file> <size>
