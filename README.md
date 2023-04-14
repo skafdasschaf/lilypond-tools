@@ -594,6 +594,7 @@ This folder contains miscellaneous scripts:
   ```
   where `<ID>` is the Manuscriptorium ID and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `0001r.jpg`, `0001v.jpg`, `0002r.jpg` etc.
 
+- `download_from_slub.sh`: obtains high-resolution images from SLUB. Usage:
 - `split_image.sh`: splits double-sided PDFs. Usage:
   ```bash
   split_image.sh <file> <size>
