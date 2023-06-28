@@ -725,6 +725,13 @@ Incipits for alto and tenor wih trombones.
 \incipit \markup \center-column { "Tenore" "Trombone II" } "tenor" #-20.9 #-1.8
 ```
 
+Add a tacet followed by a repeated movement.
+
+```lilypond
+\tacet "section" "Benedictus"
+\markup { \vspace #3 \fontsize #3 \fill-line { "" "Osanna ut supra" "" } }
+```
+
 
 ### Spacing recommendations
 
