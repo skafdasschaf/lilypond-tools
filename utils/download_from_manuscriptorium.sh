@@ -1,9 +1,14 @@
-# usage:
-# $1 = Manuscriptorium ID
-# $2 = last page
-#
-# example:
-# download_from_manuscriptorium.sh AIPDIG-NKCR__59_R_3525___0O7CCJ7-cs 35
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "usage:"
+  echo "\$1 = Manuscriptorium ID"
+  echo "\$2 = last page"
+  echo ""
+  echo "example:"
+  echo "download_from_manuscriptorium.sh AIPDIG-NKCR__59_R_3525___0O7CCJ7-cs 35"
+  exit 0
+fi
 
 img_url_left="https://imagines.manuscriptorium.com/loris/$1/ID"
 img_url_right="/full/full/0/default.jpg"

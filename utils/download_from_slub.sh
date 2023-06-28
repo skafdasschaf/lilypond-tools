@@ -1,11 +1,14 @@
 #!/bin/bash
 
-# usage:
-# $1 = SLUB ID
-# $2 = last page
-#
-# example:
-# download_from_slub.sh sona-mu_314970908 16
+if [ $# -eq 0 ]; then
+  echo "usage:"
+  echo "\$1 = SLUB ID"
+  echo "\$2 = last page"
+  echo ""
+  echo "example:"
+  echo "download_from_slub.sh sona-mu_314970908 16"
+  exit 0
+fi
 
 img_url_left="https://digital.slub-dresden.de/data/kitodo/$1/$1_tif/jpegs/"
 img_url_right=".tif.original.jpg"
