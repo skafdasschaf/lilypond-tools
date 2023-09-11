@@ -61,8 +61,7 @@
 #(define option-instrument-name-lower
   (if (not (defined? 'option-instrument-name-lower))
   ""
-  option-instrument-name-lower))(define option-instrument-name-lower "")
-)
+  option-instrument-name-lower))
 
 \layout {
   \context {
