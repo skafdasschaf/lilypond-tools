@@ -11,3 +11,11 @@
 - see MH 628, 98 for gregorian notation
 - update \vlc and \bassi
 - include sacral-lyrics, add metadata to this repo
+- \fivehat = \markup {
+  \combine
+  \figured-bass 5
+  \path #.15 #'(
+    (rmoveto 0 1.2)
+    (rlineto .5 .5)
+    (rlineto .5 -.5))
+}
