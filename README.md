@@ -825,3 +825,14 @@ threeStanzaDistance = \setGroupDistance #18 #22
 and apply these to the choir staff in both the full and vocal score. In the vocal score, only show two systems per page.
 
 In **accompagnatos**, parts comprise up to 5 staves per page by default. The number of staves may be increased to six per page if system-system spacing is 16 and the choir staff uses `\smallGroupDistance`.
+
+
+### Useful bash snippets
+
+Extract individual images from a PDF. (The origin lies in the top left corner.)
+
+```bash
+mkdir cropped
+pdfimages -j score.pdf img
+mogrify -crop 1000x1300+120+120 -path cropped *.jpg
+```
