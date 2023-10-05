@@ -837,3 +837,9 @@ mkdir cropped
 pdfimages -j score.pdf img
 mogrify -crop 1000x1300+120+120 -path cropped *.jpg
 ```
+
+Crop a PDF (here: remove 1 pt from the left, 80 pt from the top, 2 pt from the right, and 60 pt from the bottom).
+
+```bash
+pdfcrop --margins '-1 -80 -2 -60' input.pdf output.pdf
+```
