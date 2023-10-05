@@ -294,7 +294,7 @@ senzaSordE =\markup \remarkE "senza sordino"
 
 
 t = \markup { \combine \transparent \figured-bass 0 \raise #.6 \draw-line #'(1 . 0) }
-l = \markup { \transparent \figured-bass 0 }
+l = \markup { \hspace #-0.9 \transparent \figured-bass 0 }
 tllur = \markup { \combine \transparent \figured-bass 0 \raise #.1 \draw-line #'(1 . 1) }
 critnote = \markup { \musicglyph #'"pedal.*" }
 trillE = \tweak self-alignment-X #CENTER ^\markup { \hspace #1.5 [ \musicglyph #'"scripts.trill" ] }
