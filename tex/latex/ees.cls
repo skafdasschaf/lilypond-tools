@@ -506,9 +506,9 @@
   \vspace*{\fill}
 
   \raisebox{-4mm}{\includegraphics{\@license}}\hspace*{1em}%
-  Edition Esser-Skala, \DTMfetchyear{tagdate}
+  Edition Esser-Skala · Koppl, Austria · \DTMfetchyear{tagdate}
 
-  © \DTMfetchyear{tagdate} by Edition Esser-Skala. \ees@license@statement
+  © \DTMfetchyear{tagdate} by Edition Esser-Skala (Selbstverlag § 2 Abs 1 Z 7 GewO 1994). \ees@license@statement
 
   Music engraving by LilyPond \MetadataLilypondVersion~(\url{https://www.lilypond.org}) and EES Tools \MetadataEESToolsVersion.\\
   Front matter typeset with Source Sans and Fredericka the Great.
