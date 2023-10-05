@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ees}[2021/12/01 Front matter for the Edition Esser-Skala]
+\ProvidesClass{ees}[2023/10/06 Front matter for the Edition Esser-Skala]
 
 
 
@@ -415,6 +415,7 @@
 \def\shorttitle#1{\def\@shorttitle{#1}}
 \def\namesuffix#1{\def\@namesuffix{#1}}
 \def\scoring#1{\def\@scoring{#1}}
+\def\editor#1{\def\@editor{#1}}
 \def\license#1{\def\@license{#1}}
 \def\scoretype#1{\def\@scoretype{#1}}
 \def\repository#1{\def\@repository{#1}}
@@ -435,6 +436,7 @@
 \providecommand\MetadataTitle{\relax}
 \providecommand\MetadataSubtitle{\relax}
 \providecommand\MetadataScoring{\relax}
+\providecommand\MetadataEditor{\relax}
 \providecommand\MetadataLicense{cc-by-sa-4.0}
 \providecommand\MetadataScoretype{\relax}
 \providecommand\MetadataRepository{\relax}
@@ -457,6 +459,7 @@
 \shorttitle{\MetadataTitle}
 \subtitle{\MetadataSubtitle}
 \scoring{\MetadataScoring}
+\editor{\MetadataEditor}
 \license{\MetadataLicense}
 \scoretype{\MetadataScoretype}
 \repository{\MetadataRepository}
@@ -493,6 +496,7 @@
     {\@subtitle}\\[\baselineskip]%
     {\itshape\@scoring}%
     \vfill%
+    {\ltseries\strut edited by \@editor}\\[\baselineskip]%
     {\itshape\@scoretype}\hspace*{\fill}%
      \raisebox{0pt}[0pt][0pt]{\includegraphics[scale=1.25]{logo_full}}%
   \end{titlepage}%

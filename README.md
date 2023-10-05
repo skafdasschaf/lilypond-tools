@@ -455,6 +455,7 @@ This file describes metadata for each work and comprises the following keys:
 - `id` (optional): Work identifier (typically, the catalogue of works number). If this key is missing, the RISM library siglum and shelfmark of the principal source are used.
 - `genre` (required): Work genre (only used on the webpage).
 - `scoring` (required): Scoring of the work (-> `\MetadataScoring`). See the editorial guidelines for the scoring syntax. The list of abbreviations in the critical report is also assembled from the scoring information (-> `\MetadataAbbreviations`)
+- `editor` (optional): Editor of the work (default: Wolfgang Esser-Skala; -> `\MetadataEditor`).
 - `license` (required): License of the edition (-> `\MetadataLicense`). Currently, the following values are supported: `cc-by-sa-4.0` and `cc-by-nc-sa-4.0`.
 - `sources` (required): Manuscript and print sources used for the edition (-> `\MetadataSources`). The name of each subkey will be used as source identifier (e.g., A1, B2). Each source is described by the following keys:
   - `siglum` (required): RISM library siglum
@@ -517,6 +518,7 @@ By default, these macros use the respective values in `metadata.yaml`.
 - `\shorttitle{}`: work title for the title page head (default: `\MetadataTitle`)
 - `\subtitle{}`: work subtitle (default: `\MetadataSubtitle`)
 - `\scoring{}`: scoring information (default: `\MetadataScoring`)
+- `\editor{}`: editor (default: `\MetadataEditor`)
 - `\license{}`: license of the edition (default: `\MetadataLicense`)
 - `\scoretype{}`: score type printed on the title page (default: `\MetadataScoretype`)
 - `\repository{}`: name with owner of the GitHub repository (default: `\MetadataRepository`)

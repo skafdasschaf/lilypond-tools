@@ -86,6 +86,7 @@ METADATA_TEMPLATE = """
 \\def\\MetadataTitle{{{title}}}
 \\def\\MetadataSubtitle{{{subtitle}}}
 \\def\\MetadataScoring{{{scoring}}}
+\\def\\MetadataEditor{{{editor}}}
 \\def\\MetadataScoretype{{{score_type}}}
 \\def\\MetadataLicense{{{license}}}
 \\def\\MetadataRepository{{{repository}}}
@@ -355,6 +356,11 @@ def parse_metadata(file=None,
     abbr_items = [ABBR_ITEM_TEMPLATE.format(short=k, long=v)
                   for k, v in sorted(abbr.items(), key=lambda x: x[0].lower())]
     metadata["abbr_env"] = ABBR_TEMPLATE.format("\n  ".join(abbr_items))
+
+    ## Editor
+    # set a default editor
+    if "editor" not in metadata:
+        metadata["editor"] = "Wolfgang Esser-Skala"
 
     ## License
     # Check whether the license key (a) exists, (b) has a known value, and
