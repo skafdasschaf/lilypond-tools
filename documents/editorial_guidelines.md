@@ -1,6 +1,6 @@
 # Editorial guidelines
 
-This document describes v2023.02.0 of the editorial guidelines for the Edition Esser-Skala, which were inspired by the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
+This document describes v2023.10.0 of the editorial guidelines for the Edition Esser-Skala, which were inspired by the guidelines of the [CPEB:CW project](https://cpebach.org/description.html).
 
 
 

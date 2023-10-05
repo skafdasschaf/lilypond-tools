@@ -13,7 +13,7 @@ jobs:
         run: mkdir -p /home/runner/work/_temp/_github_home && printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
 
       - name: Engrave
-        uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2023.02.0
+        uses: docker://ghcr.io/edition-esser-skala/ees-tools:v2023.10.0
 
       - name: Release
         id: create_release
