@@ -632,7 +632,7 @@ Adjust overall horizontal spacing.
 ```lilypond
 \layout { \override Score.SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8) }
 tightNotes = \override Score.SpacingSpanner.common-shortest-duration = #(ly:make-moment 1/8)
-untightNotes = \revert Score.SpacingSpanner.common-shortest-duration
+looseNotes = \revert Score.SpacingSpanner.common-shortest-duration
 ```
 
 Define a right-aligned mark.
