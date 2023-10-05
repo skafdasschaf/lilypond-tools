@@ -33,7 +33,7 @@
 - `\eesCommentaryAfterToe` now may contain arbitrary contents. Previously, it did not support a range of commands, such as `\section` or `\clearpage`.
 - The start of the bass figure extender after `\l` has been improved so that it aligns correctly with the bass note above.
 - `option-instrument-name-lower` in `score_settings/four_staves.ly`, which previously generated an error
-- various pylint problems in `parse_logs.py` and `read_metadata.py`
+- various pylint problems in `parse_logs.py`, `read_metadata.py`, and `utils/add_variables.py`
 
 
 

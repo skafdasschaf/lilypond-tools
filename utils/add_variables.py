@@ -1,11 +1,12 @@
 #!/bin/python
 
+"""Adds note variables to LY files in folder 'notes'."""
+
 import argparse
 import logging
 import os
 import re
 
-import numpy as np
 import pandas as pd
 
 logging.basicConfig(
@@ -36,7 +37,7 @@ INSTRUMENT_TEMPLATE = """
 
 CHORDS_TEMPLATE = """
 {movement}{instrument} = {{
-  \clef {clef}
+  \\clef {clef}
   {time_modifier}\\key {key} \\time {time} {autobeam}\\tempo{movement}
   {flags}
   << \\relative {relative} {{
@@ -142,15 +143,15 @@ def arabic_to_roman(number=None):
 def make_key_signature(k):
     """Converts a key signature abbreviation
     to the corresponding LilyPond string."""
-    key, mode = key_pattern.match(k).groups()
+    key_letter, mode = key_pattern.match(k).groups()
     if mode == "":
-        if key[0].isupper():
-            key = key.lower()
+        if key_letter[0].isupper():
+            key_letter = key_letter.lower()
             mode = "major"
         else:
             mode = "minor"
 
-    return f"{key} \\{mode}"
+    return f"{key_letter} \\{mode}"
 
 
 
@@ -171,12 +172,12 @@ if args.notes == "ALL":
 
 
 for instrument in args.notes:
-    abbr, id = note_pattern.match(instrument).groups()
+    abbr, num = note_pattern.match(instrument).groups()
 
     try:
         instrument_long = instrument_data.loc[abbr, 'variable']
     except KeyError:
-        logging.warning(f"Ignoring unknown instrument '{instrument}'.")
+        logging.warning("Ignoring unknown instrument '%s'.", instrument)
         continue
 
     if instrument_data.loc[abbr, "default_key"] == "none":
@@ -198,7 +199,7 @@ for instrument in args.notes:
 
     keys = dict(
         movement=args.movement,
-        instrument=f"{instrument_long}{arabic_to_roman(id)}",
+        instrument=f"{instrument_long}{arabic_to_roman(num)}",
         relative=instrument_data.loc[abbr, "relative"],
         time_modifier=time_modifier,
         clef=instrument_data.loc[abbr, "clef"],
@@ -212,16 +213,18 @@ for instrument in args.notes:
 
     if instrument not in available_notes:
         if args.force_file_creation:
-            with open(os.path.join("notes", f"{instrument}.ly"), "w") as f:
+            with open(os.path.join("notes", f"{instrument}.ly"),
+                      "w", encoding="utf8") as f:
                 f.write(DOCUMENT_PREAMBLE)
-            logging.info(f"Successfully created '{instrument}'.")
+            logging.info("Successfully created '%s'.", instrument)
         else:
             logging.warning(
-                f"Ignoring unknown file for instrument '{instrument}'."
+                "Ignoring unknown file for instrument '%s'.", instrument
             )
             continue
 
-    with open(os.path.join("notes", f"{instrument}.ly"), "a+") as f:
+    with open(os.path.join("notes", f"{instrument}.ly"),
+              "a+", encoding="utf8") as f:
         if instrument_long == "Chords":
             f.write(CHORDS_TEMPLATE.format(**keys))
         else:
@@ -232,4 +235,4 @@ for instrument in args.notes:
         elif instrument_data.loc[abbr, "second_template"] == "figures":
             f.write(FIGURES_TEMPLATE.format(**keys))
 
-    logging.info(f"Successfully updated '{instrument}'.")
+    logging.info("Successfully updated '%s'.", instrument)
