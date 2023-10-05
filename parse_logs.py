@@ -1,5 +1,7 @@
 #!/bin/python
 
+"""Parse LilyPond and LaTeX logs to look for warnings."""
+
 import argparse
 import glob
 import re
@@ -27,7 +29,7 @@ cprint(
 parser = LatexLogParser()
 tex_errors_found = False
 for tex_logs in glob.glob(f"{args.dir}/*.tex.log"):
-    with open(tex_logs) as f:
+    with open(tex_logs, encoding="utf8") as f:
         parser.process(f)
 
     if len(parser.errors) + len(parser.warnings) + len(parser.badboxes) > 0:
@@ -58,7 +60,7 @@ re_other_warning = re.compile("$warning:|Warnung:")
 
 ly_errors_found = False
 for ly_logs in glob.glob(f"{args.dir}/*.ly.log"):
-    with open(ly_logs) as f:
+    with open(ly_logs, encoding="utf8") as f:
         lines = list(f.readlines())
 
     messages = []

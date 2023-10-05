@@ -1,28 +1,30 @@
-#!/usr/bin/python
+#!/bin/python
 
-import argparse
-from datetime import date
-from git import Repo
+"""Parse metadata from YAML file."""
+
 import io
 import os
-from pandas import json_normalize, read_csv
 import re
-import segno
 import subprocess
 import sys
+
+import argparse
+from git import Repo
+from pandas import json_normalize, read_csv
+import segno
 import strictyaml
 
 
 
 # General functions and classes -------------------------------------------
 
-# if an exception is caught, print an error message and exit gracefully
 def error_exit(msg):
+    """Print an error message and exit."""
     print(f"ERROR: {msg}")
     sys.exit(1)
 
-# convert an Arabic number to a Roman numeral
 def arabic_to_roman(number=None):
+    """Convert an Arabic number to a Roman numeral."""
     conv = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
             [ 100, "C"], [ 90, "XC"], [ 50, "L"], [ 40, "XL"],
             [  10, "X"], [  9, "IX"], [  5, "V"], [  4, "IV"],
@@ -148,8 +150,9 @@ PRINT_SCORE_TEMPLATE = """
 
 # Prepare metadata --------------------------------------------------------
 
-# derive the score type shown on the title page from the score type abbreviation
 def get_score_type(abbr, parts):
+    """Derive the score type shown on the title page
+       from the score type abbreviation."""
     if abbr == "draft":
         return "Draft"
 
@@ -160,7 +163,7 @@ def get_score_type(abbr, parts):
         return parts[abbr]
 
     try:
-        abbr_bare, number = re.match("(\D+)(\d*)", abbr).groups()
+        abbr_bare, number = re.match(r"(\D+)(\d*)", abbr).groups()
         name = INSTRUMENT_METADATA.loc[abbr_bare, "score_type"]
         number = arabic_to_roman(number)
         return f"{name} {number}".strip()
@@ -168,8 +171,8 @@ def get_score_type(abbr, parts):
         error_exit(f"No long form for {abbr} defined")
 
 
-# get the long form of a scoring abbreviation
 def get_abbr(a):
+    """Get the long form of a scoring abbreviation."""
     try:
         res = INSTRUMENT_METADATA.loc[a, "long"]
     except KeyError:
@@ -184,8 +187,9 @@ def parse_metadata(file=None,
                    check_license=True,
                    license_directory=".",
                    qr_base_url=None):
+    """Parse metadata."""
     if file is not None:
-        with open(file) as f:
+        with open(file, encoding="utf8") as f:
             yaml_data = f.read()
     elif string is not None:
         yaml_data = string
@@ -245,7 +249,8 @@ def parse_metadata(file=None,
         lilypond_version = subprocess.run(
             ["lilypond", "--version"],
             capture_output=True,
-            text=True
+            text=True,
+            check=False
         ).stdout
         metadata["lilypond_version"] = re.search(
             r"GNU LilyPond ([^\s]+)",
@@ -281,8 +286,8 @@ def parse_metadata(file=None,
     # and notes, and determine the identifier of the principal source.
 
     source_items = []
-    for id, info in metadata["sources"].items():
-        info["category"] = SOURCE_CATEGORIES[id[0]]
+    for source_id, info in metadata["sources"].items():
+        info["category"] = SOURCE_CATEGORIES[source_id[0]]
 
         if "date" not in info or info["date"] == "":
             info["date"] = ""
@@ -304,7 +309,7 @@ def parse_metadata(file=None,
                 info["siglum"], info["shelfmark"]
             )
 
-        source_items.append(SOURCE_ITEM_TEMPLATE.format(id=id, **info))
+        source_items.append(SOURCE_ITEM_TEMPLATE.format(id=source_id, **info))
 
     metadata["sources_env"] = SOURCES_TEMPLATE.format("\n".join(source_items))
 
@@ -348,7 +353,7 @@ def parse_metadata(file=None,
         if a[0] == "[":
             a = a[1:-1]
         if a[-1] == ")":
-            a = re.match("[^\(]+", a).group(0).strip()
+            a = re.match(r"[^\(]+", a).group(0).strip()
         a = a.lstrip("0123456789 ").removesuffix("solo").rstrip()
         if a not in abbr:
             abbr[a] = get_abbr(a)
@@ -373,7 +378,8 @@ def parse_metadata(file=None,
 
     if check_license:
         try:
-            with open(os.path.join(license_directory, "LICENSE")) as f:
+            with open(os.path.join(license_directory, "LICENSE"),
+                      encoding="utf8") as f:
                 license_heading = f.readline().strip()
         except FileNotFoundError:
             error_exit("No LICENSE file found.")
@@ -387,6 +393,7 @@ def parse_metadata(file=None,
 # Dispatcher functions ----------------------------------------------------
 
 def prepare_edition(args):
+    """Collects metadata for an edition."""
     metadata = parse_metadata(
         file=args.input,
         score_type=args.type,
@@ -417,7 +424,7 @@ def prepare_edition(args):
         )
 
     # save macros
-    with open(args.output, "w") as f:
+    with open(args.output, "w", encoding="utf8") as f:
         f.writelines(macros_conditionals)
         f.writelines(macros_metadata)
         f.writelines(macros_additional_keys)
@@ -425,17 +432,20 @@ def prepare_edition(args):
 
 
 def format_table_sources(sources):
+    """Formats edition sources for display in a table."""
     res = []
-    for id, details in sources.items():
+    for source_id, details in sources.items():
         if "principal" in details and details["principal"]:
             p = ", principal"
         else:
             p = ""
-        res.append(f"{id} ({details['siglum']} {details['shelfmark']}{p})")
+        res.append(f"{source_id} ({details['siglum']} "
+                   f"{details['shelfmark']}{p})")
     return "".join(res)
 
 
 def prepare_table(args):
+    """Collects metadata for a table."""
     # read metadata files
     works = []
     for composer_dir in os.listdir(args.root_directory):
@@ -558,5 +568,5 @@ if __name__ == "__main__":
     )
     parser_table.set_defaults(func=prepare_table)
 
-    args = parser.parse_args()
-    args.func(args)
+    parsed_args = parser.parse_args()
+    parsed_args.func(parsed_args)
