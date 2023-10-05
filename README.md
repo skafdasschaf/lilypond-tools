@@ -348,6 +348,7 @@ TOC commands:
 - `\l`: empty space instead of figure; works like `_` introduced in LilyPond 2.24.0, but yields centered extenders
 - `\t`: horizontal dash instead of figure
 - `\tllur`: dash from lower left to upper right instead of figure
+- `\fivehat`: the figure 5 with a hat, indicating a diminished fifth
 
 
 
