@@ -334,6 +334,18 @@ dynScriptPrefix = #(define-scheme-function
         #:normal-text #:small prefix
         #:normal-text #:large #:bold sym)))))
 
+dynScriptSuffix = #(define-scheme-function
+  (parser location sym suffix extra?)
+  (string? string? boolean?)
+  (make-dynamic-script
+    (if extra?
+      (markup #:line (
+        #:normal-text #:italic #:large #:bold sym
+        #:normal-text #:small #:italic suffix))
+      (markup #:line (
+        #:normal-text #:large #:bold sym
+        #:normal-text #:small suffix)))))
+
 fff  = \dynScript "fff" ##f
 fffE = \dynScript "fff" ##t
 ff   = \dynScript "ff"  ##f
@@ -374,6 +386,9 @@ pocoF  = \dynScriptPrefix "poco" "f" ##f
 pocoFE = \dynScriptPrefix "poco" "f" ##t
 pocoP  = \dynScriptPrefix "poco" "p" ##f
 pocoPE = \dynScriptPrefix "poco" "p" ##t
+
+passai = \dynScriptSuffix "p" "assai" ##f
+passaiE = \dynScriptSuffix "p" "assai" ##t
 
 cresc = #(make-music
   'CrescendoEvent
