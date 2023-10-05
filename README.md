@@ -699,35 +699,39 @@ Make a multirow short instrument name.
 #(define option-instrument-name (markup #:center-column ("vla 1" "trb 1")))
 ```
 
-Incipits for two sopranos.
+Incipits for …
 
-```lilypond
-\incipit "Soprano I" "soprano" #-19.5 #-1.8
-\incipit "Soprano II" "soprano" #-20 #-1.8
-```
+- two sopranos:
+  ```lilypond
+  \incipit "Soprano I" "soprano" #-19.5 #-1.8
+  \incipit "Soprano II" "soprano" #-20 #-1.8
+  ```
 
-Incipits for mixed chorus and continuo.
+- mixed chorus and continuo:
+  ```lilypond
+  \incipit "Soprano" "soprano" #-20.5 #-0.3
+  \incipit "Alto" "alto" #-18.3 #-0.3
+  \incipit "Tenore" "tenor" #-19.7 #-0.3
+  ```
+- solo voice and strings:
+  ```lilypond
+  \incipit "Soprano" "soprano" #-18.0 #-2.8
+  \incipit "Alto" "alto" #-15.8 #-2.8
+  \incipit "Tenore" "tenor" #-17.2 #-2.8
+  ```
 
-```lilypond
-\incipit "Soprano" "soprano" #-20.5 #-0.3
-\incipit "Alto" "alto" #-18.3 #-0.3
-\incipit "Tenore" "tenor" #-19.7 #-0.3
-```
+- alto and tenor wih trombones:
+  ```lilypond
+  \incipit \markup \center-column { "Alto" "Trombone I" } "alto" #-20.5 #-1.8
+  \incipit \markup \center-column { "Tenore" "Trombone II" } "tenor" #-20.9 #-1.8
+  ```
 
-Incipits for solo voice and strings.
-
-```lilypond
-\incipit "Soprano" "soprano" #-18.0 #-2.8
-\incipit "Alto" "alto" #-15.8 #-2.8
-\incipit "Tenore" "tenor" #-17.2 #-2.8
-```
-
-Incipits for alto and tenor wih trombones.
-
-```lilypond
-\incipit \markup \center-column { "Alto" "Trombone I" } "alto" #-20.5 #-1.8
-\incipit \markup \center-column { "Tenore" "Trombone II" } "tenor" #-20.9 #-1.8
-```
+- voices with accompanying strings:
+  ```lilypond
+  \incipit \markup \center-column { "Soprano" "[Violino I]" } "soprano" #-21.3 #-0.3
+  \incipit \markup \center-column { "Alto" "[Violino II]" } "alto" #-21.8 #-0.3
+  \incipit \markup \center-column { "Tenore" "[Viola]" } "tenor" #-19.6 #-0.3
+  ```
 
 Add a tacet followed by a repeated movement.
 
