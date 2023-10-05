@@ -551,8 +551,7 @@
             \end{xltabular}%
           }%
         \fi% ifees@toe
-        \ifthenelse{\equal{\eesCommentaryAfterToe}{\@empty}}{}%
-          {\par\eesCommentaryAfterToe}%
+        \eesCommentaryAfterToe%
     \ifees@changelog%
       \cleardoublepage%
       \markdownInput{../CHANGELOG.md}%
