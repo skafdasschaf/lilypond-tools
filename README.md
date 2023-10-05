@@ -736,6 +736,21 @@ Add a tacet followed by a repeated movement.
 \markup { \vspace #3 \fontsize #3 \fill-line { "" "Osanna ut supra" "" } }
 ```
 
+Unmetered notation (see MH 98 and 628 for complete examples).
+
+```lilypond
+Basso = {
+  \relative c {
+    \clef bass
+    \key c \major \time 2/2 \tempoXXX
+      \omit Staff.TimeSignature
+    \time 10/1 \[ e1 d f \] \[ e f g f d f \] f \noBreak
+    \time 7/1 \[ f d \] f \[ e f g \] d \noBreak
+    \time 5/1 \[ f a \] \[ g f \] e\fermata \bar "||"
+    \undo \omit Staff.TimeSignature
+      e1 \noBreak
+```
+
 
 ### Spacing recommendations
 
