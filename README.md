@@ -50,12 +50,6 @@
 
 We recommend to engrave scores via the [ees-tools](https://ghcr.io/edition-esser-skala/ees-tools) Docker image. This image is based on [python](https://hub.docker.com/_/python), with all dependencies installed by [docker/setup.sh](docker/setup.sh). GitHub Actions uses this image to automatically engrave and release scores of the Edition Esser-Skala whenever a tag is pushed.
 
-Build the image via
-
-```bash
-sudo docker build --build-arg user_id=$(id -u) --build-arg group_id=$(id -g) --tag ees-tools .
-```
-
 From the root directory of an edition, run
 
 ```bash
@@ -865,3 +859,17 @@ Crop a PDF (here: remove 1 pt from the left, 80 pt from the top, 2 pt from the r
 ```bash
 pdfcrop --margins '-1 -80 -2 -60' input.pdf output.pdf
 ```
+
+
+### How to create a new EES Tools release
+
+- update the changelog, clean up the TODO
+- update version information manually in the following files:
+  - `.github/workflows/engrave-and-release.yaml`
+  - `documents/editorial-guidelines.md`
+  - `tex/latex/ees.cls`
+
+- build the Docker image via
+  ```bash
+  sudo docker build --build-arg user_id=$(id -u) --build-arg group_id=$(id -g) --tag ees-tools .
+  ```
