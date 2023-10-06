@@ -26,6 +26,7 @@
 - The title page now displays the editor of a piece. It may be set via the new optional key `editor` in `metadata.yaml` and the LaTeX macro `\editor`, and is accessible via `\MetadataEditor`.
 - The copyright information now contains the place of publication and the statement that Edition Esser-Skala is a Selbstverlag according to the Gewerbeordnung.
 - `\org`, `\vlc`, `\bassi`, `\senzaOrg`, and `\colOrg` (as well as their corresponding editorial variants) now conform to the used abbreviations (e.g., `\org` prints “org” instead of “Org.”).
+- `ees-tools` now uses LilyPond v2.24.2 and TinyTeX v2023.10.
 
 
 ### Fixed

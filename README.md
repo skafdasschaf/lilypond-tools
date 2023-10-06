@@ -70,8 +70,8 @@ sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
 Install the following dependencies:
 - [Python](https://python.org/) v3.11 with packages [GitPython](https://github.com/gitpython-developers/GitPython), [numpy](https://numpy.org/), [pandas](https://pandas.pydata.org/), [segno](https://segno.readthedocs.io/), [strictyaml](https://hitchdev.com/strictyaml/), [termcolor](https://pypi.org/project/termcolor/), and [texoutparse](https://github.com/inakleinbottle/texoutparse).
 - [Source Sans](https://github.com/adobe-fonts/source-sans) v3.046 and [Fredericka the Great](https://github.com/google/fonts) v1.001
-- [TinyTex](https://yihui.org/tinytex/) v2022.12 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
-- [LilyPond](https://lilypond.org/) v2.24.0
+- [TinyTex](https://yihui.org/tinytex/) v2023.10 with LaTeX packages in [docker/tinytex_packages.txt](docker/tinytex_packages.txt)
+- [LilyPond](https://lilypond.org/) v2.24.2
 
 Clone the repository and make sure that the files can be found by the respective programs:
 - Define the shell variable `EES_TOOLS_PATH` to point to this directory.

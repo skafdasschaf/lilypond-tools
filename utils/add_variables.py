@@ -22,7 +22,7 @@ note_pattern = re.compile(r"([A-Za-z]+)(\d?)")
 key_pattern = re.compile(r"([A-Za-z]+)_?([a-z]*)")
 
 DOCUMENT_PREAMBLE = """\
-\\version "2.24.0"
+\\version "2.24.2"
 """
 
 INSTRUMENT_TEMPLATE = """
