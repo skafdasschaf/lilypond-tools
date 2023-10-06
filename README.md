@@ -53,13 +53,13 @@ We recommend to engrave scores via the [ees-tools](https://ghcr.io/edition-esser
 From the root directory of an edition, run
 
 ```bash
-sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools
+docker run --rm -it -u engraver -v $PWD:/ees ees-tools
 ```
 
 to engrave all final scores (i.e., `make final/scores`). To list all available build targets, run
 
 ```bash
-sudo docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
+docker run --rm -it -u engraver -v $PWD:/ees ees-tools make info
 ```
 
 (Note: These commands ensure that there is a user *engraver* in the container whose uid and gid match the user who runs the container. Thereby, all files created by the container will have the correct permissions.)
@@ -871,5 +871,5 @@ pdfcrop --margins '-1 -80 -2 -60' input.pdf output.pdf
 
 - build the Docker image via
   ```bash
-  sudo docker build --build-arg user_id=$(id -u) --build-arg group_id=$(id -g) --tag ees-tools .
+  docker build --build-arg user_id=$(id -u) --build-arg group_id=$(id -g) --tag ees-tools .
   ```
