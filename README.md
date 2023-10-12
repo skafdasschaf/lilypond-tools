@@ -727,6 +727,12 @@ Incipits for …
   \incipit \markup \center-column { "Tenore" "[Viola]" } "tenor" #-19.6 #-0.3
   ```
 
+- two violins in a grand staff colla parte with S and A:
+  ```lilypond
+  \incipit "I" "soprano" #-16.1 #-0.8
+  \incipit "II" "alto" #-16.4 #-0.8
+  ```
+
 Add a tacet followed by a repeated movement.
 
 ```lilypond
