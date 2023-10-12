@@ -461,7 +461,6 @@ This file describes metadata for each work and comprises the following keys:
   - `notes` (optional): miscellaneous notes
   - `principal` (optional/required): Boolean that denotes whether this source is the principal source. Exactly one source *must* contain this key with a true value.
 - `imslp` (optional): IMSLP identifier (only used on the webpage).
-- `asin` (optional): Amazon Standard Identification Number for titles that are available in print (only used on the webpage).
 - `notes` (optional): Miscellaneous notes (only used on the webpage).
 - `parts` (optional): For each file in the `scores/` subdirectory, this key may contain a subkey-value pair. The subkey corresponds to the file name (without extension), and the value will be used as score type on the title page (-> `\MetadataScoretype`). File names that correspond to default scoring abbreviations (such as `org` and `vl1`) will be converted even in the absence of a respective subkey.
 - `extra_abbreviations` (optional): Additional abbreviations and their long forms (subkeys and values, respectively) to be included in the critical report. If the subkey corresponds to a known abbreviation, its value may be empty.
