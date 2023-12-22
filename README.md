@@ -843,9 +843,10 @@ If a work contains **chorals with three stanzas**, define
 
 ```lilypond
 threeStanzaDistance = \setGroupDistance #18 #22
+threeStanzaDistanceCoro = \setGroupDistance #18 #18
 ```
 
-and apply these to the choir staff in both the full and vocal score. In the vocal score, only show two systems per page.
+and apply these to the choir staff in the full and vocal score, respectively. In the vocal score, only show two systems per page.
 
 In **accompagnatos**, parts comprise up to 5 staves per page by default. The number of staves may be increased to six per page if system-system spacing is 16 and the choir staff uses `\smallGroupDistance`.
 
