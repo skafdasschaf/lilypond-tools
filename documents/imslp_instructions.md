@@ -2,7 +2,11 @@
 
 ## Uploading new scores
 
-Generally, follow the official [instructions](https://imslp.org/wiki/IMSLP:Score_submission_guide/Layout_of_Work_Pages).
+Generally, follow the official instructions on
+
+- [composition lists](https://imslp.org/wiki/Composer_Composition_Lists_Manual_of_Style)
+- [genres](https://imslp.org/wiki/IMSLP:Tagging)
+- [work pages](https://imslp.org/wiki/IMSLP:Score_submission_guide/Layout_of_Work_Pages).
 
 Submit vocal scores as “Other” and manually change the header to
 ```
