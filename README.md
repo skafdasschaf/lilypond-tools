@@ -701,7 +701,7 @@ Incipits for …
   \incipit "Soprano II" "soprano" #-20 #-1.8
   ```
 
-- mixed chorus and continuo:
+- mixed chorus with or without continuo:
   ```lilypond
   \incipit "Soprano" "soprano" #-20.5 #-0.3
   \incipit "Alto" "alto" #-18.3 #-0.3
@@ -714,7 +714,7 @@ Incipits for …
   \incipit "Tenore" "tenor" #-17.2 #-2.8
   ```
 
-- alto and tenor wih trombones:
+- alto and tenor with trombones:
   ```lilypond
   \incipit \markup \center-column { "Alto" "Trombone I" } "alto" #-20.5 #-1.8
   \incipit \markup \center-column { "Tenore" "Trombone II" } "tenor" #-20.9 #-1.8
