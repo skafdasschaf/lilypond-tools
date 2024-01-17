@@ -858,13 +858,19 @@ Extract individual images from a PDF. (The origin lies in the top left corner.)
 ```bash
 mkdir cropped
 pdfimages -j score.pdf img
-mogrify -crop 1000x1300+120+120 -path cropped *.jpg
+mogrify +repage -crop 1000x1300+120+120 -path cropped *.jpg
 ```
 
 Crop a PDF (here: remove 1 pt from the left, 80 pt from the top, 2 pt from the right, and 60 pt from the bottom).
 
 ```bash
 pdfcrop --margins '-1 -80 -2 -60' input.pdf output.pdf
+```
+
+Name files with sequential numbers.
+
+```bash
+ls -v | cat -n | while read n f; do mv -n "$f" "$n.jpg"; done 
 ```
 
 
