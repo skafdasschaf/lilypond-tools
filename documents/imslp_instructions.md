@@ -20,7 +20,14 @@ Template for work metadata:
 |Manuscript Sources={{RISMc|212006126|Mss full score (D-Dl, Mus.2973-D-26)}}
 |Instrumentation=soprano, alto, tenor, bass, mixed chorus (SATB), orchestra
 |InstrDetail=2 flutes, 2 oboes, 2 horns, 2 trumpets, timpani, strings, continuo
+|Tags=masses ; sop alt ten bass ch orch ; la
 ```
+
+Instrument names:
+- strings in plural and with roman numerals (e.g, Violins I, Violins II, Violas, Cellos/Basses)
+- other instruments singular and with arabic numerals (e.g., Oboe 1, Trombone 2 ...)
+- parts with several instruments in a grand staff: separate numbers with slashes (e.g., Horn 1/2 (C), Trumpet 1/2 (C)/Timpani)
+- do not write key changes in the timpani
 
 
 ## Updating scores
