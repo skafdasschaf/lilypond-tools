@@ -873,6 +873,13 @@ Name files with sequential numbers.
 ls -v | cat -n | while read n f; do mv -n "$f" "$n.jpg"; done 
 ```
 
+Resize all images in the current folder to the same width.
+
+```bash
+mogrify -resize $(identify -ping -format "%w\n" *.jpg | sort -n | tail -1)x -path resized *.jpg
+```
+```
+
 
 ### How to create a new EES Tools release
 
