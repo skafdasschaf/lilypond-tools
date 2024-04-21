@@ -878,6 +878,10 @@ Resize all images in the current folder to the same width.
 ```bash
 mogrify -resize $(identify -ping -format "%w\n" *.jpg | sort -n | tail -1)x -path resized *.jpg
 ```
+
+Merge two images with sequential names horizontally, for all files in the current folder.
+```bash
+montage -tile 2x1 -geometry +0+0 *.jpg img.jpg
 ```
 
 
