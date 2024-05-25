@@ -22,3 +22,4 @@
 - describe how to use snippets in critical report (see Eybler, Missa S. Wolfgangi); think about custom macros
 - add macro `trillFlat = \tweak self-alignment-X #CENTER ^\markup { { \teeny \raise #.5 \flat } \musicglyph #'"scripts.trill" }` and maybe also `trillSharp, trillNatural`
 - improve \critnote (use a more decent star)
+- create PDF document of editorial guidelines
