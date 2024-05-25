@@ -603,6 +603,28 @@ This folder contains miscellaneous scripts:
   ```
   where `<ID>` is the mirador ID (as evident from the IIIF manifest) and `<last page>` is the last page of the document. Images are saved in the current folder as a series of JPEG files `001.jpg`, `002.jpg` etc.
 
+- `make_collection.py`: creates a collection of works for a printed edition. The semi-automatical workflow comprises the following steps:
+
+  1. Run `make_collection.py`. This script requires the name of the collection as first argument, followed by the included works as further arguments. It combines relevant data from the specified works (i.e., from `metadata.yaml`, `definitions.ly`, and `full_score.ly`) and creates a subfolder in `collections/` named after the collection. This folder contains three files:
+      - `critical_report.tex` – the overall front matter. Abbreviations are merged into a single section at the beginning, followed by a section for each work, which contains general information, the table of emendations, and the lyrics.
+      - `definitions.ly` – overall definitions. They include required files with note variables, tempo indications, macros etc.
+      - `full_score.ly` – the full score with all works. For each work, top-level paper variables are moved into the paper blocks of its bookparts.
+  2. Optionally, make minor (!) manual adjustments in `critical_report.tex`, such as line or page breaks.
+  3. Engrave the full score with LilyPond.
+  4. Render the front matter with latexmk.
+  5. Replace the first page in the generated PDF by a custom title page (e.g., `collections/extra_title.pdf`).
+
+  The following commands execute this workflow:
+
+  ```bash
+  NAME=B1
+  WORKS="44 50 56 107 132"
+  python collections/make_collection.py $NAME $WORKS
+  lilypond --include=$EES_TOOLS_PATH -dno-point-and-click -o tmp/$NAME/full_score collections/$NAME/full_score.ly
+  latexmk -cd -lualatex -jobname=full_score collections/$NAME/critical_report.tex
+  latexmk -cd -c -jobname=full_score collections/$NAME/critical_report.tex
+  ```
+
 - `split_image.sh`: splits double-sided PDFs. Usage:
   ```bash
   split_image.sh <file> <size>
