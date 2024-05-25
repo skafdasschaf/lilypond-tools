@@ -875,7 +875,7 @@ pdfcrop --margins '-1 -80 -2 -60' input.pdf output.pdf
 Name files with sequential numbers.
 
 ```bash
-ls -v | cat -n | while read n f; do mv -n "$f" "$n.jpg"; done 
+ls -v | cat -n | while read n f; do mv -n "$f" "$n.jpg"; done
 ```
 
 Resize all images in the current folder to the same width.
@@ -887,6 +887,11 @@ mogrify -resize $(identify -ping -format "%w\n" *.jpg | sort -n | tail -1)x -pat
 Merge two images with sequential names horizontally, for all files in the current folder.
 ```bash
 montage -tile 2x1 -geometry +0+0 *.jpg img.jpg
+```
+
+Reset image orientation.
+```bash
+mogrify -orient TopLeft -rotate 90 +repage *.jpg
 ```
 
 
