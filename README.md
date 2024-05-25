@@ -732,6 +732,11 @@ Incipits for …
   \incipit "I" "soprano" #-16.1 #-0.8
   \incipit "II" "alto" #-16.4 #-0.8
   ```
+- right hand of organ solo
+  ```lilypond
+  \incipit " " "soprano" #0 #-1.8
+  ```
+
 
 Add a tacet followed by a repeated movement.
 
