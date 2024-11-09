@@ -11,14 +11,14 @@ cor,horn,Corno,Corno,c',treble,true,C,none
 cor da caccia,corno da caccia,CornoCacc,Corno da caccia,c',treble,true,C,none
 clno,clarion,Clarino,Clarino,c',treble,true,C,none
 tr,trumpet,Tromba,Tromba,c',treble,true,C,none
-trb,trombone,Trombone,Trombone,c',treble,true,none,none
+trb,trombone,Trombone,Trombone,c',alto,true,none,none
 a-trb,alto trombone,AltoTrombone,Alto trombone,c',alto,true,none,none
 t-trb,tenor trombone,TenorTrombone,Tenor trombone,c',tenor,true,none,none
 b-trb,bass trombone,BassTrombone,Bass trombone,c,bass,true,none,none
 timp,timpani,Timpani,Timpani,c,bass,true,C,none
 vl,violin,Violino,Violino,c',treble,true,none,none
-vla,viola,Viola,Viola,c',treble,true,none,none
-vla da gamba,viola da gamba,Gamba,Viola da gamba,c',treble,true,none,none
+vla,viola,Viola,Viola,c',alto,true,none,none
+vla da gamba,viola da gamba,Gamba,Viola da gamba,c',alto,true,none,none
 vlc,violoncello,Cello,Violoncello,c,bass,true,none,none
 vlne,violone,Violone,Violone,c,bass,true,none,none
 cb,contrabass,Contrabasso,Contrabasso,c,bass,true,none,none
