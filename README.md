@@ -618,8 +618,8 @@ This folder contains miscellaneous scripts:
 
   ```bash
   NAME=B1
-  WORKS="44 50 56 107 132"
-  python collections/make_collection.py $NAME $WORKS
+  WORKS="44 47 50 53 54 56 61 78 85 86_43 93 107 132"
+  python $EES_TOOLS_PATH/utils/make_collection.py $NAME $WORKS
   lilypond --include=$EES_TOOLS_PATH -dno-point-and-click -o tmp/$NAME/full_score collections/$NAME/full_score.ly
   latexmk -cd -lualatex -jobname=full_score collections/$NAME/critical_report.tex
   latexmk -cd -c -jobname=full_score collections/$NAME/critical_report.tex
