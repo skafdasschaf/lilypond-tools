@@ -833,6 +833,8 @@ For full scores with **seven staves** (e.g., Vienna church trio and four-part ch
   top-markup-spacing.minimum-distance = #0
   markup-system-spacing.basic-distance = #10
   markup-system-spacing.minimum-distance = #10
+  system-system-spacing.basic-distance = #19.5
+  system-system-spacing.minimum-distance = #19.5
   systems-per-page = #2
 }
 ```
