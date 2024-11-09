@@ -7,6 +7,8 @@ from sys import argv
 
 
 FRONT_MATTER_TEMPLATE = """\
+% created by make_collection.py
+% manual adjustments: [describe here]
 \\documentclass[tocdir=../../tmp/{name}]{{ees}}
 
 \\begin{{document}}
@@ -76,6 +78,8 @@ TOE_TEMPLATE = """\
 LYRICS_TEMPLATE = "\\textlt{{\\textit{{Lyrics}}\\\\{}}}"
 
 FULL_SCORE_TEMPLATE = """\
+% created by make_collection.py
+% manual adjustments: [describe here]
 \\version "2.24.0"
 
 \\include "../../definitions_main.ly"
@@ -85,6 +89,11 @@ FULL_SCORE_TEMPLATE = """\
 \\book {{
 {}
 }}
+"""
+
+DEFINITIONS_HEADER = """\
+% created by make_collection.py
+% manual adjustments: [describe here]
 """
 
 
@@ -192,7 +201,7 @@ def main() -> None:
     coll_name = argv[1]
     works = argv[2:]
 
-    definitions: list[str] = []
+    definitions: list[str] = [DEFINITIONS_HEADER]
     full_score: list[str] = []
     abbreviations: set[str] = set()
     work_details: list[str] = []
