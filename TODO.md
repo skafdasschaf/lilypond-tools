@@ -23,3 +23,8 @@
 - add macro `trillFlat = \tweak self-alignment-X #CENTER ^\markup { { \teeny \raise #.5 \flat } \musicglyph #'"scripts.trill" }` and maybe also `trillSharp, trillNatural`
 - improve \critnote (use a more decent star)
 - create PDF document of editorial guidelines
+- add documentation for proprium missae projects (keys in yaml, files ...)
+- remove part of makescript that is not required for edition
+- updates clef for trombones in template
+- alternative \startDeleted and \stopDeleted (see Eybler SM)
+- guiedlines: clarify that alto clef in fugues is transcribed as treble ottavo
