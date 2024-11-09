@@ -913,9 +913,19 @@ Merge two images with sequential names horizontally, for all files in the curren
 montage -tile 2x1 -geometry +0+0 *.jpg img.jpg
 ```
 
-Reset image orientation.
+Reset image orientation (portrait).
 ```bash
 mogrify -orient TopLeft -rotate 90 +repage *.jpg
+```
+
+Reset image orientation (landscape).
+```bash
+mogrify -orient TopLeft -rotate 180 +repage *.jpg
+```
+
+Extract even pages of a PDF.
+```bash
+gs -sDEVICE=pdfwrite -sPageList=even -sOutputFile=even.pdf -dBATCH -dNOPAUSE file-pdf
 ```
 
 
