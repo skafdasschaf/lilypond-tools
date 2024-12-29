@@ -27,4 +27,6 @@
 - remove part of makescript that is not required for edition
 - updates clef for trombones in template
 - alternative \startDeleted and \stopDeleted (see Eybler SM)
-- guiedlines: clarify that alto clef in fugues is transcribed as treble ottavo
+- guiedlines:
+  - clarify that alto clef in fugues is transcribed as treble ottavo
+  - clarify that in allabreves, breves are regarded as single bar (e.g., Litainae WerW G.17)
