@@ -30,3 +30,4 @@
 - guiedlines:
   - clarify that alto clef in fugues is transcribed as treble ottavo
   - clarify that in allabreves, breves are regarded as single bar (e.g., Litainae WerW G.17)
+- add macro `\skips` (see WerW incipit header)
