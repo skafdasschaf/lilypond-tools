@@ -852,12 +852,12 @@ For scores with **six or less staves**, change (a) the distance between systems 
 ```
 
 Staves|Full score                                |Vocal score
-------|------------------------------------------|-----------
+------|------------------------------------------|-----------------------------------------
 6     |[20]/2                                    |25/2
 5     |30/2                                      |[17]/[3]
 4     |22/3                                      |25/[3]
 3     |20/4 (or 30/3)                            |22/4
-2     |21/5 (or 18/6 with `\smallGroupDistance`) |20/6
+2     |21/5 (or 18/6 with `\smallGroupDistance`) |20/6 (or 16/7 with `\smallGroupDistance`)
 
 If a work contains **chorals with two stanzas**, define
 
