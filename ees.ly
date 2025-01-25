@@ -682,7 +682,7 @@ tacet = #(define-scheme-function
        (if (output-port? outfile)
            (display whole-string outfile)
            (ly:warning
-             (_ "Unable to open output file ~a for the TOC information")
+             (G_ "Unable to open output file ~a for the TOC information")
              outfilename))
        (close-output-port outfile)))))
 
